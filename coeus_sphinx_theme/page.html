@@ -1,0 +1,19 @@
+{# Main page template for Coeus Sphinx Theme. #}
+
+{%- extends "layout.html" -%}
+{%- block body %}
+{%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] %}
+{%- if not only_main_nav and sidebars|length > 0 %}
+<div class="w-full min-w-0 mx-auto">
+  {%- else %}
+  <div class="w-full min-w-0 mx-auto max-w-prose">
+    {%- endif %}
+    {%- block body_before %}{%- endblock body_before -%}
+    {%- if pagename != master_doc and theme_show_breadcrumbs|tobool %}
+    {%- include "breadcrumbs.html" %}
+    {%- endif %}
+    <div id="content" role="main">
+      {{ body }}
+    </div>
+  </div>
+  {%- endblock body %}

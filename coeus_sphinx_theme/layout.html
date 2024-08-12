@@ -1,0 +1,89 @@
+{# Master layout template for Coeus Sphinx Theme. #}
+
+{%- set lang_attr = "en" if language == None else (language|replace('_','-')) -%}
+{%- if not embedded and docstitle -%}
+{%- if title == docstitle -%}
+{%- set titlesuffix = "" -%}
+{%- else -%}
+{%- set titlesuffix = " | "|safe + docstitle|e -%}
+{%- endif -%}
+{%- else -%}
+{%- set titlesuffix = "" -%}
+{%- endif -%}
+<!DOCTYPE html>
+<html lang="{{ lang_attr }}" {% if sphinx_version_tuple>= (7, 2) %}data-content_root="{{ content_root }}"{% endif %} >
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  {{ metatags }}
+  {%- block htmltitle %}
+  <title>{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}</title>
+  <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
+  <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
+  {%- endblock htmltitle %}
+  {%- for css in css_files %}
+  {%- if css|attr("filename") %}
+  {{ css_tag(css) }}
+  {%- else -%}
+  <link rel="stylesheet" href="{{ pathto(css, 1)|e }}" />
+  {%- endif %}
+  {%- endfor %}
+  {%- if pageurl %}
+  <link rel="canonical" href="{{ pageurl|e }}" />
+  {%- endif %}
+  {%- set _favicon_url = favicon_url | default(pathto('_static/' + (favicon or ""), 1)) %}
+  {%- if favicon_url or favicon %}
+  <link rel="icon" href="{{ _favicon_url }}" />
+  {%- endif %}
+  {%- block linktags %}
+  {%- if hasdoc('search') %}
+  <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
+  {%- endif %}
+  {%- endblock linktags %}
+  {%- block extrahead %}{%- endblock extrahead %}
+</head>
+
+<body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground"
+  :class="{ 'overflow-hidden': showSidebar }">
+  {%- if sidebars|length > 0 %}
+  <div x-cloak x-show="showSidebar"
+    class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden"
+    @click.self="showSidebar = false"></div>
+  {%- endif %}
+  <div id="page" class="relative flex flex-col min-h-screen">
+    {%- block header %}
+    {%- include "header.html" %}
+    {%- endblock header %}
+    <div class="flex-1">
+      {%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] %}
+      {%- if not only_main_nav and sidebars|length > 0 -%}
+      <div
+        class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+        {%- else -%}
+        <div class="container items-start flex-1">
+          {%- endif -%}
+          {%- block sidebar %}
+          {%- if sidebars|length > 0 %}
+          {%- include "sidebar.html" %}
+          {%- endif %}
+          {%- endblock sidebar %}
+          {%- block main %}
+          <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
+            {%- block body %}{%- endblock %}
+          </main>
+          {%- endblock main %}
+        </div>
+      </div>
+      {%- block footer %}
+      {%- include "footer.html" %}
+      {%- endblock footer %}
+    </div>
+    {% block scripts %}
+    {%- for js in script_files %}
+    {{ js_tag(js) }}
+    {%- endfor %}
+    {% endblock scripts %}
+</body>
+
+</html>

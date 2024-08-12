@@ -41,6 +41,7 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     """
     here = os.path.abspath(os.path.dirname(__file__))
     app.add_html_theme(name=theme_name, theme_path=here)
+    app.add_css_file(f"{theme_name}.css", priority=900)
     return {
         "version": theme_version,
         "parallel_read_safe": True,
