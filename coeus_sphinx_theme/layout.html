@@ -21,6 +21,7 @@
   <title>{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}</title>
   <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
   <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
+  <script src="https://kit.fontawesome.com/8bcdaaff4d.js" crossorigin="anonymous"></script>
   {%- endblock htmltitle %}
   {%- for css in css_files %}
   {%- if css|attr("filename") %}
@@ -59,7 +60,7 @@
       {%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] %}
       {%- if not only_main_nav and sidebars|length > 0 -%}
       <div
-        class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
+        class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
         {%- else -%}
         <div class="container items-start flex-1">
           {%- endif -%}
@@ -70,6 +71,11 @@
           {%- endblock sidebar %}
           {%- block main %}
           <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
+            {% if type and icon and gradient %}
+            <div class="documentation-hero-content" style="background: {{ gradient }};">
+              <span class="{{ icon }} documentation-hero-icon"></span>
+            </div>
+            {% endif %}
             {%- block body %}{%- endblock %}
           </main>
           {%- endblock main %}
