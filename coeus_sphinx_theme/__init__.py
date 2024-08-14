@@ -23,15 +23,22 @@ import typing as t
 from sphinx.application import Sphinx
 from sphinx.util import logging
 
-from coeus_sphinx_theme.extensions import abstract_content as abc
-from coeus_sphinx_theme.extensions import documentation_hero as hero
+from coeus_sphinx_theme.extensions import contributor_hero
+from coeus_sphinx_theme.extensions import documentation_hero
+from coeus_sphinx_theme.extensions import homelander
+from coeus_sphinx_theme.extensions import top_ribbon
 
 logger = logging.getLogger(__name__)
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
 theme_version: str = "1.0.0alpha"
 
-modules: list[types.ModuleType] = [abc, hero]
+modules: t.Sequence[types.ModuleType] = (
+    contributor_hero,
+    documentation_hero,
+    homelander,
+    top_ribbon,
+)
 
 
 def setup(app: Sphinx) -> dict[str, t.Any]:

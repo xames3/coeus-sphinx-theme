@@ -1,5 +1,6 @@
 {# Breadcrumbs template for Coeus Sphinx Theme. #}
 
+{% if not is_homelander %}
 {%- set separator %}
 <div class="mr-1">{{ theme_breadcrumbs_separator|default('/') }}</div>
 {%- endset %}
@@ -21,3 +22,4 @@
   <span aria-current="page" class="font-bold text-foreground overflow-hidden text-ellipsis whitespace-nowrap">{{ title
     }}</span>
 </nav>
+{% endif %}

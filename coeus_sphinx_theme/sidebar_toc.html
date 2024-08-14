@@ -2,8 +2,8 @@
 
 <nav class="table w-full min-w-full my-6 lg:my-8">
   {%- if theme_globaltoc_includehidden|tobool %}
-  {{ toctree(titles_only=true, collapse=True, includehidden=true) }}
+  {{ toctree(titles_only=false, collapse=true, includehidden=true) }}
   {%- else %}
-  {{ toctree(titles_only=true, collapse=True) }}
+  {{ toctree(titles_only=false, collapse=true) }}
   {%- endif %}
 </nav>

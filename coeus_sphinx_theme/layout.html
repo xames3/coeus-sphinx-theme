@@ -51,6 +51,11 @@
     class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden"
     @click.self="showSidebar = false"></div>
   {%- endif %}
+  {%- block top_ribbon %}
+  {% if top_ribbon %}
+  <div class="top-ribbon-wrapper"><span>{{ top_ribbon }}</span></div>
+  {% endif %}
+  {%- endblock top_ribbon %}
   <div id="page" class="relative flex flex-col min-h-screen">
     {%- block header %}
     {%- include "header.html" %}
@@ -58,37 +63,46 @@
     <div class="flex-1">
       {%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] %}
       {%- if not only_main_nav and sidebars|length > 0 -%}
+      {% if not is_homelander %}
       <div
         class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
         {%- else -%}
-        <div class="container items-start flex-1">
-          {%- endif -%}
-          {%- block sidebar %}
-          {%- if sidebars|length > 0 %}
-          {%- include "sidebar.html" %}
-          {%- endif %}
-          {%- endblock sidebar %}
-          {%- block main %}
-          <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
-            {% if type and icon and gradient %}
-            <div class="documentation-hero-content" style="background: {{ gradient }};">
-              <span class="{{ icon }} documentation-hero-icon"></span>
-            </div>
-            {% endif %}
-            {%- block body %}{%- endblock %}
-          </main>
-          {%- endblock main %}
+        <div class="container flex-1 items-start md:grid">
+          {% endif %}
+          {%- else -%}
+          <div class="container items-start flex-1">
+            {%- endif -%}
+            {%- block sidebar %}
+            {%- if sidebars|length > 0 and not is_homelander %}
+            {%- include "sidebar.html" %}
+            {%- endif %}
+            {%- endblock sidebar %}
+            {%- block main %}
+            {% if not is_homelander %}
+            <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
+              {%- else -%}
+              <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr]">
+                {% endif %}
+                {% if type and icon and gradient %}
+                <div class="documentation-hero-content" style="background: {{ gradient }};">
+                  <span class="{{ icon }} documentation-hero-icon"></span>
+                </div>
+                {% endif %}
+                {%- block body %}
+                {%- endblock %}
+              </main>
+              {%- endblock main %}
+          </div>
         </div>
+        {%- block footer %}
+        {%- include "footer.html" %}
+        {%- endblock footer %}
       </div>
-      {%- block footer %}
-      {%- include "footer.html" %}
-      {%- endblock footer %}
-    </div>
-    {% block scripts %}
-    {%- for js in script_files %}
-    {{ js_tag(js) }}
-    {%- endfor %}
-    {% endblock scripts %}
+      {% block scripts %}
+      {%- for js in script_files %}
+      {{ js_tag(js) }}
+      {%- endfor %}
+      {% endblock scripts %}
 </body>
 
 </html>
