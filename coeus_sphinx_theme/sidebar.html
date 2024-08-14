@@ -14,12 +14,12 @@
       {%- if logo_url %}
       <img height="16" width="16" class="mr-2 dark:invert" src="{{ logo_url }}" alt="Logo" />
       {%- endif -%}
-      {%- if theme_logo_dark and not logo_url %}
-      <img width="16" height="16" class="mr-2 hidden dark:block" src="{{ pathto('_static/' + theme_logo_dark, 1) }}"
-        alt="Logo" />
+      {%- if theme_dark_mode_logo and not logo_url %}
+      <img width="16" height="16" class="mr-2 hidden dark:block"
+        src="{{ pathto('_static/' + theme_dark_mode_logo, 1) }}" alt="Logo" />
       {%- endif -%}
-      {%- if theme_logo_light and not logo_url %}
-      <img width="16" height="16" class="mr-2 dark:hidden" src="{{ pathto('_static/' + theme_logo_light, 1) }}"
+      {%- if theme_light_mode_logo and not logo_url %}
+      <img width="16" height="16" class="mr-2 dark:hidden" src="{{ pathto('_static/' + theme_light_mode_logo, 1) }}"
         alt="Logo" />
       {%- endif -%}
       <span class="font-bold text-clip whitespace-nowrap">{{ docstitle }}</span>

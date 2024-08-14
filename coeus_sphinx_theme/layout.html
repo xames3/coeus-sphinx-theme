@@ -14,13 +14,12 @@
 <html lang="{{ lang_attr }}" {% if sphinx_version_tuple>= (7, 2) %}data-content_root="{{ content_root }}"{% endif %} >
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" />
   {{ metatags }}
   {%- block htmltitle %}
-  <title>{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}</title>
-  <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
-  <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}{{ titlesuffix }}" />
+  <title>{{ title|striptags|e if title else docstitle }}</title>
+  <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}" />
+  <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}" />
   <script src="https://kit.fontawesome.com/8bcdaaff4d.js" crossorigin="anonymous"></script>
   {%- endblock htmltitle %}
   {%- for css in css_files %}
