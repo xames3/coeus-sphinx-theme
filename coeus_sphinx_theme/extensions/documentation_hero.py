@@ -85,15 +85,20 @@ class DocumentationHeroDirective(Directive):
 
         :return: List of Docutils node for custom directive.
         """
+        env = self.state.document.settings.env
         node = DocumentationHeroNode("\n".join(self.content), **self.options)
         if (node_type := node.attributes["type"]) not in available_types:
             raise ValueError(
                 "Invalid document type. "
                 f"Either {', '.join(available_types)} are allowed"
             )
-        self.state.document.settings.env.app.type = node_type
-        self.state.document.settings.env.app.icon = node.attributes["icon"]
-        self.state.document.settings.env.app.grad = node.attributes["gradient"]
+        if not hasattr(env, "documentation_hero"):
+            env.documentation_hero = {}
+        env.documentation_hero[env.docname] = (
+            node_type,
+            node.attributes["icon"],
+            node.attributes["gradient"],
+        )
         return [node]
 
 
@@ -107,7 +112,7 @@ def depart(self: HTMLTranslator, node: DocumentationHeroNode) -> None:
     pass
 
 
-def setup_html_context(
+def parse_and_load_documentation_hero(
     app: Sphinx,
     pagename: str,
     templatename: str,
@@ -115,13 +120,14 @@ def setup_html_context(
     doctree: Node,
 ) -> None:
     """Register function for Jinja2 context."""
-    context["type"] = getattr(app, "type", "")
-    context["icon"] = getattr(app, "icon", "")
-    context["gradient"] = getattr(app, "grad", "")
+    if attr := app.builder.env.documentation_hero.get(pagename, ""):
+        context["type"] = attr[0]
+        context["icon"] = attr[1]
+        context["gradient"] = attr[2]
 
 
 name: t.Final[str] = "documentation-hero"
 node = DocumentationHeroNode
 klass = DocumentationHeroDirective
 add_html_context: bool = True
-callback = setup_html_context
+callback = parse_and_load_documentation_hero
