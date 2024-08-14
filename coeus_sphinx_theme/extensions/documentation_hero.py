@@ -4,11 +4,15 @@ Coeus Sphinx Theme Documentation Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Monday, August 12 2024
-Last updated on: Monday, August 12 2024
+Last updated on: Wednesday, August 14 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
-that allows authors and contributors to add an icon or graphic as well
-as a gradient to their documentation title.
+that allows authors and contributors to add an icon or graphic, a
+background gradient, a summary and document type to their documentation
+title banner. The summary is basically an abstract of the document's
+contents that is displayed prominently at the top of the page after the
+main title, helping readers quickly understand the scope and purpose of
+the document.
 
 Coeus Sphinx Theme's documentation hero is created using the custom
 `documentation-hero` directive, which is included as part of this theme.
@@ -23,6 +27,10 @@ and contributors when building the documentation.
 
 .. note::
 
+    The summary should be maximum of 2 lines.
+
+.. note::
+
     This module is designed specifically for the Coeus Sphinx Theme,
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
@@ -33,6 +41,7 @@ from __future__ import annotations
 
 import typing as t
 
+import jinja2
 from docutils.nodes import Element
 from docutils.nodes import Node
 from docutils.parsers.rst import Directive
@@ -44,6 +53,15 @@ from sphinx.writers.html import HTMLTranslator
 logger = logging.getLogger(__name__)
 
 available_types: tuple[str, ...] = ("Article", "Guide", "Changelog")
+
+
+class DocumentationHero(t.NamedTuple):
+    """Collector for documentation hero."""
+
+    document: str
+    gradient: str
+    icon: str
+    summary: str
 
 
 class DocumentationHeroNode(Element):
@@ -70,9 +88,10 @@ class DocumentationHeroDirective(Directive):
     has_content: bool = True
     final_argument_whitespace: bool = True
     option_spec = {
-        "type": directives.unchanged_required,
-        "icon": directives.unchanged_required,
         "gradient": directives.unchanged_required,
+        "icon": directives.unchanged_required,
+        "summary": directives.unchanged_required,
+        "type": directives.unchanged_required,
     }
 
     def run(self) -> list[Node]:
@@ -87,24 +106,40 @@ class DocumentationHeroDirective(Directive):
         """
         env = self.state.document.settings.env
         node = DocumentationHeroNode("\n".join(self.content), **self.options)
-        if (node_type := node.attributes["type"]) not in available_types:
+        if node.attributes["type"] not in available_types:
             raise ValueError(
                 "Invalid document type. "
                 f"Either {', '.join(available_types)} are allowed"
             )
         if not hasattr(env, "documentation_hero"):
             env.documentation_hero = {}
-        env.documentation_hero[env.docname] = (
-            node_type,
-            node.attributes["icon"],
-            node.attributes["gradient"],
+        env.documentation_hero[env.docname] = DocumentationHero(
+            document=node.attributes["type"],
+            gradient=node.attributes["gradient"],
+            icon=node.attributes["icon"],
+            summary=node.attributes["summary"],
         )
         return [node]
 
 
+template: t.Final[jinja2.Template] = jinja2.Template(
+    """\
+<div class="documentation-hero-summary">
+<p class="font-medium">{{ summary }}</p>
+</div>
+"""
+)
+
+
 def visit(self: HTMLTranslator, node: DocumentationHeroNode) -> None:
     """Node visitor function which maps the node element."""
-    pass
+    html_src = template.render(
+        gradient=node.attributes["gradient"],
+        icon=node.attributes["icon"],
+        summary=node.attributes["summary"],
+        type=node.attributes["type"],
+    )
+    self.body.append(html_src)
 
 
 def depart(self: HTMLTranslator, node: DocumentationHeroNode) -> None:
@@ -120,10 +155,12 @@ def parse_and_load_documentation_hero(
     doctree: Node,
 ) -> None:
     """Register function for Jinja2 context."""
-    if attr := app.builder.env.documentation_hero.get(pagename, ""):
-        context["type"] = attr[0]
-        context["icon"] = attr[1]
-        context["gradient"] = attr[2]
+    builder = app.builder.env
+    if attr := builder.documentation_hero.get(pagename, ""):
+        context["gradient"] = attr.gradient
+        context["icon"] = attr.icon
+        context["summary"] = attr.summary
+        context["type"] = attr.document
 
 
 name: t.Final[str] = "documentation-hero"
