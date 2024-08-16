@@ -4,7 +4,7 @@ Coeus Sphinx Theme Documentation Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Monday, August 12 2024
-Last updated on: Wednesday, August 14 2024
+Last updated on: Thursday, August 15 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add an icon or graphic, a
@@ -83,6 +83,7 @@ class DocumentationHeroDirective(Directive):
         defaults to `True`.
     :var final_argument_whitespace: A boolean flag, may the final argument
         contain whitespace, set to `True`.
+    :var option_spec: A mapping of option specificiations.
     """
 
     has_content: bool = True
@@ -125,7 +126,7 @@ class DocumentationHeroDirective(Directive):
 template: t.Final[jinja2.Template] = jinja2.Template(
     """\
 <div class="documentation-hero-summary">
-<p class="font-medium">{{ summary }}</p>
+<p class="font-medium">{{ html_coeus_documentation_hero_summary }}</p>
 </div>
 """
 )
@@ -134,10 +135,10 @@ template: t.Final[jinja2.Template] = jinja2.Template(
 def visit(self: HTMLTranslator, node: DocumentationHeroNode) -> None:
     """Node visitor function which maps the node element."""
     html_src = template.render(
-        gradient=node.attributes["gradient"],
-        icon=node.attributes["icon"],
-        summary=node.attributes["summary"],
-        type=node.attributes["type"],
+        html_coeus_documentation_hero_gradient=node.attributes["gradient"],
+        html_coeus_documentation_hero_icon=node.attributes["icon"],
+        html_coeus_documentation_hero_summary=node.attributes["summary"],
+        html_coeus_documentation_hero_type=node.attributes["type"],
     )
     self.body.append(html_src)
 
@@ -157,10 +158,10 @@ def parse_and_load_documentation_hero(
     """Register function for Jinja2 context."""
     builder = app.builder.env
     if attr := builder.documentation_hero.get(pagename, ""):
-        context["gradient"] = attr.gradient
-        context["icon"] = attr.icon
-        context["summary"] = attr.summary
-        context["type"] = attr.document
+        context["html_coeus_documentation_hero_gradient"] = attr.gradient
+        context["html_coeus_documentation_hero_icon"] = attr.icon
+        context["html_coeus_documentation_hero_summary"] = attr.summary
+        context["html_coeus_documentation_hero_type"] = attr.document
 
 
 name: t.Final[str] = "documentation-hero"

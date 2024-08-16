@@ -196,7 +196,9 @@ ol,
 ul {
     list-style: none;
     margin: 0;
-    padding: 0
+    padding: 0;
+    line-height: 1.8rem;
+    font-size: 1.1rem;
 }
 
 dialog {
@@ -242,7 +244,9 @@ video {
 img,
 video {
     height: auto;
-    max-width: 100%
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 [hidden] {
@@ -523,20 +527,22 @@ video {
 .contributor-hero-timestamp {
     font-size: 1rem;
     margin-top: 2rem;
+    font-weight: 500;
     color: var(--muted-foreground);
 }
 
 .contributor-hero-publisher {
     font-size: 1rem;
-    margin-top: 10px;
+    margin-top: 0.5rem;
     color: var(--primary);
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .contributor-hero-socials {
-    letter-spacing: 1rem;
+    letter-spacing: 0.8rem;
     float: right;
-    margin-top: -1rem;
+    font-size: 1.3rem;
+    margin-top: -3px;
 }
 
 #content h1 {
@@ -554,7 +560,7 @@ video {
     font-size: 1.875rem;
     font-weight: 600;
     line-height: 2.25rem;
-    padding-bottom: .5rem
+    margin-top: 2rem
 }
 
 #content h3 {
@@ -583,8 +589,8 @@ video {
     font-size: 1.1rem;
 }
 
-#content section>p:first-child {
-    margin-top: 0
+#content section>p:first-of-type {
+    margin-top: 1.5rem;
 }
 
 #content section>p.lead {
@@ -613,15 +619,18 @@ video {
     text-underline-offset: 4px
 }
 
+#content .contributor-hero-socials a:not(.toc-backref) {
+    color: #6c757d;
+}
+
 #content ul:not(.search) {
     list-style-type: disc;
     margin-left: 1.5rem;
-    margin-top: 1.5rem
 }
 
 #content ul:not(.search) p,
 #content ul:not(.search)>li {
-    margin-top: 1.5rem
+    margin: 0.8em 0;
 }
 
 #content ul:not(.search) ul {
@@ -631,7 +640,7 @@ video {
 #content ol {
     list-style-type: decimal;
     margin-left: 1.5rem;
-    margin-top: 1.5rem
+    margin-top: 0.8em
 }
 
 #content ol ::marker {
@@ -644,7 +653,7 @@ video {
 
 #content ol p,
 #content ol>li {
-    margin-top: 1.5rem
+    margin-top: 0.8em
 }
 
 #content ol ol {
@@ -652,12 +661,12 @@ video {
 }
 
 #content dl {
-    margin-top: 1.5rem
+    margin-top: 0.8em
 }
 
 #content dl dt:not(.sig) {
     font-weight: 500;
-    margin-top: 1.5rem
+    margin-top: 0.8em
 }
 
 #content dl dt:not(.sig):first-child {
@@ -1126,7 +1135,7 @@ pre {
     border-radius: var(--radius);
     font-size: 1rem;
     line-height: 1.5rem;
-    margin-top: 1.25rem;
+    margin: 1.25rem 0rem;
     overflow-x: auto;
     padding: 2rem;
 }
@@ -1350,6 +1359,43 @@ em.property {
     font-weight: 700 !important
 }
 
+.copylink {
+    align-items: center;
+    display: inline-flex;
+    margin-left: .25rem;
+    position: relative;
+    vertical-align: middle
+}
+
+.copylink:after {
+    cursor: grab;
+    content: attr(data-tooltip);
+    z-index: 1000000;
+    -webkit-font-smoothing: subpixel-antialiased;
+    letter-spacing: normal;
+    text-shadow: none;
+    text-transform: none;
+    word-wrap: break-word;
+    background-color: #f1f5f9;
+    border-radius: calc(.5rem - 4px);
+    border-radius: calc(var(--radius) - 4px);
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    white-space: pre;
+    --coeus-bg-opacity: 0.75;
+    color: #65758b;
+    color: var(--muted-foreground);
+    font-family: 'Archivo', sans-serif;
+    font-size: .75rem;
+    font-weight: 400;
+    line-height: 1rem;
+    opacity: 0;
+    padding: 1rem;
+    text-align: center;
+    text-decoration-line: none
+}
+
 .headerlink {
     align-items: center;
     display: inline-flex;
@@ -1484,7 +1530,7 @@ table:not(.does-not-exist):hover .headerlink>* {
 #left-sidebar ul ul {
     margin-left: 0;
     opacity: 1;
-    padding: .1rem 0 .1rem 0;
+    padding: .1rem 0 .1rem 0.5rem;
     position: relative;
     transition-duration: .5s;
     transition-property: opacity;
@@ -1627,8 +1673,11 @@ table:not(.does-not-exist):hover .headerlink>* {
 .contents .topic-title,
 .toctree-wrapper .caption,
 .toctree-wrapper .topic-title {
-    font-weight: 500;
-    padding-top: 1.5rem
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 2rem;
+    margin-top: 1rem
 }
 
 .contents ul,
@@ -1730,9 +1779,7 @@ table:not(.does-not-exist):hover .headerlink>* {
     text-transform: none;
     word-wrap: break-word;
     background-color: #f1f5f9;
-    background-color: var(--muted);
-    border-radius: calc(.5rem - 4px);
-    border-radius: calc(var(--radius) - 4px);
+    border-radius: calc(.5rem - 2px);
     content: attr(data-tooltip);
     display: none;
     pointer-events: none;
@@ -1742,12 +1789,13 @@ table:not(.does-not-exist):hover .headerlink>* {
     color: #65758b;
     color: var(--muted-foreground);
     font-family: 'Archivo', sans-serif;
-    font-size: .75rem;
     font-weight: 400;
     line-height: 1rem;
     opacity: 0;
-    padding: .25rem;
+    padding: 0.5rem 0.7rem;
     text-align: center;
+    border-color: var(--border);
+    border-width: 2px;
     text-decoration-line: none
 }
 
@@ -2333,7 +2381,7 @@ table:not(.does-not-exist):hover .headerlink>* {
 
 .rounded-md {
     border-radius: calc(.5rem - 2px);
-    border-radius: calc(var(--radius) - 2px)
+    ;
 }
 
 .rounded-sm {
@@ -2500,6 +2548,10 @@ table:not(.does-not-exist):hover .headerlink>* {
     line-height: 1rem
 }
 
+.font-bolder {
+    font-weight: 900;
+}
+
 .font-bold {
     font-weight: 700;
 }
@@ -2653,7 +2705,6 @@ table:not(.does-not-exist):hover .headerlink>* {
 
 .hover\:bg-muted:hover {
     background-color: #f1f5f9;
-    background-color: var(--muted)
 }
 
 .hover\:bg-transparent:hover {

@@ -138,4 +138,5 @@ venv/
 
 # Coeus' mess
 archive/*
+linting.html
 *.bak

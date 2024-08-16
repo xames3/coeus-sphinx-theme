@@ -4,7 +4,7 @@ Coeus Sphinx Theme Homelander Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Tuesday, August 13 2024
-Last updated on: Tuesday, August 13 2024
+Last updated on: Thursday, August 15 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 for a custom background of the landing page.
@@ -57,6 +57,7 @@ class HomelanderDirective(Directive):
         defaults to `True`.
     :var final_argument_whitespace: A boolean flag, may the final argument
         contain whitespace, set to `True`.
+    :var option_spec: A mapping of option specificiations.
     """
 
     has_content: bool = True

@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributor Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Wednesday, August 14 2024
+Last updated on: Thursday, August 15 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -25,18 +25,24 @@ and contributors when building the documentation.
 
 from __future__ import annotations
 
+import ast
+import os
 import typing as t
 
-import jinja2
+import jinja2 as j2
 from docutils.nodes import Element
 from docutils.nodes import Node
 from docutils.parsers.rst import Directive
-from docutils.parsers.rst import roles
 from docutils.parsers.rst import directives
+from docutils.parsers.rst import roles
 from sphinx.util import logging
 from sphinx.writers.html import HTMLTranslator
 
 logger = logging.getLogger(__name__)
+
+file = os.path.basename(__file__).replace(".py", ".html")
+loader = j2.FileSystemLoader(os.path.realpath("../coeus_sphinx_theme/"))
+template = j2.Environment(loader=loader).get_template(file)
 
 
 class ContributorHero(t.NamedTuple):
@@ -49,26 +55,6 @@ class ContributorHero(t.NamedTuple):
 
 class ContributorHeroNode(Element):
     pass
-
-
-template: t.Final[jinja2.Template] = jinja2.Template(
-    """\
-{%- if location and contributors and timestamp %}
-<div class="container flex-1 px-0">
-  <p class="contributor-hero-timestamp">{{ timestamp }}</p>
-  <div class="contributor-hero-publisher py-2">
-    <p>Published by {{ contributors }}</p>
-    <div class="contributor-hero-socials">
-      <i class="fa-solid fa-envelope"></i>
-      <i class="fa-brands fa-github"></i>
-      <i class="fa-brands fa-x-twitter"></i>
-      <i class="fa-solid fa-link"></i>
-    </div>
-  </div>
-</div>
-{%- endif %}
-"""
-)
 
 
 class ContributorHeroDirective(Directive):
@@ -86,12 +72,14 @@ class ContributorHeroDirective(Directive):
         defaults to `True`.
     :var final_argument_whitespace: A boolean flag, may the final argument
         contain whitespace, set to `True`.
+    :var option_spec: A mapping of option specificiations.
     """
 
     has_content: bool = True
     final_argument_whitespace: bool = True
     option_spec = {
         "contributors": directives.unchanged_required,
+        "limit": directives.unchanged,
         "location": directives.unchanged_required,
         "timestamp": directives.unchanged_required,
     }
@@ -115,10 +103,19 @@ class ContributorHeroDirective(Directive):
 
 def visit(self: HTMLTranslator, node: ContributorHeroNode) -> None:
     """Node visitor function which maps the node element."""
+    contributors = ast.literal_eval(node.attributes["contributors"])
+    article = list(filter(lambda x: x, node.document.astext().splitlines()))[0]
+    subject = f"[{self.config.html_coeus_title}] {article}"
+    limit = node.attributes.get("limit", 2)
     html_src = template.render(
-        contributors=node.attributes["contributors"],
-        location=node.attributes["location"],
-        timestamp=node.attributes["timestamp"],
+        html_coeus_contributor_hero_contributors=contributors,
+        html_coeus_contributor_hero_contributors_limit=limit,
+        html_coeus_contributor_hero_location=node.attributes["location"],
+        html_coeus_contributor_hero_timestamp=node.attributes["timestamp"],
+        html_coeus_contributor_hero_email=self.config.html_coeus_email,
+        html_coeus_contributor_hero_email_subject=subject,
+        html_coeus_contributor_hero_github=self.config.html_coeus_github,
+        html_coeus_contributor_hero_twitter=self.config.html_coeus_twitter,
     )
     self.body.append(html_src)
 

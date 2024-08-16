@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Monday, August 12 2024
+Last updated on: Thursday, August 15 2024
 
 This module defines the Coeus Sphinx Theme, providing utilities and
 configuration for integrating a custom theme into Sphinx documentation.
@@ -53,9 +53,28 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         reading and writing.
     """
     here = os.path.abspath(os.path.dirname(__file__))
-    app.config.html_permalinks_icon = ""
+    config = app.config
+    coeus_theme_configurations: dict[str, tuple[t.Any, ...]] = {
+        "html_coeus_author": (config.author, tuple),
+        "html_coeus_copyright": (config.copyright, str),
+        "html_coeus_documentation": ("#", str),
+        "html_coeus_email": ("#", str),
+        "html_coeus_favicon": ("#", str),
+        "html_coeus_github": ("#", str),
+        "html_coeus_homepage": ("#", str),
+        "html_coeus_include_last_updated_date": (True, bool),
+        "html_coeus_license": ("#", str),
+        "html_coeus_permalinks_icon": ("", str),
+        "html_coeus_repository": ("#", str),
+        "html_coeus_title": (config.html_title or config.project, tuple),
+        "html_coeus_twitter": ("#", str),
+        "html_coeus_version": (config.release, str),
+    }
+    for name, default in coeus_theme_configurations.items():
+        app.add_config_value(name, default[0], "html", default[1])
+    config.html_permalinks_icon = config.html_coeus_permalinks_icon
     app.add_html_theme(name=theme_name, theme_path=here)
-    app.add_css_file(f"{theme_name}.css", priority=900)
+    app.add_js_file("theme.js", loading_method="defer")
     for module in modules:
         if module.add_html_context:
             app.connect("html-page-context", module.callback)

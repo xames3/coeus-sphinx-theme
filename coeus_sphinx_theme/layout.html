@@ -81,11 +81,13 @@
             {% if not is_homelander %}
             <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
               {%- else -%}
-              <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr]">
+              <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
                 {% endif %}
-                {% if type and icon and gradient %}
-                <div class="documentation-hero-content" style="background: {{ gradient }};">
-                  <span class="{{ icon }} documentation-hero-icon"></span>
+                {% if html_coeus_documentation_hero_type and html_coeus_documentation_hero_icon and
+                html_coeus_documentation_hero_gradient %}
+                <div class="documentation-hero-content"
+                  style="background: {{ html_coeus_documentation_hero_gradient }};">
+                  <span class="{{ html_coeus_documentation_hero_icon }} documentation-hero-icon"></span>
                 </div>
                 {% endif %}
                 {%- block body %}
