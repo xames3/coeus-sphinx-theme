@@ -9,10 +9,10 @@
 <script src="{{ pathto('searchindex.js', 1) }}" defer></script>
 {% endblock scripts %}
 {% block body %}
+<div class="documentation-hero-content" style="background:linear-gradient(135deg, #ffd5d5, #f7fbfb);">
+  <span class="fa-solid fa-magnifying-glass documentation-hero-icon"></span>
+</div>
 <div class="w-full min-w-0 mx-auto">
-  {%- if pagename != master_doc and theme_show_breadcrumbs|tobool %}
-  {%- include "breadcrumbs.html" %}
-  {%- endif %}
   <div id="content" role="main">
     <div id="fallback" class="my-8 text-sm text-red-700">
       <script>document.querySelector("#fallback").style.display = "none"</script>
