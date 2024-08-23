@@ -1,4 +1,4 @@
-{# Header template for Coeus Sphinx Theme. #}
+{# Navbar template for Coeus Sphinx Theme. #}
 
 <header
   class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur">
@@ -11,21 +11,20 @@
         {%- if logo_url %}
         <img height="24" width="24" class="mr-2 dark:invert" src="{{ logo_url }}" alt="Logo" />
         {%- endif -%}
-        {%- if theme_dark_mode_logo and not logo_url %}
-        <img width="24" height="24" class="mr-2 hidden dark:block"
-          src="{{ pathto('_static/' + theme_dark_mode_logo, 1) }}" alt="Logo" />
-        {%- endif -%}
-        {%- if theme_light_mode_logo and not logo_url %}
-        <img width="24" height="24" class="mr-2 dark:hidden" src="{{ pathto('_static/' + theme_light_mode_logo, 1) }}"
+        {%- if html_logo and not logo_url %}
+        <img width="24" height="24" class="mr-2 hidden dark:block" src="{{ pathto('_static/' + html_logo, 1) }}"
           alt="Logo" />
+        {%- endif -%}
+        {%- if html_logo and not logo_url %}
+        <img width="24" height="24" class="mr-2 dark:hidden" src="{{ pathto('_static/' + html_logo, 1) }}" alt="Logo" />
         {%- endif -%}
         <span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">{{ docstitle }}</span>
       </a>
       {%- endblock header_logo %}
       {%- block header_main_nav %}
-      {%- if theme_navbar_links|tobool -%}
+      {%- if navbar_links|tobool -%}
       <nav class="flex items-center space-x-6 text-sm font-medium">
-        {%- for text,url in theme_navbar_links.items() %}
+        {%- for text,url in navbar_links.items() %}
         {%- set _active = "text-foreground" if pagename in url else "text-foreground/60" -%}
         {%- if url.startswith("http") %}
         <a href="{{ url }}" class="transition-colors hover:text-foreground/80 {{ _active }}" rel="noopener nofollow">{{

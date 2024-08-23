@@ -1,8 +1,8 @@
-{# Sidebar navigation links template for Coeus Sphinx Theme. #}
+{# Navigation bar links template for Coeus Sphinx Theme. #}
 
-{%- if theme_navbar_links|tobool -%}
+{%- if navbar_links|tobool -%}
 <nav class="flex md:hidden flex-col font-medium mt-4">
-  {%- for text,url in theme_navbar_links.items() %}
+  {%- for text,url in navbar_links.items() %}
   {%- if url.startswith("http") %}
   <a href="{{ url }}" rel="nofollow noopener">{{ text }}</a>
   {%- else %}
