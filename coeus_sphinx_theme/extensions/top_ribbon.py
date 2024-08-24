@@ -4,7 +4,7 @@ Coeus Sphinx Theme Top Ribbon Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Tuesday, August 13 2024
-Last updated on: Tuesday, August 13 2024
+Last updated on: Thursday, August 15 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add an top_ribbon banner to
@@ -89,20 +89,22 @@ def depart(self: HTMLTranslator, node: TopRibbonNode) -> None:
     pass
 
 
-def add_top_ribbon_banner(
+def html_page_context(
     app: Sphinx,
     pagename: str,
     templatename: str,
     context: dict[str, t.Any],
     doctree: Node,
 ) -> None:
-    """Register function for Jinja2 context."""
+    """Register function for Coeus' HTML context."""
+    if not hasattr(app.builder.env, "top_ribbon"):
+        return
     if top_ribbon := app.builder.env.top_ribbon.get(pagename, ""):
         context["top_ribbon"] = top_ribbon
 
 
 name: t.Final[str] = "top-ribbon"
 node = TopRibbonNode
-klass = TopRibbonDirective
+directive = TopRibbonDirective
 add_html_context: bool = True
-callback = add_top_ribbon_banner
+callback = html_page_context

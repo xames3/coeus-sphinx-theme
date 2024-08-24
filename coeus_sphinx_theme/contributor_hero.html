@@ -6,51 +6,32 @@ html_coeus_contributor_hero_timestamp %}
     <p class="contributor-hero-timestamp">{{ html_coeus_contributor_hero_timestamp }}</p>
     <div class="contributor-hero-publisher py-2">
         {% if html_coeus_contributor_hero_contributors|length == 1 %}
-        <span>Published by <a
+        <span>{{ html_coeus_contributor_hero_prefix }} <a
                 href="mailto:{{ html_coeus_contributor_hero_contributors[0].email }}?subject={{ html_coeus_contributor_hero_email_subject }}"
                 aria-label="Ask {{
-                html_coeus_contributor_hero_contributors[0].name }} via email">{{
-                html_coeus_contributor_hero_contributors[0].name }}</a></span>
+                html_coeus_contributor_hero_contributors[0].name|safe }} via email">{{
+                html_coeus_contributor_hero_contributors[0].name|safe }}</a></span>
         {% elif html_coeus_contributor_hero_contributors|length == 2 %}
-        <span>Published by <a
+        <span>{{ html_coeus_contributor_hero_prefix }} <a
                 href="mailto:{{ html_coeus_contributor_hero_contributors[0].email }}?subject={{ html_coeus_contributor_hero_email_subject }}"
                 aria-label="Ask author via email">{{
-                html_coeus_contributor_hero_contributors[0].name }}</a> and <a
+                html_coeus_contributor_hero_contributors[0].name|safe }}</a> and <a
                 href="mailto:{{ html_coeus_contributor_hero_contributors[1].email }}?subject={{ html_coeus_contributor_hero_email_subject }}"
                 aria-label="Ask author via email">
-                {{ html_coeus_contributor_hero_contributors[1].name }}</a></span>
+                {{ html_coeus_contributor_hero_contributors[1].name|safe }}</a></span>
         {% else %}
-        <span>Published by <a
+        <span>{{ html_coeus_contributor_hero_prefix }} <a
                 href="mailto:{{ html_coeus_contributor_hero_contributors[0].email }}?subject={{ html_coeus_contributor_hero_email_subject }}"
                 aria-label="Ask author via email">{{
-                html_coeus_contributor_hero_contributors[0].name }}</a>, <a
+                html_coeus_contributor_hero_contributors[0].name|safe }}</a>, <a
                 href="mailto:{{ html_coeus_contributor_hero_contributors[1].email }}?subject={{ html_coeus_contributor_hero_email_subject }}"
                 aria-label="Ask author via email">{{
-                html_coeus_contributor_hero_contributors[1].name }}</a> and <a href="#" data-bs-toggle="modal"
+                html_coeus_contributor_hero_contributors[1].name|safe }}</a> and <a href="#" data-bs-toggle="modal"
                 data-bs-target="#html_coeus_contributor_hero_contributorsModal">{{
                 html_coeus_contributor_hero_contributors|length - html_coeus_contributor_hero_contributors_limit }}</a>
             other {% if html_coeus_contributor_hero_contributors|length - html_coeus_contributor_hero_contributors_limit
             == 1 %} contributor {% else %}
             contributors {% endif %}
-            <!-- <div class="modal fade" id="html_coeus_contributor_hero_contributorsModal" tabindex="-1"
-                aria-labelledby="html_coeus_contributor_hero_contributorsModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="html_coeus_contributor_hero_contributorsModalLabel">Contributors
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <ul>
-                                {% for contributor in html_coeus_contributor_hero_contributors[2:] %}
-                                <li><a href="mailto:{{ contributor.email }}?subject={{ html_coeus_contributor_hero_email_subject }}" aria-label="Ask author via email">{{ contributor.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             {% endif %}
         </span>
         <div class="contributor-hero-socials">

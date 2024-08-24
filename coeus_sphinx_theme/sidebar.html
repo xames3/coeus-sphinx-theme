@@ -1,6 +1,6 @@
 {# Sidebar template for Coeus Sphinx Theme. #}
 
-{%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] -%}
+{%- set only_main_nav = sidebars == ["navbar_links.html"] -%}
 {%- if not only_main_nav and sidebars|length > 0 -%}
 <aside id="left-sidebar"
   class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-1000 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky"
@@ -14,13 +14,12 @@
       {%- if logo_url %}
       <img height="16" width="16" class="mr-2 dark:invert" src="{{ logo_url }}" alt="Logo" />
       {%- endif -%}
-      {%- if theme_dark_mode_logo and not logo_url %}
-      <img width="16" height="16" class="mr-2 hidden dark:block"
-        src="{{ pathto('_static/' + theme_dark_mode_logo, 1) }}" alt="Logo" />
-      {%- endif -%}
-      {%- if theme_light_mode_logo and not logo_url %}
-      <img width="16" height="16" class="mr-2 dark:hidden" src="{{ pathto('_static/' + theme_light_mode_logo, 1) }}"
+      {%- if html_logo and not logo_url %}
+      <img width="16" height="16" class="mr-2 hidden dark:block" src="{{ pathto('_static/' + html_logo, 1) }}"
         alt="Logo" />
+      {%- endif -%}
+      {%- if html_logo and not logo_url %}
+      <img width="16" height="16" class="mr-2 dark:hidden" src="{{ pathto('_static/' + html_logo, 1) }}" alt="Logo" />
       {%- endif -%}
       <span class="font-bold text-clip whitespace-nowrap">{{ docstitle }}</span>
     </a>

@@ -4,7 +4,7 @@ Coeus Sphinx Theme Homelander Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Tuesday, August 13 2024
-Last updated on: Thursday, August 15 2024
+Last updated on: Friday, August 16 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 for a custom background of the landing page.
@@ -92,20 +92,20 @@ def depart(self: HTMLTranslator, node: HomelanderNode) -> None:
     pass
 
 
-def parse_and_load_homelander(
+def html_page_context(
     app: Sphinx,
     pagename: str,
     templatename: str,
     context: dict[str, t.Any],
     doctree: Node,
 ) -> None:
-    """Register function for Jinja2 context."""
+    """Register function for Coeus' HTML context."""
     if pagename == "landing-page":
         context["is_homelander"] = True
 
 
 name: t.Final[str] = "homelander"
 node = HomelanderNode
-klass = HomelanderDirective
+directive = HomelanderDirective
 add_html_context: bool = True
-callback = parse_and_load_homelander
+callback = html_page_context

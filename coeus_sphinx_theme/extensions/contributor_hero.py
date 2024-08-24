@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributor Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Thursday, August 15 2024
+Last updated on: Friday, August 16 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -26,7 +26,7 @@ and contributors when building the documentation.
 from __future__ import annotations
 
 import ast
-import os
+import os.path as p
 import typing as t
 
 import jinja2 as j2
@@ -40,8 +40,9 @@ from sphinx.writers.html import HTMLTranslator
 
 logger = logging.getLogger(__name__)
 
-file = os.path.basename(__file__).replace(".py", ".html")
-loader = j2.FileSystemLoader(os.path.realpath("../coeus_sphinx_theme/"))
+file = p.basename(__file__).replace(".py", ".html")
+path = p.abspath(p.join(p.dirname(__file__), ".."))
+loader = j2.FileSystemLoader(path)
 template = j2.Environment(loader=loader).get_template(file)
 
 
@@ -81,6 +82,7 @@ class ContributorHeroDirective(Directive):
         "contributors": directives.unchanged_required,
         "limit": directives.unchanged,
         "location": directives.unchanged_required,
+        "prefix": directives.unchanged,
         "timestamp": directives.unchanged_required,
     }
 
@@ -104,12 +106,15 @@ class ContributorHeroDirective(Directive):
 def visit(self: HTMLTranslator, node: ContributorHeroNode) -> None:
     """Node visitor function which maps the node element."""
     contributors = ast.literal_eval(node.attributes["contributors"])
-    article = list(filter(lambda x: x, node.document.astext().splitlines()))[0]
+    titles = node.document.asdom().getElementsByTagName("title")
+    article = titles[0].firstChild.nodeValue
     subject = f"[{self.config.html_coeus_title}] {article}"
     limit = node.attributes.get("limit", 2)
+    prefix = node.attributes.get("prefix", "Published by")
     html_src = template.render(
         html_coeus_contributor_hero_contributors=contributors,
         html_coeus_contributor_hero_contributors_limit=limit,
+        html_coeus_contributor_hero_prefix=prefix,
         html_coeus_contributor_hero_location=node.attributes["location"],
         html_coeus_contributor_hero_timestamp=node.attributes["timestamp"],
         html_coeus_contributor_hero_email=self.config.html_coeus_email,
@@ -125,12 +130,13 @@ def depart(self: HTMLTranslator, node: ContributorHeroNode) -> None:
     pass
 
 
-def empty():
+def html_page_context() -> None:
+    """Register function for Coeus' HTML context."""
     pass
 
 
 name: t.Final[str] = "contributor-hero"
 node = ContributorHeroNode
-klass = ContributorHeroDirective
+directive = ContributorHeroDirective
 add_html_context: bool = False
-callback = empty
+callback = html_page_context

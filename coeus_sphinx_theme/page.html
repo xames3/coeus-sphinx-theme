@@ -2,7 +2,7 @@
 
 {%- extends "layout.html" -%}
 {%- block body %}
-{%- set only_main_nav = sidebars == ["sidebar_navbar_links.html"] %}
+{%- set only_main_nav = sidebars == ["navbar_links.html"] %}
 {%- if not only_main_nav and sidebars|length > 0 %}
 <div class="w-full min-w-0 mx-auto">
   {%- else %}
@@ -13,8 +13,13 @@
     {%- include "breadcrumbs.html" %}
     {%- endif %}
     <div id="content" role="main">
-      <span class="documentation-hero-type">{{ html_coeus_documentation_hero_type }}</span>
+      {% set type = html_coeus_documentation_hero_type if html_coeus_documentation_hero_type != "None" else "&#8203;" %}
+      <span class="documentation-hero-type">{{ type }}</span>
       {{ body }}
     </div>
   </div>
+  {%- block body_after %}{%- endblock body_after -%}
+  {%- if show_previous_next_pages|tobool %}
+  {%- include "previous_next.html" %}
+  {%- endif %}
   {%- endblock body %}

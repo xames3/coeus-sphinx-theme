@@ -4,7 +4,7 @@ Coeus Sphinx Theme Documentation Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Monday, August 12 2024
-Last updated on: Thursday, August 15 2024
+Last updated on: Friday, August 16 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add an icon or graphic, a
@@ -51,8 +51,6 @@ from sphinx.util import logging
 from sphinx.writers.html import HTMLTranslator
 
 logger = logging.getLogger(__name__)
-
-available_types: tuple[str, ...] = ("Article", "Guide", "Changelog")
 
 
 class DocumentationHero(t.NamedTuple):
@@ -104,14 +102,14 @@ class DocumentationHeroDirective(Directive):
         was encountered.
 
         :return: List of Docutils node for custom directive.
+
+        .. versionchanged:: 1.0.1
+
+            Available types are deprecated. None type will be rendered
+            as an empty string in HTML.
         """
         env = self.state.document.settings.env
         node = DocumentationHeroNode("\n".join(self.content), **self.options)
-        if node.attributes["type"] not in available_types:
-            raise ValueError(
-                "Invalid document type. "
-                f"Either {', '.join(available_types)} are allowed"
-            )
         if not hasattr(env, "documentation_hero"):
             env.documentation_hero = {}
         env.documentation_hero[env.docname] = DocumentationHero(
@@ -148,15 +146,17 @@ def depart(self: HTMLTranslator, node: DocumentationHeroNode) -> None:
     pass
 
 
-def parse_and_load_documentation_hero(
+def html_page_context(
     app: Sphinx,
     pagename: str,
     templatename: str,
     context: dict[str, t.Any],
     doctree: Node,
 ) -> None:
-    """Register function for Jinja2 context."""
+    """Register function for Coeus' HTML context."""
     builder = app.builder.env
+    if not hasattr(builder, "documentation_hero"):
+        return
     if attr := builder.documentation_hero.get(pagename, ""):
         context["html_coeus_documentation_hero_gradient"] = attr.gradient
         context["html_coeus_documentation_hero_icon"] = attr.icon
@@ -166,6 +166,6 @@ def parse_and_load_documentation_hero(
 
 name: t.Final[str] = "documentation-hero"
 node = DocumentationHeroNode
-klass = DocumentationHeroDirective
+directive = DocumentationHeroDirective
 add_html_context: bool = True
-callback = parse_and_load_documentation_hero
+callback = html_page_context

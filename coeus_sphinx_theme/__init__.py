@@ -15,7 +15,7 @@ reading and writing during documentation generation.
 
 .. versionadded:: 2024.08.23
 
-    [1] Support for embedding YouTube videos anda Glossary table via
+    [1] Support for embedding YouTube videos and Glossary table via
         custom directives.
     [2] Support for native JQuery and DataTableJS via the
         `sphinx_datatables` and `sphinxcontrib.jquery` extensions as
