@@ -21,11 +21,12 @@ authors and contributors when building the documentation.
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
     for more information.
+
+.. versionadded:: 2024.08.23
 """
 
 from __future__ import annotations
 
-import os.path as p
 import typing as t
 
 import jinja2 as j2
@@ -35,7 +36,6 @@ from docutils.nodes import Node
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from docutils.parsers.rst import roles
-from sphinx.application import Sphinx
 from sphinx.util import logging
 from sphinx.writers.html import HTMLTranslator
 
@@ -44,10 +44,10 @@ logger = logging.getLogger(__name__)
 template: t.Final[j2.Template] = j2.Template(
     """\
 <div class="youtube-video-container"><iframe width="{{ width }}"
-height="{{ height }}" src="{{ url }}?controls=1&modestbranding=1" title="YouTube video player"
-frameborder="0" allow="accelerometer; clipboard-write;
-encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe></div>
+height="{{ height }}" src="{{ url }}?controls=1&modestbranding=1"
+title="YouTube video player" frameborder="0" allow="accelerometer;
+clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+allowfullscreen></iframe></div>
 """
 )
 
@@ -74,8 +74,8 @@ class YouTubeEmbedDirective(Directive):
     :var option_spec: A mapping of option specificiations.
     """
 
-    has_content: bool = True
-    final_argument_whitespace: bool = True
+    has_content: bool = True  # type: ignore[misc]
+    final_argument_whitespace: bool = True  # type: ignore[misc]
     option_spec = {
         "width": directives.unchanged,
         "height": directives.unchanged,

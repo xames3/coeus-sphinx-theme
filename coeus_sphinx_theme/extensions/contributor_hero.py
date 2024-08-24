@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributor Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Friday, August 16 2024
+Last updated on: Friday, August 23 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -21,6 +21,8 @@ and contributors when building the documentation.
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
     for more information.
+
+.. versionchanged:: 2024.08.23
 """
 
 from __future__ import annotations
@@ -74,10 +76,12 @@ class ContributorHeroDirective(Directive):
     :var final_argument_whitespace: A boolean flag, may the final argument
         contain whitespace, set to `True`.
     :var option_spec: A mapping of option specificiations.
+
+    .. versionchanged:: 2024.08.23
     """
 
-    has_content: bool = True
-    final_argument_whitespace: bool = True
+    has_content: bool = True  # type: ignore[misc]
+    final_argument_whitespace: bool = True  # type: ignore[misc]
     option_spec = {
         "contributors": directives.unchanged_required,
         "limit": directives.unchanged,
@@ -106,7 +110,8 @@ class ContributorHeroDirective(Directive):
 def visit(self: HTMLTranslator, node: ContributorHeroNode) -> None:
     """Node visitor function which maps the node element."""
     contributors = ast.literal_eval(node.attributes["contributors"])
-    titles = node.document.asdom().getElementsByTagName("title")
+    if node.document:
+        titles = node.document.asdom().getElementsByTagName("title")
     article = titles[0].firstChild.nodeValue
     subject = f"[{self.config.html_coeus_title}] {article}"
     limit = node.attributes.get("limit", 2)

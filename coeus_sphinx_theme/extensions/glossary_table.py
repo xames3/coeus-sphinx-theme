@@ -21,6 +21,8 @@ authors and contributors when building the documentation.
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
     for more information.
+
+.. versionadded:: 2024.08.23
 """
 
 from __future__ import annotations
@@ -31,6 +33,7 @@ from docutils import nodes
 from docutils.nodes import Element
 from docutils.nodes import Node
 from docutils.parsers.rst import Directive
+from docutils.statemachine import StringList
 from sphinx.util import logging
 from sphinx.writers.html import HTMLTranslator
 
@@ -58,8 +61,8 @@ class GlossaryTableDirective(Directive):
         contain whitespace, set to `True`.
     """
 
-    has_content: bool = True
-    final_argument_whitespace: bool = True
+    has_content: bool = True  # type: ignore[misc]
+    final_argument_whitespace: bool = True  # type: ignore[misc]
 
     def run(self) -> list[Node]:
         """Create node from the reStructuredText source.
@@ -76,7 +79,7 @@ class GlossaryTableDirective(Directive):
         node += self.build_table(content)
         return [node]
 
-    def parse_content(self, content: list[str]) -> list[tuple[str, str]]:
+    def parse_content(self, content: StringList) -> list[tuple[str, str]]:
         """Parse the directive and extract the glossary content."""
         glossary: list[tuple[str, str]] = []
         term: str | None = None

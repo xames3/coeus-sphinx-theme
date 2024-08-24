@@ -4,7 +4,7 @@ Coeus Sphinx Theme Documentation Hero Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Monday, August 12 2024
-Last updated on: Friday, August 16 2024
+Last updated on: Friday, August 23 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add an icon or graphic, a
@@ -35,6 +35,8 @@ and contributors when building the documentation.
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
     for more information.
+
+.. versionchanged:: 2024.08.23
 """
 
 from __future__ import annotations
@@ -82,10 +84,12 @@ class DocumentationHeroDirective(Directive):
     :var final_argument_whitespace: A boolean flag, may the final argument
         contain whitespace, set to `True`.
     :var option_spec: A mapping of option specificiations.
+
+    .. versionchanged:: 2024.08.23
     """
 
-    has_content: bool = True
-    final_argument_whitespace: bool = True
+    has_content: bool = True  # type: ignore[misc]
+    final_argument_whitespace: bool = True  # type: ignore[misc]
     option_spec = {
         "gradient": directives.unchanged_required,
         "icon": directives.unchanged_required,
@@ -103,7 +107,7 @@ class DocumentationHeroDirective(Directive):
 
         :return: List of Docutils node for custom directive.
 
-        .. versionchanged:: 1.0.1
+        .. versionchanged:: 2024.08.23
 
             Available types are deprecated. None type will be rendered
             as an empty string in HTML.

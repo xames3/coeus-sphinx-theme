@@ -146,8 +146,8 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "tags_intro_text": "html_coeus_tags_prefix",
         "tags_page_title": "html_coeus_tags_page_title",
     }
-    for default, new in coeus_theme_defaults.items():
-        setattr(config, default, getattr(config, new))
+    for default, new in coeus_theme_defaults.items():  # type: ignore
+        setattr(config, default, getattr(config, new))  # type: ignore
     app.add_html_theme(name=theme_name, theme_path=here)
     app.add_css_file("theme.css", priority=900)
     app.add_js_file("theme.js", loading_method="defer")

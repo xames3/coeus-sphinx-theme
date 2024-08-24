@@ -4,7 +4,7 @@ Coeus Sphinx Theme Homelander Directive
 
 Author: Akshay "XA" Mestry <xa@mes3.dev>
 Created on: Tuesday, August 13 2024
-Last updated on: Friday, August 16 2024
+Last updated on: Friday, August 23 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 for a custom background of the landing page.
@@ -21,6 +21,8 @@ for a custom background of the landing page.
     hence the directive may not be available or may be implemented
     differently for different themes. Please consult the documentation
     for more information.
+
+.. versionchanged:: 2024.08.23
 """
 
 from __future__ import annotations
@@ -60,8 +62,8 @@ class HomelanderDirective(Directive):
     :var option_spec: A mapping of option specificiations.
     """
 
-    has_content: bool = True
-    final_argument_whitespace: bool = True
+    has_content: bool = True  # type: ignore[misc]
+    final_argument_whitespace: bool = True  # type: ignore[misc]
     option_spec = {
         "type": directives.unchanged_required,
         "icon": directives.unchanged_required,
