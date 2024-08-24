@@ -1,4 +1,3 @@
-black
-isort
-mypy
 sphinx
+sphinx_design
+sphinx_tags
