@@ -1,0 +1,23 @@
+<!--
+Coeus Sphinx Theme YouTube Video Template
+=========================================
+
+Author: Akshay "XA" Mestry <xa@mes3.dev>
+Created on: Saturday, August 24 2024
+Last updated on: Sunday, August 25 2024
+-->
+{% block youtube_video_player %}
+    {%- if title %}
+        <h3 style="margin-top: 2.5rem;">{{ title }}</h3>
+    {%- endif -%}
+    <div class="youtube-video-container">
+        <iframe width="auto"
+                height="auto"
+                src="{{ url }}&controls=1&modestbranding=1"
+                title="YouTube Video Player"
+                frameborder="0"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+        </iframe>
+    </div>
+{% endblock youtube_video_player %}
