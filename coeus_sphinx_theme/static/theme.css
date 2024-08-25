@@ -24,11 +24,13 @@ html {
     -o-tab-size: 4;
     tab-size: 4;
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
 }
 
 body {
     line-height: inherit;
     margin: 0;
+    scroll-snap-type: y mandatory;
 }
 
 hr {
@@ -180,6 +182,13 @@ hr,
 p,
 pre {
     margin: 0;
+}
+
+h1,
+h2,
+h3 {
+    scroll-snap-align: start;
+    scroll-margin-top: 3.5rem;
 }
 
 fieldset {
@@ -565,7 +574,7 @@ video {
     width: 30ch;
     font-weight: 700;
     line-height: 2.5rem;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -581,7 +590,7 @@ video {
 #content h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    line-height: 1rem;
+    line-height: 1.75rem;
     margin-bottom: 1.25rem;
 }
 
@@ -594,6 +603,8 @@ video {
 
 #content section {
     scroll-margin: 5rem;
+    scroll-snap-align: start;
+    scroll-margin-top: 3.5rem;
 }
 
 #content section>p {
@@ -786,10 +797,14 @@ blockquote .attribution {
     margin-top: .5rem;
 }
 
+table:first-of-type {
+    display: none;
+}
+
 table {
     font-size: 1.1rem;
     line-height: 1.5rem;
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     width: 100%;
     border-collapse: collapse;
 }
@@ -845,7 +860,9 @@ table tbody td:not(:first-child) {
     margin-top: 1.5rem;
 }
 
-.footnote:last-child {}
+.footnote:last-child {
+    margin-bottom: 2.5rem;
+}
 
 .footnote>.label {
     margin-right: 1rem;
