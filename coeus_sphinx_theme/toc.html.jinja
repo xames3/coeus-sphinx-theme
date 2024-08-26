@@ -1,0 +1,17 @@
+<!--
+Coeus Sphinx Theme Sidebar ToC Template
+=======================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Sunday, August 25 2024
+Last updated on: Sunday, August 25 2024
+-->
+{% block sidebar_table_of_content %}
+    <nav class="table w-full min-w-full my-6 lg:my-8">
+        {%- if theme_globaltoc_includehidden|tobool %}
+            {{ toctree(titles_only=false, collapse=false, includehidden=false) }}
+        {%- else %}
+            {{ toctree(titles_only=false, collapse=false, includehidden=true) }}
+        {%- endif %}
+    </nav>
+{% endblock sidebar_table_of_content %}

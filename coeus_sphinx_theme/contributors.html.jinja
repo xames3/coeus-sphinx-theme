@@ -1,0 +1,41 @@
+<!--
+Coeus Sphinx Theme Contributors Template
+========================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Sunday, August 25 2024
+Last updated on: Sunday, August 25 2024
+-->
+{% block contributors_metadata %}
+    {%- if people %}
+        {%- set prefix = prefix|d("Published by") -%}
+        {%- set names = people | map(attribute="name") | list -%}
+        {%- set emails = people | map(attribute="email") | list -%}
+        {%- set contributors = names | length -%}
+        {%- set limit = limit if limit and limit > 1 and limit - 1 < contributors else 2 -%}
+        <div class="container flex-1 px-0">
+            <p class="contributors-timestamp">{{ timestamp|d("Updated Today") }}</p>
+            <div class="contributor-publisher py-2">
+                {% if contributors == 1 %}
+                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a></span>
+                {% elif contributors == 2 %}
+                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a> and <a href="mailto:{{ emails[1] }}?subject={{ subject }}" aria-label="Ask {{ names[1]|safe }} via email">{{ names[1]|safe }}</a></span>
+                {% else %}
+                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask author via email">{{ names[0]|safe }}</a>, <a href="mailto:{{ emails[1] }}?subject={{ subject }}" aria-label="Ask author via email">{{ names[1]|safe }}</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#peopleModal">{{ contributors - limit }}</a> other
+                        {% if contributors - limit == 1 %}
+                            contributor
+                        {% else %}
+                            contributors
+                        {% endif %}
+                    </span>
+                {% endif %}
+                <div class="project-socials">
+                    <a class="fa-brands fa-x-twitter font-medium" href="{{ twitter }}" {% if twitter !='#' %}target="_blank"{% endif %}aria-label="Share this article via X (opens a new tab)"></a>
+                    <a class="fa-brands fa-github" href="{{ github }}" {% if github !='#' %}target="_blank"{% endif %}aria-label="Check out source on GitHub"></a>
+                    <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}" aria-label="Ask author via email" style="font-weight: 900;"></a>
+                    <a class="fa-solid fa-link copylink" href="#" @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied to clipboard'); setTimeout(() => $el.setAttribute('data-tooltip', 'Copy article URL to clipboard'), 2000)" aria-label="Copy article URL to clipboard" style="font-weight: 900;"></a>
+                </div>
+            </div>
+        </div>
+    {%- endif %}
+{% endblock contributors_metadata %}
