@@ -2,16 +2,13 @@
 Coeus Sphinx Theme
 ==================
 
-Author: Akshay "XA" Mestry <xa@mes3.dev>
+Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Friday, August 23 2024
+Last updated on: Monday, August 26 2024
 
-This module defines the Coeus Sphinx Theme, providing utilities and
-configuration for integrating a custom theme into Sphinx documentation.
-
-The Coeus Sphinx Theme ensures that assets are hashed for cache busting,
-and integrates seamlessly with Sphinx's HTML output, enabling parallel
-reading and writing during documentation generation.
+This module defines the extensions for Coeus Sphinx Theme, providing
+utilities and configuration for integrating a custom theme into Sphinx
+documentation.
 
 .. versionadded:: 2024.08.23
 
@@ -27,6 +24,45 @@ reading and writing during documentation generation.
     [1] Adopting year-based versioning.
     [2] Major refactor to conform to the newest changes.
     [3] `module.klass` is now `module.directive`.
+
+.. versionadded:: 2024.08.30
+
+    [1] This update adds support for fetching the YouTube video title
+        automatically using `pytube` module.
+    [2] The directive now supports adding a custom title to the YouTube
+        video using the `title` option.
+
+.. versionchanged:: 2024.08.30
+
+    [1] The `embed_youtube` extension is now `youtube_video`, which
+        made a lot of sense when we noticed the use of the extension in
+        retrospective usage.
+    [2] The `documentation_hero` extension is now `title_hero`, which
+        made a lot of sense when we noticed the use of the extension in
+        retrospective usage.
+    [3] The `glossary_table` extension will now considers `term` as
+        the content which begins with `*` rather than something ending
+        with `::`. Rest of the directive's functionality stays the same.
+    [4] The `contributor_hero` extension is now `contributors`, which
+        made a lot of sense when we noticed the use of the extension in
+        retrospective usage.
+    [5] The `top_ribbon` extension is now `announcement`, which made a
+        lot of sense when we noticed the use of the extension in
+        retrospective usage.
+    [6] The extensions have been significantly refactored to minimize
+        code duplication and the docstrings now justify the code that
+        they represent. This is a big change over the previous
+        extension-management capabilties of Coeus Sphinx Theme.
+    [7] The extensions now use a `Jinja2` template rather than using
+        `Jinja2` string rendering. This is just for the convenience and
+        for future enhancements.
+    [8] The `ClassVar` update now conforms to the `mypy` restrictions.
+
+.. deprecated:: 2024.08.30
+
+    [1] The `controls`, `modestbranding`, `color`, `width` and `height`
+        options for the `youtube_video` directive have been deprecated
+        until further exploration.
 """
 
 from __future__ import annotations
@@ -35,29 +71,25 @@ import os
 import types
 import typing as t
 
-from docutils.nodes import Node
-from sphinx.application import Sphinx
-from sphinx.util import logging
-
-from coeus_sphinx_theme.extensions import contributor_hero
-from coeus_sphinx_theme.extensions import documentation_hero
-from coeus_sphinx_theme.extensions import embed_youtube
+from coeus_sphinx_theme.extensions import announcement
+from coeus_sphinx_theme.extensions import contributors
 from coeus_sphinx_theme.extensions import glossary_table
-from coeus_sphinx_theme.extensions import homelander
-from coeus_sphinx_theme.extensions import top_ribbon
+from coeus_sphinx_theme.extensions import title_hero
+from coeus_sphinx_theme.extensions import youtube_video
 
-logger = logging.getLogger(__name__)
+if t.TYPE_CHECKING:
+    import docutils.nodes as nodes
+    from sphinx.application import Sphinx
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
-theme_version: str = "2024.08.23"
+theme_version: str = "2024.08.30"
 
 modules: t.Sequence[types.ModuleType] = (
-    contributor_hero,
-    documentation_hero,
-    embed_youtube,
+    announcement,
+    contributors,
     glossary_table,
-    homelander,
-    top_ribbon,
+    title_hero,
+    youtube_video,
 )
 
 natively_supported_extensions: t.Sequence[str] = (
@@ -67,24 +99,48 @@ natively_supported_extensions: t.Sequence[str] = (
     "sphinxcontrib.jquery",
 )
 
+coeus_theme_default_mapping: dict[str, str] = {
+    "html_baseurl": "html_coeus_documentation",
+    "html_favicon": "html_coeus_favicon",
+    "html_logo": "html_coeus_logo",
+    "html_permalinks_icon": "html_coeus_permalinks_icon",
+    "html_theme_options": "html_coeus_theme_options",
+    "html_title": "html_coeus_title",
+    "tags_create_badges": "html_coeus_tags_create_badges",
+    "tags_create_tags": "html_coeus_tags_create_tags",
+    "tags_intro_text": "html_coeus_tags_prefix",
+    "tags_page_title": "html_coeus_tags_page_title",
+}
+
 
 def update_html_context(
     app: Sphinx,
     pagename: str,
     templatename: str,
     context: dict[str, t.Any],
-    doctree: Node,
+    doctree: nodes.Node,
 ) -> None:
-    """Register function for Coeus' HTML context.
+    """Register theming options for Coeus' HTML context.
 
     .. versionadded:: 2024.08.23
 
         [1] Support Coeus specific HTML theming options.
+
+    .. versionchanged:: 2024.08.30
+
+        [1] Theming options are now directly merged with the `context`.
     """
-    coeus_theme_options = app.config.html_coeus_theme_options
-    available_options = ("navbar_links", "show_previous_next_pages")
-    for option in available_options:
-        context[option] = coeus_theme_options.get(option)
+    context.update(app.config.html_coeus_theme_options)
+
+
+def update_node(module: types.ModuleType) -> type[nodes.Element]:
+    """Update `__name__` attribute of the module's node.
+
+    .. versionadded:: 2024.08.30
+    """
+    node = module.node
+    node.__name__ = "".join(_.capitalize() for _ in module.name.split("-"))
+    return node
 
 
 def setup(app: Sphinx) -> dict[str, t.Any]:
@@ -105,6 +161,10 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     .. versionchanged:: 2024.08.23
 
         [1] `module.klass` is now `module.directive`.
+
+    .. versionchanged:: 2024.08.30
+
+        [1] The extension's node object's `__name__` is now updated.
     """
     here = os.path.abspath(os.path.dirname(__file__))
     for extension in natively_supported_extensions:
@@ -130,35 +190,20 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "html_coeus_theme_options": (config.html_theme_options, dict),
         "html_coeus_title": (config.html_title or config.project, tuple),
         "html_coeus_twitter": ("#", str),
+        "html_coeus_socials": ({}, dict),
         "html_coeus_version": (config.release, str),
     }
-    for name, default in coeus_theme_configurations.items():
-        app.add_config_value(name, default[0], "html", default[1])
-    coeus_theme_defaults: dict[str, str] = {
-        "html_baseurl": "html_coeus_documentation",
-        "html_favicon": "html_coeus_favicon",
-        "html_logo": "html_coeus_logo",
-        "html_permalinks_icon": "html_coeus_permalinks_icon",
-        "html_theme_options": "html_coeus_theme_options",
-        "html_title": "html_coeus_title",
-        "tags_create_badges": "html_coeus_tags_create_badges",
-        "tags_create_tags": "html_coeus_tags_create_tags",
-        "tags_intro_text": "html_coeus_tags_prefix",
-        "tags_page_title": "html_coeus_tags_page_title",
-    }
-    for default, new in coeus_theme_defaults.items():  # type: ignore
-        setattr(config, default, getattr(config, new))  # type: ignore
+    for name, (default, types) in coeus_theme_configurations.items():
+        app.add_config_value(name, default, "html", types)
+    for default, new in coeus_theme_default_mapping.items():
+        setattr(config, default, getattr(config, new))
     app.add_html_theme(name=theme_name, theme_path=here)
     app.add_css_file("theme.css", priority=900)
     app.add_js_file("theme.js", loading_method="defer")
-    for module in modules:
-        app.add_node(module.node, html=(module.visit, module.depart))
-        app.add_directive(module.name, module.directive)
-        if module.add_html_context:
-            app.connect("html-page-context", module.html_page_context)
     app.connect("html-page-context", update_html_context)
-    return {
-        "version": theme_version,
-        "parallel_read_safe": True,
-        "parallel_write_safe": True,
-    }
+    for module in modules:
+        app.add_node(update_node(module), html=(module.visit, module.depart))
+        app.add_directive(module.name, module.directive)
+        if hasattr(module, "html_page_context"):
+            app.connect("html-page-context", module.html_page_context)
+    return {"parallel_read_safe": True, "parallel_write_safe": True}

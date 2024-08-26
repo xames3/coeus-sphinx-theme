@@ -1,0 +1,21 @@
+<!--
+Coeus Sphinx Theme Navigation Bar Template
+==========================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Monday, August 26 2024
+Last updated on: Monday, August 26 2024
+-->
+{% block navigation_bar_links %}
+    {%- if navbar_links|tobool -%}
+        <nav class="flex md:hidden flex-col font-medium mt-4">
+            {%- for text, url in navbar_links.items() %}
+                {%- if url.startswith("http") %}
+                    <a href="{{ url }}" rel="nofollow noopener">{{ text }}</a>
+                {%- else %}
+                    <a href="{{ pathto(url) }}">{{ text }}</a>
+                {%- endif %}
+            {%- endfor %}
+        </nav>
+    {%- endif %}
+{% endblock navigation_bar_links %}
