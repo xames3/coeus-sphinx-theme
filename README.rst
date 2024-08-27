@@ -1,11 +1,12 @@
-.. Author: Akshay "XA" Mestry <xa@mes3.dev>
+.. Author: Akshay Mestry <xa@mes3.dev>
 .. Created on: Sunday, August 11 2024
-.. Last updated on: Sunday, August 11 2024
+.. Last updated on: Friday, August 23 2024
 
 Coeus Sphinx Theme
 ==================
 
-.. figure:: ./assets/coeus-stable-diffusion.png
+.. figure:: https://raw.githubusercontent.com/xames3/coeus-sphinx-theme/main/
+    assets/coeus-stable-diffusion.png
     :alt: Coeus
 
 Hello hello!
