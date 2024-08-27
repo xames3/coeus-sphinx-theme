@@ -273,31 +273,37 @@ video {
     --destructive-foreground: #4a4a4a;
     --destructive: #aaa;
     --footer: #f5f5f7;
-    --foreground: #1d1d1f;
     --input: #e3e3e3;
-    --link: #06c;
     --muted-foreground: #707070;
     --muted: #4b4b4b;
     --popover-foreground: #1d1d1f;
     --popover: #fff;
-    --primary-foreground: #4a4a4a;
-    --primary: #1d1d1f;
+    --color-text-foreground: #4a4a4a;
+    --color-text: #1d1d1f;
     --radius: 15px;
     --ring: #344359;
+    --red: #ff453a;
+    --green: #34c759;
+    --blue: #007aff;
+    --orange: #ff9500;
+    --yellow: #ffcc00;
+    --pink: #ff375f;
+    --link: var(--blue);
+    --foreground: var(--color-text);
     --secondary-foreground: #1d1d1f;
     --secondary: #4b4b4b;
     --sidebar-muted-foreground: #7a7a7a;
-    --sidebar-foreground: #111;
+    --sidebar-foreground: var(--color-text);
     --sd-color-tabs-label-active: hsl(var(--foreground));
     --sd-color-tabs-underline-active: hsl(var(--accent-foreground));
     --sd-color-tabs-label-hover: hsl(var(--accent-foreground));
     --sd-color-tabs-overline: hsl(var(--border));
     --sd-color-tabs-underline: hsl(var(--border));
-    --sd-color-primary: #065ec6;
-    --sd-color-secondary: #d28314;
-    --sd-color-success: #5c800f;
+    --sd-color-primary: var(--blue);
+    --sd-color-secondary: var(--orange);
+    --sd-color-success: var(--green);
     --sd-color-info: #6e6e73;
-    --sd-color-danger: #bf4800;
+    --sd-color-danger: var(--red);
     --sd-bg-primary: var(--sd-color-primary);
     --sd-bg-secondary: var(--sd-color-secondary);
     --sd-bg-info: var(--sd-color-info);
@@ -323,8 +329,8 @@ video {
     --muted: #7896e3;
     --popover-foreground: #344359;
     --popover: #000;
-    --primary-foreground: #79a0fc;
-    --primary: #4a4a4a;
+    --color-text-foreground: #79a0fc;
+    --color-text: #4a4a4a;
     --radius: 15px;
     --ring: ##5789d4;
     --secondary-foreground: #4a4a4a;
@@ -476,7 +482,7 @@ video {
 }
 
 .announcement-wrapper {
-    background-color: #0071e3;
+    background-color: var(--blue);
     font-size: 1rem;
     font-weight: 400;
     color: #fff;
@@ -491,7 +497,7 @@ video {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
 }
 
 @-webkit-keyframes ribbon-drop {
@@ -558,7 +564,7 @@ video {
 .contributors-publisher {
     font-size: 1rem;
     margin-top: 0.25rem;
-    color: var(--primary);
+    color: var(--color-text);
     margin-bottom: 2rem;
 }
 
@@ -779,9 +785,9 @@ figure {
 }
 
 .title-image {
-    margin: 2.5rem 0 1rem 0 !important;
-    width: 40px;
-    height: 40px;
+    margin: 3rem 0 1rem 0 !important;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 blockquote {
@@ -892,14 +898,16 @@ table tbody td:not(:first-child) {
     border-color: var(--border);
     border-radius: .5rem;
     border-radius: var(--radius);
-    border-width: 1px;
     color: #0f1729;
     color: var(--foreground);
-    font-size: .875rem;
+    font-size: 1.1rem;
+    border-style: solid;
+    border-width: 2px;
     line-height: 1.25rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
+    text-align: start;
 }
 
 .admonition p:not(.admonition-title) {
@@ -938,7 +946,7 @@ table tbody td:not(:first-child) {
     line-height: 1.25rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     text-align: start;
 }
 
@@ -966,7 +974,7 @@ table tbody td:not(:first-child) {
     line-height: 1.25rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     text-align: start;
 }
 
@@ -995,7 +1003,7 @@ table tbody td:not(:first-child) {
     line-height: 1.25rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
     text-align: start;
 }
 
@@ -1681,7 +1689,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 
 #left-sidebar a>button:hover {
     background-color: rgba(15, 23, 41, .1);
-    background-color: var(--primary)/.1;
+    background-color: var(--color-text)/.1;
 }
 
 #left-sidebar a>button>svg {
@@ -3347,4 +3355,76 @@ details.sd-dropdown summary.sd-summary-title .sd-summary-state-marker svg {
     padding: 4px 6px;
     border-radius: 5px;
     margin-right: 0.3rem;
+}
+
+.scbs-carousel {
+    position: relative;
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+.scbs-carousel-indicators {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -1rem;
+    list-style: none;
+}
+
+.scbs-carousel-indicators [data-bs-target] {
+    box-sizing: content-box;
+    flex: 0 1 auto;
+    padding: 0;
+    text-indent: -999px;
+    cursor: pointer;
+    transition: background-color .6s ease;
+    width: 0.55rem;
+    height: 0.55rem;
+    background-color: #d2d2d7;
+    border-radius: 50%;
+    margin: 0 0.5rem;
+    cursor: pointer;
+}
+
+.scbs-carousel-indicators .scbs-active {
+    background-color: var(--color-text);
+}
+
+.scbs-carousel-control-prev {
+    left: -5rem;
+}
+
+.scbs-carousel-control-next,
+.scbs-carousel-control-prev {
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #e2e2e5;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.scbs-carousel-control-next {
+    right: -5rem;
+}
+
+.scbs-carousel-control-prev-icon {
+    width: 50%;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="%23636365" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>');
+}
+
+.scbs-carousel-control-next-icon {
+    width: 50%;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="%23636365" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>');
+}
+
+.scbs-carousel-item img {
+    border-radius: var(--radius);
 }

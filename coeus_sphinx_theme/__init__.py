@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Monday, August 26 2024
+Last updated on: Tuesday, August 27 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -31,6 +31,8 @@ documentation.
         automatically using `pytube` module.
     [2] The directive now supports adding a custom title to the YouTube
         video using the `title` option.
+    [3] Support for Bootstrap-native image carousels using the extension
+        like, `sphinx_carousel`.
 
 .. versionchanged:: 2024.08.30
 
@@ -93,6 +95,7 @@ modules: t.Sequence[types.ModuleType] = (
 )
 
 natively_supported_extensions: t.Sequence[str] = (
+    "sphinx_carousel.carousel",
     "sphinx_datatables",
     "sphinx_design",
     "sphinx_tags",
