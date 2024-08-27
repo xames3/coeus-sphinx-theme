@@ -10,7 +10,7 @@ readme = "README.rst"
 requires-python = ">=3.11"
 license.file = "LICENSE"
 authors = [
-  { name = 'Akshay "XA" Mestry', email = "xa@mes3.dev" }
+  { name = "Akshay Mestry", email = "xa@mes3.dev" }
 ]
 keywords = [ "coeus", "sphinx", "python", "nasa" ]
 classifiers = [
@@ -59,3 +59,19 @@ strict = true
 show_column_numbers = true
 warn_unreachable = true
 warn_unused_ignores = true
+
+[tool.djlint]
+blank_line_after_tag = "load,extends,include"
+blank_line_before_tag = "load,extends,include"
+extension = "html.jinja"
+format_attribute_template_tags = true
+format_css = true
+ignore="H008,H021,T002"
+indent = 4
+max_attribute_length = 500
+line_break_after_multiline_tag = false
+max_line_length = 79
+profile = "html"
+
+[tool.djlint.css]
+indent_size = 4

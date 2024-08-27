@@ -135,6 +135,7 @@ venv/
 .history/
 .ionide
 .vscode/*
+*.code-workspace
 
 # Coeus' mess
 archive/*
