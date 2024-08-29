@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Sunday, August 25 2024
+Last updated on: Wednesday, August 28 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -24,6 +24,11 @@ contributors when building the documentation.
     for more information.
 
 .. versionchanged:: 2024.08.23
+
+.. versionadded:: 2024.08.30
+
+    [1] Added support for location, reading time and document language
+        options in the `contributors` directive.
 
 .. versionchanged:: 2024.08.30
 
@@ -111,10 +116,14 @@ def depart(self: HTMLTranslator, node: node) -> None:
     pass
 
 
+# TODO (xames3): Add support for automatically calculating the
+# estimated reading time for the page based on the paragraph text.
 directive.has_content = True
 directive.option_spec = {
     "prefix": rst.directives.unchanged,
     "limit": rst.directives.positive_int,
     "timestamp": rst.directives.unchanged,
     "people": rst.directives.unchanged_required,
+    "location": rst.directives.unchanged_required,
+    "language": lambda x: rst.directives.choice(x, ("english", "spanish")),
 }

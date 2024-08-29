@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 25 2024
-Last updated on: Monday, August 26 2024
+Last updated on: Wednesday, August 28 2024
 -->
 {% block contributors_metadata %}
     {%- if people %}
@@ -15,7 +15,7 @@ Last updated on: Monday, August 26 2024
         {%- set limit = limit if limit and limit > 1 and limit - 1 < contributors else 2 -%}
         <div class="container flex-1 px-0 my-8">
             <p class="contributors-timestamp">{{ timestamp|d("Updated Today") }}</p>
-            <div class="contributor-publisher py-2">
+            <div class="contributors-publisher">
                 {% if contributors == 1 %}
                     <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a></span>
                 {% elif contributors == 2 %}
@@ -35,6 +35,11 @@ Last updated on: Monday, August 26 2024
                     <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}" aria-label="Ask author via email" style="font-weight: 900;"></a>
                     <a class="fa-solid fa-link copylink" href="#" @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied to clipboard'); setTimeout(() => $el.setAttribute('data-tooltip', 'Copy article URL to clipboard'), 2000)" aria-label="Copy article URL to clipboard" style="font-weight: 900;"></a>
                 </div>
+            </div>
+            <div class="contributors-article-metadata">
+                <p class="contributors-metadata-badge"><i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>{{ read_time|d("5 minutes") }}</p>
+                <p class="contributors-metadata-badge"><i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}</p>
+                <p class="contributors-metadata-badge"><i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>{{ language|d("English") }}</p>
             </div>
         </div>
     {%- endif %}

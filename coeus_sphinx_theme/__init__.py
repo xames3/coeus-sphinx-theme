@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Tuesday, August 27 2024
+Last updated on: Wednesday, August 28 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -33,6 +33,11 @@ documentation.
         video using the `title` option.
     [3] Support for Bootstrap-native image carousels using the extension
         like, `sphinx_carousel`.
+    [4] Added support for location, reading time and document language
+        options in the `contributors` directive.
+    [5] Added new `headshots` directive that allows authors and
+        contributors to add information about themselves as contributor
+        in particular, their photo (if any) and their affiliation.
 
 .. versionchanged:: 2024.08.30
 
@@ -59,6 +64,7 @@ documentation.
         `Jinja2` string rendering. This is just for the convenience and
         for future enhancements.
     [8] The `ClassVar` update now conforms to the `mypy` restrictions.
+    [9] The `copyrights` are now properly shown in the website's footer.
 
 .. deprecated:: 2024.08.30
 
@@ -76,6 +82,7 @@ import typing as t
 from coeus_sphinx_theme.extensions import announcement
 from coeus_sphinx_theme.extensions import contributors
 from coeus_sphinx_theme.extensions import glossary_table
+from coeus_sphinx_theme.extensions import headshots
 from coeus_sphinx_theme.extensions import title_hero
 from coeus_sphinx_theme.extensions import youtube_video
 
@@ -90,6 +97,7 @@ modules: t.Sequence[types.ModuleType] = (
     announcement,
     contributors,
     glossary_table,
+    headshots,
     title_hero,
     youtube_video,
 )
@@ -106,6 +114,7 @@ coeus_theme_default_mapping: dict[str, str] = {
     "html_baseurl": "html_coeus_documentation",
     "html_favicon": "html_coeus_favicon",
     "html_logo": "html_coeus_logo",
+    "copyright": "html_coeus_copyright",
     "html_permalinks_icon": "html_coeus_permalinks_icon",
     "html_theme_options": "html_coeus_theme_options",
     "html_title": "html_coeus_title",
