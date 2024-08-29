@@ -1,95 +1,98 @@
-<!-- Coeus Sphinx Theme Main Layout Template ======================================= Author: Akshay Mestry <xa@mes3.dev> Created on: Monday, August 26 2024 Last updated on: Tuesday, August 27 2024 -->
+<!--
+Coeus Sphinx Theme Main Layout Template
+=======================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Monday, August 26 2024
+Last updated on: Thursday, August 29 2024
+-->
 {%- set lang_attr = "en" if language == None else (language|replace('_','-')) -%}
 {%- if not embedded and docstitle -%}
-  {%- if title == docstitle -%}
-    {%- set titlesuffix = "" -%}
-  {%- else -%}
-    {%- set titlesuffix = " | "|safe + docstitle|e -%}
-  {%- endif -%}
+    {%- if title == docstitle -%}
+        {%- set titlesuffix = "" -%}
+    {%- else -%}
+        {%- set titlesuffix = " | "|safe + docstitle|e -%}
+    {%- endif -%}
 {%- else -%}
-  {%- set titlesuffix = "" -%}
+    {%- set titlesuffix = "" -%}
 {%- endif -%}
 <!DOCTYPE html>
 <html lang="{{ lang_attr }}" {% if sphinx_version_tuple>= (7, 2) %} data-content_root="{{ content_root }}" {% endif %}>
-
-  <head>
-    <meta charset="utf-8"/>
-    {{ metatags }}
-    {%- block htmltitle %}
-      <title>{{ title|striptags|e if title else docstitle }}</title>
-      <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}"/>
-      <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}"/>
-      <script src="https://kit.fontawesome.com/8bcdaaff4d.js" crossorigin="anonymous"></script>
-    {%- endblock htmltitle %}
-    {%- for css in css_files %}
-      {%- if css|attr("filename") %}
-        {{ css_tag(css) }}
-      {%- else -%}
-        <link rel="stylesheet" href="{{ pathto(css, 1) |e }}"/>
-      {%- endif %}
-    {%- endfor %}
-    {%- if pageurl %}
-      <link rel="canonical" href="{{ pageurl|e }}"/>{%- endif %}
-    {%- set _favicon_url = favicon_url | default(pathto('_static/' + (favicon or ""), 1)) %}
-    {%- if favicon_url or favicon %}
-      <link rel="icon" href="{{ _favicon_url }}"/>
-    {%- endif %}
-    {%- block linktags %}
-      {%- if hasdoc('search') %}
-        <link rel="search" title="{{ _(" search") }}"="search") }}"" href="{{ pathto("/>
-      {%- endif %}
-    {%- endblock linktags %}
-    {%- block extrahead %}{%- endblock extrahead %}
-  </head>
-
-  <body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
-    {%- if sidebars|length > 0 %}
-      <div x-cloak="x-cloak" x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div>
-    {%- endif %}
-    <div id="page" class="relative flex flex-col min-h-screen">
-      {%- block header %}
-        {%- include "navbar.html" %}
-      {%- endblock header %}
-      {%- block announcement %}
-        {% if announcement %}
-          <div class="announcement-wrapper md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
-            <span>{{ announcement }}</span>
-          </div>
-        {% endif %}
-      {%- endblock announcement %}
-      <div class="flex-1">
-        {%- set only_main_nav = sidebars == ["navbar_links.html.jinja"] %}
-        {%- if not only_main_nav and sidebars|length > 0 -%}
-          <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
-          {%- else -%}
-            <div class="container flex-1 items-start md:grid">
-            {% endif %}
-            {%- block sidebar %}
-              {%- if sidebars|length > 0 %}
-                {%- include "sidebar.html.jinja" %}
-              {%- endif %}
-            {%- endblock sidebar %}
-            {%- block main %}
-              <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
-                {% if article and icon and gradient %}
-                  <div class="title-hero-content" style="background: {{ gradient }};">
-                    <span class="{{ icon }} title-hero-icon"></span>
-                  </div>
-                {% endif %}
-                {%- block body %}{%- endblock %}
-              </main>
-            {%- endblock main %}
-          </div>
-        </div>
-        {%- block footer %}
-          {%- include "footer.html.jinja" %}
-        {%- endblock footer %}
-      </div>
-      {% block scripts %}
-        {%- for js in script_files %}{{ js_tag(js) }}
+    <head>
+        <meta charset="utf-8" />
+        {{ metatags }}
+        {%- block htmltitle %}
+            <title>{{ title|striptags|e if title else docstitle }}</title>
+            <meta property="og:title" content="{{ title|striptags|e if title else docstitle }}" />
+            <meta name="twitter:title" content="{{ title|striptags|e if title else docstitle }}" />
+            <script src="https://kit.fontawesome.com/8bcdaaff4d.js" crossorigin="anonymous"></script>
+        {%- endblock htmltitle %}
+        {%- for css in css_files %}
+            {%- if css|attr("filename") %}
+                {{ css_tag(css) }}
+            {%- else -%}
+                <link rel="stylesheet" href="{{ pathto(css, 1) |e }}" />
+            {%- endif %}
         {%- endfor %}
-      {% endblock scripts %}
-    </div>
-  </body>
-
-</html>
+        {%- if pageurl %}<link rel="canonical" href="{{ pageurl|e }}" />{%- endif %}
+        {%- set _favicon_url = favicon_url | default(pathto('_static/' + (favicon or ""), 1)) %}
+        {%- if favicon_url or favicon %}
+            <link rel="icon" href="{{ _favicon_url }}" />
+        {%- endif %}
+        {%- block linktags %}
+            {%- if hasdoc('search') %}
+                <link rel="search" title="{{ _("Search") }}" href="{{ pathto("search") }}" />
+            {%- endif %}
+        {%- endblock linktags %}
+        {%- block extrahead %}{%- endblock extrahead %}
+        </head>
+        <body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+            {%- if sidebars|length > 0 %}
+                <div x-cloak="x-cloak" x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false">
+                </div>
+            {%- endif %}
+            <div id="page" class="relative flex flex-col min-h-screen">
+                {%- block header %}
+                    {%- include "navbar.html" %}
+                {%- endblock header %}
+                {%- block announcement %}
+                    {% if announcement %}
+						<div class="announcement-wrapper md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
+                            <span>{{ announcement }}</span>
+                        </div>
+                    {% endif %}
+                {%- endblock announcement %}
+                <div class="flex-1">
+                    {%- set only_main_nav = sidebars == ["navbar_links.html.jinja"] %}
+                    {%- if not only_main_nav and sidebars|length > 0 -%}
+                        <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
+                        {%- else -%}
+                            <div class="container flex-1 items-start md:grid">
+                            {% endif %}
+                            {%- block sidebar %}
+                                {%- if sidebars|length > 0 %}
+                                    {%- include "sidebar.html.jinja" %}
+                                {%- endif %}
+                            {%- endblock sidebar %}
+                            {%- block main %}
+                                <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
+                                    {% if article and icon and gradient %}
+                                        <div class="title-hero-content" style="background: {{ gradient }};">
+                                            <span class="{{ icon }} title-hero-icon"></span>
+                                        </div>
+                                    {% endif %}
+                                    {%- block body %}{%- endblock %}
+                                    </main>
+                                {%- endblock main %}
+                            </div>
+                        </div>
+                        {%- block footer %}
+                            {%- include "footer.html.jinja" %}
+                        {%- endblock footer %}
+                    </div>
+                    {% block scripts %}
+                        {%- for js in script_files %}{{ js_tag(js) }}{%- endfor %}
+                    {% endblock scripts %}
+                </div>
+            </body>
+        </html>
