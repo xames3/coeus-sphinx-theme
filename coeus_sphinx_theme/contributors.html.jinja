@@ -30,7 +30,9 @@ Last updated on: Wednesday, August 28 2024
                     </span>
                 {% endif %}
                 <div class="project-socials">
-                    <a class="fa-brands fa-x-twitter font-medium" href="{{ twitter }}" {% if twitter !='#' %}target="_blank"{% endif %}aria-label="Share this article via X (opens a new tab)"></a>
+                    {% for key, value in socials | dictsort %}
+                    <a class="{{ value[1]|e }}" href="{{ value[0]|e }}" {% if value[0]|e !='#' %}target="_blank"{% endif %}aria-label="Share this article via {{ key|title }} (opens a new tab)"></a>
+                    {% endfor %}
                     <a class="fa-brands fa-github" href="{{ github }}" {% if github !='#' %}target="_blank"{% endif %}aria-label="Check out source on GitHub"></a>
                     <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}" aria-label="Ask author via email" style="font-weight: 900;"></a>
                     <a class="fa-solid fa-link copylink" href="#" @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied to clipboard'); setTimeout(() => $el.setAttribute('data-tooltip', 'Copy article URL to clipboard'), 2000)" aria-label="Copy article URL to clipboard" style="font-weight: 900;"></a>

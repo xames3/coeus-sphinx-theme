@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Wednesday, August 28 2024
+Last updated on: Thursday, August 29 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -29,6 +29,8 @@ contributors when building the documentation.
 
     [1] Added support for location, reading time and document language
         options in the `contributors` directive.
+    [2] Added support for automatically listing the author provided
+        socials via the `html_coeus_socials` option.
 
 .. versionchanged:: 2024.08.30
 
@@ -61,6 +63,14 @@ source = os.path.join(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
     "contributors.html.jinja",
 )
+
+socials: dict[str, list[str]] = {
+    "twitter": "fa-brands fa-x-twitter",
+    "discord": "fa-brands fa-discord",
+    "reddit": "fa-brands fa-reddit",
+    "youtube": "fa-brands fa-youtube",
+    "slack": "fa-brands fa-slack",
+}
 
 with open(source) as f:
     template = jinja2.Template(f.read())
@@ -96,7 +106,13 @@ class directive(rst.Directive):
 
 
 def visit(self: HTMLTranslator, node: node) -> None:
-    """Node visitor function which maps the node element."""
+    """Node visitor function which maps the node element.
+
+    .. versionadded:: 2024.08.30
+
+        [1] Added support for automatically listing the author provided
+            socials via the `html_coeus_socials` option.
+    """
     title = (
         dom.asdom().getElementsByTagName("title")
         if (dom := node.document)
@@ -107,6 +123,9 @@ def visit(self: HTMLTranslator, node: node) -> None:
     node.attributes["subject"] = f"[{self.config.html_coeus_title}] {article}"
     node.attributes["email"] = self.config.html_coeus_email
     node.attributes["github"] = self.config.html_coeus_github
+    for platform, icon in socials.items():
+        if platform in self.config.html_coeus_socials:
+            self.config.html_coeus_socials[platform].append(icon)
     node.attributes["socials"] = self.config.html_coeus_socials
     self.body.append(template.render(**node.attributes))
 

@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Wednesday, August 28 2024
+Last updated on: Thursday, August 29 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -38,6 +38,8 @@ documentation.
     [5] Added new `headshots` directive that allows authors and
         contributors to add information about themselves as contributor
         in particular, their photo (if any) and their affiliation.
+    [6] Added support for automatically listing the author provided
+        socials via the `html_coeus_socials` option.
 
 .. versionchanged:: 2024.08.30
 
@@ -71,6 +73,8 @@ documentation.
     [1] The `controls`, `modestbranding`, `color`, `width` and `height`
         options for the `youtube_video` directive have been deprecated
         until further exploration.
+    [2] The `html_coeus_twitter` option is now deprecated in favor of
+        the `html_coeus_socials` option.
 """
 
 from __future__ import annotations
@@ -177,6 +181,11 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     .. versionchanged:: 2024.08.30
 
         [1] The extension's node object's `__name__` is now updated.
+
+    .. deprecated:: 2024.08.30
+
+        [1] The `html_coeus_twitter` option is now deprecated in favor
+            of the `html_coeus_socials` option.
     """
     here = os.path.abspath(os.path.dirname(__file__))
     for extension in natively_supported_extensions:
@@ -201,7 +210,6 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "html_coeus_tags_prefix": ("", str),
         "html_coeus_theme_options": (config.html_theme_options, dict),
         "html_coeus_title": (config.html_title or config.project, tuple),
-        "html_coeus_twitter": ("#", str),
         "html_coeus_socials": ({}, dict),
         "html_coeus_version": (config.release, str),
     }
