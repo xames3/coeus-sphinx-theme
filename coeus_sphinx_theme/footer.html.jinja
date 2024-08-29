@@ -1,0 +1,44 @@
+<!--
+Coeus Sphinx Theme Footer Template
+==================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Thursday, August 29 2024
+Last updated on: Thursday, August 29 2024
+-->
+<!-- TODO (xames3): Add support for feedback submission through conf.py -->
+<footer class="py-6 footer-bg border-border md:py-0">
+    {%- block footer_before %}{%- endblock footer_before %}
+        <div class="footer-element">
+            <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+                <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">
+                    To submit feedback on documentation, visit
+                    <a style="color: var(--link);" href="#">Feedback</a>.
+                    <br>
+                    {%- if show_copyright and copyright|length -%}
+                        {%- if hasdoc('copyright') -%}
+                            {%- trans path=pathto('copyright'), copyright=copyright|e -%}
+                            Copyright © <a href="{{ path }}">Copyright</a>{{ copyright }}
+                        {%- endtrans -%}
+                    {%- else -%}
+                        {%- trans copyright=copyright|e -%}
+                        Copyright © {{ copyright }}&ensp; | &ensp;
+                    {%- endtrans -%}
+                {%- endif -%}
+            {%- endif -%}
+            {%- if last_updated -%}
+                {%- trans last_updated=last_updated|e -%}
+                Last updated: {{ last_updated }}&ensp; | &ensp;
+            {%- endtrans -%}
+        {%- endif -%}
+        {%- if show_sphinx -%}
+            {%- trans sphinx_version=sphinx_version|e -%}
+            Built with <a class="font-medium" style="color: var(--link);" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx {{ sphinx_version }}</a>&ensp; | &ensp;
+            Coeus Sphinx Theme by <a class="font-medium" style="color: var(--link);" href="https://linkedin.com/in/xames3" rel="noreferrer">Akshay Mestry</a>
+        {%- endtrans -%}
+    {%- endif -%}
+</p>
+</div>
+</div>
+{%- block footer_after %}{%- endblock footer_after %}
+</footer>
