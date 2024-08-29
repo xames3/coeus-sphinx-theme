@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Layout Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Monday, August 26 2024
+Last updated on: Tuesday, August 27 2024
 -->
 {%- set lang_attr = "en" if language == None else (language|replace('_','-')) -%}
 {%- if not embedded and docstitle -%}
@@ -57,7 +57,7 @@ Last updated on: Monday, August 26 2024
                 {%- endblock header %}
                 {%- block announcement %}
                     {% if announcement %}
-                        <div class="announcement-wrapper">
+						<div class="announcement-wrapper md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
                             <span>{{ announcement }}</span>
                         </div>
                     {% endif %}
