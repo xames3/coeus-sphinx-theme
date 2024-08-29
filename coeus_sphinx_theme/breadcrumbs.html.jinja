@@ -17,7 +17,7 @@ Last updated on: Monday, August 26 2024
                 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
             </svg>
         </a>
-        {{ separator }} {%- for doc in parents -%}
+        {%- for doc in parents -%}
         <a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="{{ doc.link|e }}">{{ doc.title }}</a>
         {{ separator }} {%- endfor -%}
         <span aria-current="page" class="font-bold text-foreground overflow-hidden text-ellipsis whitespace-nowrap">{{ title }}</span>
