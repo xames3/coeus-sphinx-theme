@@ -22,3 +22,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+window.onload = function () {
+    const wordsPerMinute = 225;
+    const section = document.querySelector('section');
+
+    if (!section) return;
+
+    const paragraphs = section.querySelectorAll('p');
+    const totalWordCount = Array.from(paragraphs).reduce((count, p) => {
+        return count + p.textContent.trim().split(/\s+/).length;
+    }, 0);
+
+    if (totalWordCount > 0) {
+        const value = Math.ceil(totalWordCount / wordsPerMinute);
+        const result = `${value} minutes`;
+        document.getElementById('readingTime').innerHTML = `<i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>${result}`;
+    }
+};

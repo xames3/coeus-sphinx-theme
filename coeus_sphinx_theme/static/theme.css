@@ -452,8 +452,7 @@ video {
 .container {
     margin-left: auto;
     margin-right: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding: 0 2rem;
     width: 100%;
 }
 
@@ -481,6 +480,33 @@ video {
     }
 }
 
+h1>a.headerlink,
+h2>a.headerlink,
+h3>a.headerlink,
+h4>a.headerlink,
+h5>a.headerlink,
+h6>a.headerlink {
+    visibility: hidden;
+}
+
+h1:hover>a.headerlink:before,
+h2:hover>a.headerlink:before,
+h3:hover>a.headerlink:before,
+h4:hover>a.headerlink:before,
+h5:hover>a.headerlink:before,
+h6:hover>a.headerlink:before {
+    visibility: visible;
+    opacity: 0.5;
+    color: #636365;
+    content: "\f0c1";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-left: 0.25rem;
+}
+
 .announcement-wrapper {
     background-color: var(--blue);
     font-size: 1rem;
@@ -497,7 +523,6 @@ video {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateY(-50%);
 }
 
 @-webkit-keyframes ribbon-drop {
@@ -713,26 +738,32 @@ video {
 }
 
 #content dl {
-    margin-top: 0.8em;
+    font-size: 1.1rem;
+    line-height: 1.8rem;
+    margin-bottom: 2.5rem;
+}
+
+#content dl.glossary dt {
+    font-family: 'Courier Prime', monospace;
+}
+
+#content dl.glossary dt::before {
+    content: 'term ';
+    color: var(--muted-foreground);
+    font-weight: 400;
+}
+
+#content dl.glossary dd {
+    margin-left: 5ch;
+    margin-bottom: 1rem;
 }
 
 #content dl dt:not(.sig) {
-    font-weight: 500;
-    margin-top: 0.8em;
-}
-
-#content dl dt:not(.sig):first-child {
-    margin-bottom: 0;
-    margin-top: 0;
+    font-weight: 600;
 }
 
 #content dl dd {
     margin-left: 0;
-}
-
-#content dl p {
-    margin-bottom: .5rem;
-    margin-top: .5rem;
 }
 
 #content .align-center {
@@ -3422,7 +3453,7 @@ details.sd-dropdown .sd-summary-chevron-right::before {
 .scbs-carousel {
     position: relative;
     margin: 0 auto;
-    max-width: 80%;
+    max-width: 85%;
 }
 
 .scbs-carousel-indicators {
@@ -3545,12 +3576,16 @@ details.sd-dropdown .sd-summary-chevron-right::before {
     margin-bottom: 0;
 }
 
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-.fade-in {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
+.beta-badge {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    font-weight: 600;
+    display: inline-block;
+    padding: 0.05rem 0.25rem;
+    border-radius: 0.35rem;
+    margin: auto;
+    margin-left: 0.25rem;
+    color: white;
+    background-color: #db4545;
+    vertical-align: middle;
 }
