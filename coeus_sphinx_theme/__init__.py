@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Thursday, August 29 2024
+Last updated on: Friday, August 30 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -40,6 +40,7 @@ documentation.
         in particular, their photo (if any) and their affiliation.
     [6] Added support for automatically listing the author provided
         socials via the `html_coeus_socials` option.
+    [7] Added support for custom Sphinx `stylize` role.
 
 .. versionchanged:: 2024.08.30
 
@@ -75,6 +76,11 @@ documentation.
         until further exploration.
     [2] The `html_coeus_twitter` option is now deprecated in favor of
         the `html_coeus_socials` option.
+    [3] The use of `modules` collection is now deprecated in favor of
+        `directives` import.
+    [4] The `glossary_table` directive is now deprecated in favor of
+        Sphinx's `glossary` directive to better support with `term`
+        cross-reference role.
 """
 
 from __future__ import annotations
@@ -83,12 +89,10 @@ import os
 import types
 import typing as t
 
-from coeus_sphinx_theme.extensions import announcement
-from coeus_sphinx_theme.extensions import contributors
-from coeus_sphinx_theme.extensions import glossary_table
-from coeus_sphinx_theme.extensions import headshots
-from coeus_sphinx_theme.extensions import title_hero
-from coeus_sphinx_theme.extensions import youtube_video
+import docutils.parsers.rst as rst
+
+from coeus_sphinx_theme.extensions import directives
+from coeus_sphinx_theme.extensions import roles
 
 if t.TYPE_CHECKING:
     import docutils.nodes as nodes
@@ -96,15 +100,6 @@ if t.TYPE_CHECKING:
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
 theme_version: str = "2024.08.30"
-
-modules: t.Sequence[types.ModuleType] = (
-    announcement,
-    contributors,
-    glossary_table,
-    headshots,
-    title_hero,
-    youtube_video,
-)
 
 natively_supported_extensions: t.Sequence[str] = (
     "sphinx_carousel.carousel",
@@ -149,7 +144,7 @@ def update_html_context(
     context.update(app.config.html_coeus_theme_options)
 
 
-def update_node(module: types.ModuleType) -> type[nodes.Element]:
+def fix(module: types.ModuleType) -> type[nodes.Element]:
     """Update `__name__` attribute of the module's node.
 
     .. versionadded:: 2024.08.30
@@ -177,6 +172,10 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     .. versionchanged:: 2024.08.23
 
         [1] `module.klass` is now `module.directive`.
+
+    .. versionadded:: 2024.08.30
+
+        [1] Added support for custom Sphinx `stylize` role.
 
     .. versionchanged:: 2024.08.30
 
@@ -221,9 +220,13 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     app.add_css_file("theme.css", priority=900)
     app.add_js_file("theme.js", loading_method="defer")
     app.connect("html-page-context", update_html_context)
-    for module in modules:
-        app.add_node(update_node(module), html=(module.visit, module.depart))
-        app.add_directive(module.name, module.directive)
-        if hasattr(module, "html_page_context"):
-            app.connect("html-page-context", module.html_page_context)
+    for directive in directives:
+        app.add_node(fix(directive), html=(directive.visit, directive.depart))
+        app.add_directive(directive.name, directive.directive)
+        if hasattr(directive, "html_page_context"):
+            app.connect("html-page-context", directive.html_page_context)
+    for role in dir(roles):
+        if role.endswith("_role"):
+            _role = role[:-5].replace("_", "-")
+            rst.roles.register_local_role(_role, getattr(roles, role))
     return {"parallel_read_safe": True, "parallel_write_safe": True}

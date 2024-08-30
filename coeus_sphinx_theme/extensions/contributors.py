@@ -64,7 +64,7 @@ source = os.path.join(
     "contributors.html.jinja",
 )
 
-socials: dict[str, list[str]] = {
+socials: dict[str, str] = {
     "twitter": "fa-brands fa-x-twitter",
     "discord": "fa-brands fa-discord",
     "reddit": "fa-brands fa-reddit",

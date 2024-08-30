@@ -65,7 +65,7 @@ class directive(rst.Directive):
 
         :return: List of `docutils` node(s).
         """
-        people = ast.literal_eval(self.options.get("people"))
+        people = ast.literal_eval(self.options["people"])
         if "sorted" in self.options:
             people = sorted(people, key=lambda x: x["name"])
         (container := nodes.container())["classes"].append("headshots-grid")

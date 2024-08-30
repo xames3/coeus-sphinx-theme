@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 25 2024
-Last updated on: Wednesday, August 28 2024
+Last updated on: Thursday, August 29 2024
 -->
 {% block contributors_metadata %}
     {%- if people %}
@@ -39,7 +39,7 @@ Last updated on: Wednesday, August 28 2024
                 </div>
             </div>
             <div class="contributors-article-metadata">
-                <p class="contributors-metadata-badge"><i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>{{ read_time|d("5 minutes") }}</p>
+                <p class="contributors-metadata-badge" id="readingTime"></p>
                 <p class="contributors-metadata-badge"><i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}</p>
                 <p class="contributors-metadata-badge"><i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>{{ language|d("English") }}</p>
             </div>
