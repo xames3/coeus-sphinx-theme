@@ -905,6 +905,12 @@ table tbody td:not(:first-child) {
     background-color: var(--footer);
 }
 
+.footer-element {
+    max-width: 895px;
+    margin: 3rem auto;
+    padding-left: 5rem;
+}
+
 .admonition {
     background-color: #fff;
     background-color: var(--background);
