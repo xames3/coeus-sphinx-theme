@@ -510,9 +510,10 @@ h6:hover>a.headerlink:before {
 .announcement-wrapper {
     background-color: var(--blue);
     font-size: 1rem;
+    line-height: 1.25;
     font-weight: 400;
     color: #fff;
-    height: 3rem;
+    height: 4rem;
     text-align: center;
     position: relative;
     -webkit-animation: ribbon-drop 0.8s cubic-bezier(0.42, 0, 0.58, 1) forwards;
@@ -523,6 +524,7 @@ h6:hover>a.headerlink:before {
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @-webkit-keyframes ribbon-drop {
