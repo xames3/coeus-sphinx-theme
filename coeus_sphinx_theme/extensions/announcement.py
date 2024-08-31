@@ -24,7 +24,7 @@ authors and contributors when building the documentation.
 
 .. versionchanged:: 2024.08.23
 
-.. versionchanged:: 2024.08.30
+.. versionchanged:: 2024.09.01
 
     [1] The `top_ribbon` extension is now `announcement`, which made a
         lot of sense when we noticed the use of the extension in
@@ -65,7 +65,7 @@ class directive(rst.Directive):
     By using a custom directive, Coeus Sphinx Theme allows contributors
     or authors to render content for their specific context and needs.
 
-    .. versionchanged:: 2024.08.30
+    .. versionchanged:: 2024.09.01
 
         [1] The `ClassVar` update now conforms to the `mypy`
             restrictions.

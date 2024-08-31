@@ -24,14 +24,14 @@ authors and contributors when building the documentation.
 
 .. versionadded:: 2024.08.23
 
-.. versionadded:: 2024.08.30
+.. versionadded:: 2024.09.01
 
     [1] This update adds support for fetching the YouTube video title
         automatically using `pytube` module.
     [2] The directive now supports adding a custom title to the YouTube
         video using the `title` option.
 
-.. versionchanged:: 2024.08.30
+.. versionchanged:: 2024.09.01
 
     [1] The `embed_youtube` extension is now `youtube_video`, which
         made a lot of sense when we noticed the use of the extension in
@@ -45,7 +45,7 @@ authors and contributors when building the documentation.
         for future enhancements.
     [4] The `ClassVar` update now conforms to the `mypy` restrictions.
 
-.. deprecated:: 2024.08.30
+.. deprecated:: 2024.09.01
 
     [1] The `controls`, `modestbranding`, `color`, `width` and `height`
         options for the directive have been deprecated until further
@@ -92,19 +92,19 @@ class directive(rst.Directive):
     By using a custom directive, Coeus Sphinx Theme allows contributors
     or authors to render content for their specific context and needs.
 
-    .. versionadded:: 2024.08.30
+    .. versionadded:: 2024.09.01
 
         [1] This update adds support for fetching the YouTube video
             title automatically using `pytube` module.
         [2] The directive now supports adding a custom title to the
             YouTube video using the `title` option.
 
-    .. versionchanged:: 2024.08.30
+    .. versionchanged:: 2024.09.01
 
         [1] The `ClassVar` update now conforms to the `mypy`
             restrictions.
 
-    .. deprecated:: 2024.08.30
+    .. deprecated:: 2024.09.01
 
         [1] The `controls`, `modestbranding`, `color`, `width` and
             `height` options for the directive have been deprecated

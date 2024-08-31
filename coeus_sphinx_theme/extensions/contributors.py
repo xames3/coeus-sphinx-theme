@@ -25,14 +25,14 @@ contributors when building the documentation.
 
 .. versionchanged:: 2024.08.23
 
-.. versionadded:: 2024.08.30
+.. versionadded:: 2024.09.01
 
     [1] Added support for location, reading time and document language
         options in the `contributors` directive.
     [2] Added support for automatically listing the author provided
         socials via the `html_coeus_socials` option.
 
-.. versionchanged:: 2024.08.30
+.. versionchanged:: 2024.09.01
 
     [1] The `contributor_hero` extension is now `contributors`, which
         made a lot of sense when we noticed the use of the extension in
@@ -108,7 +108,7 @@ class directive(rst.Directive):
 def visit(self: HTMLTranslator, node: node) -> None:
     """Node visitor function which maps the node element.
 
-    .. versionadded:: 2024.08.30
+    .. versionadded:: 2024.09.01
 
         [1] Added support for automatically listing the author provided
             socials via the `html_coeus_socials` option.

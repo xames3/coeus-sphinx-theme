@@ -38,7 +38,7 @@ contributors when building the documentation.
 
 .. versionchanged:: 2024.08.23
 
-.. versionchanged:: 2024.08.30
+.. versionchanged:: 2024.09.01
 
     [1] The `documentation_hero` extension is now `title_hero`, which
         made a lot of sense when we noticed the use of the extension in

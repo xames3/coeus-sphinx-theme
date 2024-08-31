@@ -25,7 +25,7 @@ documentation.
     [2] Major refactor to conform to the newest changes.
     [3] `module.klass` is now `module.directive`.
 
-.. versionadded:: 2024.08.30
+.. versionadded:: 2024.09.01
 
     [1] This update adds support for fetching the YouTube video title
         automatically using `pytube` module.
@@ -42,7 +42,7 @@ documentation.
         socials via the `html_coeus_socials` option.
     [7] Added support for custom Sphinx `stylize` role.
 
-.. versionchanged:: 2024.08.30
+.. versionchanged:: 2024.09.01
 
     [1] The `embed_youtube` extension is now `youtube_video`, which
         made a lot of sense when we noticed the use of the extension in
@@ -69,7 +69,7 @@ documentation.
     [8] The `ClassVar` update now conforms to the `mypy` restrictions.
     [9] The `copyrights` are now properly shown in the website's footer.
 
-.. deprecated:: 2024.08.30
+.. deprecated:: 2024.09.01
 
     [1] The `controls`, `modestbranding`, `color`, `width` and `height`
         options for the `youtube_video` directive have been deprecated
@@ -99,11 +99,10 @@ if t.TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
-theme_version: str = "2024.08.30"
+theme_version: str = "2024.09.01"
 
 natively_supported_extensions: t.Sequence[str] = (
     "sphinx_carousel.carousel",
-    "sphinx_datatables",
     "sphinx_design",
     "sphinx_tags",
     "sphinxcontrib.jquery",
@@ -137,7 +136,7 @@ def update_html_context(
 
         [1] Support Coeus specific HTML theming options.
 
-    .. versionchanged:: 2024.08.30
+    .. versionchanged:: 2024.09.01
 
         [1] Theming options are now directly merged with the `context`.
     """
@@ -147,7 +146,7 @@ def update_html_context(
 def fix(module: types.ModuleType) -> type[nodes.Element]:
     """Update `__name__` attribute of the module's node.
 
-    .. versionadded:: 2024.08.30
+    .. versionadded:: 2024.09.01
     """
     node = module.node
     node.__name__ = "".join(_.capitalize() for _ in module.name.split("-"))
@@ -173,15 +172,15 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
 
         [1] `module.klass` is now `module.directive`.
 
-    .. versionadded:: 2024.08.30
+    .. versionadded:: 2024.09.01
 
         [1] Added support for custom Sphinx `stylize` role.
 
-    .. versionchanged:: 2024.08.30
+    .. versionchanged:: 2024.09.01
 
         [1] The extension's node object's `__name__` is now updated.
 
-    .. deprecated:: 2024.08.30
+    .. deprecated:: 2024.09.01
 
         [1] The `html_coeus_twitter` option is now deprecated in favor
             of the `html_coeus_socials` option.

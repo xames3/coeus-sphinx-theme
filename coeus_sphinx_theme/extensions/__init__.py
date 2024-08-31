@@ -8,9 +8,9 @@ Last updated on: Friday, August 30 2024
 
 This module manages Coeus Sphinx Theme's directive and roles.
 
-.. versionadded:: 2024.08.30
+.. versionadded:: 2024.09.01
 
-.. deprecated:: 2024.08.30
+.. deprecated:: 2024.09.01
 
     [1] The `glossary_table` directive is now deprecated in favor of
         Sphinx's `glossary` directive to better support with `term`

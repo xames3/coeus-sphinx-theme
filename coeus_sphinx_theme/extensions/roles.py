@@ -16,7 +16,7 @@ allows authors and contributors to add features to their document pages.
     differently for different themes. Please consult the documentation
     for more information.
 
-.. versionadded:: 2024.08.30
+.. versionadded:: 2024.09.01
 """
 
 from __future__ import annotations
