@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Friday, August 30 2024
+Last updated on: Saturday, August 31 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -81,6 +81,21 @@ documentation.
     [4] The `glossary_table` directive is now deprecated in favor of
         Sphinx's `glossary` directive to better support with `term`
         cross-reference role.
+
+.. versionchanged:: 2024.09.09
+
+    [1] The syntax of the `people` option is now changed and is now
+        handled using `docutils.statemachine` for supporting the nested
+        parsing in the `headshots` module whereas it is now handled at
+        the `node` level rather than the node visitor method in the
+        `contributors` module. Rest of the functionality remains intact
+        with no affect on the performance.
+
+.. deprecated:: 2024.09.09
+
+    [1] The `people` option is now deprecated in favor of more simple
+        and intuitive `list-table` like directive layout from both
+        the `headshots` and `contributors` modules.
 """
 
 from __future__ import annotations
@@ -99,7 +114,7 @@ if t.TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
-theme_version: str = "2024.09.01"
+theme_version: str = "2024.09.09"
 
 natively_supported_extensions: t.Sequence[str] = (
     "sphinx_carousel.carousel",

@@ -4,7 +4,7 @@ Coeus Sphinx Theme Headshot Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Tuesday, August 27 2024
-Last updated on: Tuesday, August 27 2024
+Last updated on: Saturday, August 31 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -23,15 +23,28 @@ contributors when building the documentation.
     for more information.
 
 .. versionadded:: 2024.09.01
+
+.. versionchanged:: 2024.09.09
+
+    [1] The syntax of the `people` option is now changed and is now
+        handled using `docutils.statemachine` for supporting the nested
+        parsing. Rest of the functionality remains intact with no affect
+        on the performance.
+
+.. deprecated:: 2024.09.09
+
+    [1] The `people` option is now deprecated in favor of more simple
+        and intuitive `list-table` like directive layout.
 """
 
 from __future__ import annotations
 
-import ast
 import typing as t
+from itertools import groupby
 
 import docutils.nodes as nodes
 import docutils.parsers.rst as rst
+import docutils.statemachine as stm
 
 if t.TYPE_CHECKING:
     from sphinx.writers.html import HTMLTranslator
@@ -64,8 +77,36 @@ class directive(rst.Directive):
         encountered.
 
         :return: List of `docutils` node(s).
+
+        .. versionchanged:: 2024.09.09
+
+            [1] The syntax of the `people` option is now changed and is
+                now handled using `docutils.statemachine` for supporting
+                the nested parsing. Rest of the functionality remains
+                intact with no affect on the performance.
+
+        .. deprecated:: 2024.09.09
+
+            [1] The `people` option is now deprecated in favor of more
+                simple and intuitive `list-table` like directive layout.
         """
-        people = ast.literal_eval(self.options["people"])
+        self.assert_has_content()
+        content: list[str] = []
+        for line in self.content:
+            if line and line.startswith("- "):
+                content.append(current := line.split("- ")[-1].strip())
+            else:
+                current += line.strip()
+                content[-1] = current
+        people = [
+            {
+                "name": content[idx],
+                "about": content[idx + 1],
+                "headshot": content[idx + 2],
+                "information": content[idx + 3],
+            }
+            for idx in range(0, len(content), 4)
+        ]
         if "sorted" in self.options:
             people = sorted(people, key=lambda x: x["name"])
         (container := nodes.container())["classes"].append("headshots-grid")
@@ -80,16 +121,22 @@ class directive(rst.Directive):
             image["classes"].append("headshot-img")
             name = nodes.paragraph(text=person["name"])
             name["classes"].append("headshot-name")
-            affiliation = nodes.paragraph(text=person["affiliation"])
-            affiliation["classes"].append("headshot-affiliation")
-            more = nodes.paragraph(text=person["more"])
-            more["classes"].append("headshot-more")
+            about_node = nodes.container()
+            about_lines = stm.StringList([person["about"]])
+            self.state.nested_parse(about_lines, 0, about_node)
+            about = about_node[0]
+            about["classes"].append("headshot-about")
+            information_node = nodes.container()
+            info_lines = stm.StringList([person["information"]])
+            self.state.nested_parse(info_lines, 0, information_node)
+            information = information_node[0]
+            information["classes"].append("headshot-information")
             identity.append(image)
             title.append(name)
-            title.append(affiliation)
+            title.append(about)
             identity.append(title)
             individual.append(identity)
-            individual.append(more)
+            individual.append(information)
             container.append(individual)
         return [container]
 
@@ -106,6 +153,5 @@ def depart(self: HTMLTranslator, node: node) -> None:
 
 directive.has_content = True
 directive.option_spec = {
-    "people": rst.directives.unchanged_required,
     "sorted": rst.directives.flag,
 }

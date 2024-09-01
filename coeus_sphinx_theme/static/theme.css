@@ -3549,7 +3549,8 @@ details.sd-dropdown .sd-summary-chevron-right::before {
 }
 
 .headshot-title-card {
-    padding: 0 2rem 0 1rem;
+    padding-left: 1rem;
+    padding-right: 0;
     text-align: left;
 }
 
@@ -3568,13 +3569,13 @@ details.sd-dropdown .sd-summary-chevron-right::before {
     line-height: 1.5;
 }
 
-.headshot-affiliation {
-    font-size: 0.9rem;
+.headshot-about {
+    font-size: 0.95rem;
     color: #909090;
     line-height: 1.5;
 }
 
-.headshot-more {
+.headshot-information {
     margin-bottom: 0;
 }
 

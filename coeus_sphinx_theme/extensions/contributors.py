@@ -42,11 +42,22 @@ contributors when building the documentation.
         represent. This is a big change over the previous extension-
         management capabilties of Coeus Sphinx Theme.
     [3] The `ClassVar` update now conforms to the `mypy` restrictions.
+
+.. versionchanged:: 2024.09.09
+
+    [1] The syntax of the `people` option is now changed and is now
+        handled at the `node` level rather than the node visitor method.
+        Rest of the functionality remains intact with no affect on the
+        performance.
+
+.. deprecated:: 2024.09.09
+
+    [1] The `people` option is now deprecated in favor of more simple
+        and intuitive `list-table` like directive layout.
 """
 
 from __future__ import annotations
 
-import ast
 import os
 import typing as t
 
@@ -102,7 +113,18 @@ class directive(rst.Directive):
 
         :return: List of `docutils` node(s).
         """
-        return [node("\n".join(self.content), **self.options)]
+        self.assert_has_content()
+        element = node("\n".join(self.content), **self.options)
+        content = [_.split("- ")[-1].strip() for _ in self.content if _]
+        element.attributes["people"] = [
+            {
+                "name": content[idx],
+                "email": content[idx + 1],
+                "github": content[idx + 2],
+            }
+            for idx in range(0, len(content), 3)
+        ]
+        return [element]
 
 
 def visit(self: HTMLTranslator, node: node) -> None:
@@ -119,7 +141,7 @@ def visit(self: HTMLTranslator, node: node) -> None:
         else ["Article"]
     )
     article = title[0].firstChild.nodeValue
-    node.attributes["people"] = ast.literal_eval(node.attributes["people"])
+    node.attributes["people"] = node.attributes["people"]
     node.attributes["subject"] = f"[{self.config.html_coeus_title}] {article}"
     node.attributes["email"] = self.config.html_coeus_email
     node.attributes["github"] = self.config.html_coeus_github
@@ -135,14 +157,11 @@ def depart(self: HTMLTranslator, node: node) -> None:
     pass
 
 
-# TODO (xames3): Add support for automatically calculating the
-# estimated reading time for the page based on the paragraph text.
 directive.has_content = True
 directive.option_spec = {
     "prefix": rst.directives.unchanged,
     "limit": rst.directives.positive_int,
     "timestamp": rst.directives.unchanged,
-    "people": rst.directives.unchanged_required,
     "location": rst.directives.unchanged_required,
     "language": lambda x: rst.directives.choice(x, ("english", "spanish")),
 }
