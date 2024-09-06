@@ -470,13 +470,13 @@ video {
     border-color: #e1e7ef;
     border-color: var(--border);
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    margin-top: 0;
 }
 
 @media (min-width:768px) {
     #content hr {
         margin-bottom: 1.5rem;
-        margin-top: 1.5rem;
+        margin-top: 0;
     }
 }
 
@@ -889,10 +889,6 @@ blockquote {
 blockquote .attribution {
     font-style: normal;
     margin-top: .5rem;
-}
-
-table:first-of-type {
-    display: none;
 }
 
 table {
@@ -3441,6 +3437,24 @@ details.sd-dropdown .sd-summary-chevron-right::before {
     -webkit-font-smoothing: antialiased;
     font-size: 2rem !important;
     font: var(--fa-font-solid);
+}
+
+details.sd-dropdown .sd-summary-content {
+    margin-bottom: 1.5rem;
+}
+
+.sd-sphinx-override p {
+    line-height: 1.8rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.sd-sphinx-override p:last-of-type {
+    margin-bottom: 1.5rem;
+}
+
+.sd-sphinx-override p a span.std-ref {
+    font-weight: bold !important;
 }
 
 .sd-card-img,
