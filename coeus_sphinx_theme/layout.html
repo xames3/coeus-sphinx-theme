@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Layout Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Thursday, August 29 2024
+Last updated on: Thursday, September 05 2024
 -->
 {%- set lang_attr = "en" if language == None else (language|replace('_','-')) -%}
 {%- if not embedded and docstitle -%}
@@ -76,10 +76,11 @@ Last updated on: Thursday, August 29 2024
                             {%- endblock sidebar %}
                             {%- block main %}
                                 <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
-                                    {% if article and icon and gradient %}
-                                        <div class="title-hero-content" style="background: {{ gradient }};">
-                                            <span class="{{ icon }} title-hero-icon"></span>
-                                        </div>
+                                    {% if icon %}
+										<div class="title-hero-container" style="background-image: {{ gradient|d('linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)') }};">
+											<span class="{{ icon }} title-hero-icon"></span>
+											<div class="title-hero-content"></div>
+										</div>
                                     {% endif %}
                                     {%- block body %}{%- endblock %}
                                     </main>

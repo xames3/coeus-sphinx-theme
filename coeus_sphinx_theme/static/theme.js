@@ -40,3 +40,27 @@ window.onload = function () {
         document.getElementById('readingTime').innerHTML = `<i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>${result}`;
     }
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('#content .fade-image');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            } else {
+                entry.target.classList.remove('fade-in');
+            }
+        });
+    }, observerOptions);
+
+    images.forEach(image => {
+        observer.observe(image);
+    });
+});

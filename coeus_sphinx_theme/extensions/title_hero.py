@@ -4,7 +4,7 @@ Coeus Sphinx Theme Title Hero Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 12 2024
-Last updated on: Sunday, August 25 2024
+Last updated on: Thursday, September 05 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add a FontAwesome icon, a
@@ -51,6 +51,16 @@ contributors when building the documentation.
         `Jinja2` string rendering. This is just for the convenience and
         for future enhancements.
     [4] The `ClassVar` update now conforms to the `mypy` restrictions.
+
+.. versionchanged:: 2024.09.09
+
+    [1] The `gradient` option is now optional and is handled at the
+        HTML level. This functionality is now been taken over the CSS
+        gradient animation.
+
+.. deprecated:: 2024.09.09
+
+    [1] The `article` option is now deprecated.
 """
 
 from __future__ import annotations
@@ -135,8 +145,7 @@ def html_page_context(
 
 directive.has_content = True
 directive.option_spec = {
-    "gradient": rst.directives.unchanged_required,
+    "gradient": rst.directives.unchanged,
     "icon": rst.directives.unchanged_required,
     "summary": rst.directives.unchanged_required,
-    "article": rst.directives.unchanged_required,
 }

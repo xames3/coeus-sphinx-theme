@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Saturday, August 31 2024
+Last updated on: Thursday, September 05 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -90,12 +90,19 @@ documentation.
         the `node` level rather than the node visitor method in the
         `contributors` module. Rest of the functionality remains intact
         with no affect on the performance.
+    [2] The `gradient` option from the `title-hero` directive is now
+        optional and is handled at the HTML level. This functionality
+        is now been taken over the CSS gradient animation.
 
 .. deprecated:: 2024.09.09
 
     [1] The `people` option is now deprecated in favor of more simple
         and intuitive `list-table` like directive layout from both
         the `headshots` and `contributors` modules.
+    [2] The `article` option is now deprecated from `title-hero`
+        directive.
+    [3] The `html_coeus_include_last_updated_date` option is now
+        deprecated in favor of traditional sphinx option.
 """
 
 from __future__ import annotations
@@ -212,7 +219,6 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "html_coeus_favicon": ("#", str),
         "html_coeus_github": ("#", str),
         "html_coeus_homepage": ("#", str),
-        "html_coeus_include_last_updated_date": (True, bool),
         "html_coeus_license": ("#", str),
         "html_coeus_logo": ("", str),
         "html_coeus_permalinks_icon": ("", str),

@@ -284,7 +284,7 @@ video {
     --ring: #344359;
     --red: #ff453a;
     --green: #34c759;
-    --blue: #007aff;
+    --blue: #0972d3;
     --orange: #ff9500;
     --yellow: #ffcc00;
     --pink: #ff375f;
@@ -547,30 +547,59 @@ h6:hover>a.headerlink:before {
     }
 }
 
-.title-hero-content {
-    position: absolute;
+.title-hero-container {
     width: 100%;
-    height: 300px;
-    z-index: -999;
+    position: absolute;
+    background-size: 400% 400%;
+    animation: title-hero-gradient 10s ease infinite;
+    animation-play-state: running;
+    z-index: -1;
     overflow: hidden;
+}
+
+@-webkit-keyframes title-hero-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes title-hero-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.title-hero-content {
+    position: relative;
+    width: 100%;
+    height: 25rem;
+    background: radial-gradient(100% 140% at 50% -10%, #fff0, #fff 75%)
 }
 
 .title-hero-icon {
     position: absolute;
     margin-top: 2.5rem;
-    margin-right: -2.5rem;
+    margin-right: -3rem;
     right: 0;
     box-sizing: border-box;
     font-size: 20rem;
-    color: #0000001a;
-    mix-blend-mode: color-burn;
-}
-
-.title-hero-type {
-    font-size: 1.5rem;
-    line-height: 2;
-    font-weight: 500;
-    color: #909090;
+    color: #ffffff4a;
 }
 
 #content .title-hero-summary {
@@ -621,6 +650,7 @@ h6:hover>a.headerlink:before {
     width: 30ch;
     font-weight: 700;
     line-height: 2.5rem;
+    margin-top: 5rem;
     margin-bottom: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
@@ -804,6 +834,17 @@ figure {
 #content figcaption>* {
     margin-top: 1.5rem;
     margin-bottom: 2rem;
+}
+
+#content .fade-image {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+#content .fade-image.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .height-450 {

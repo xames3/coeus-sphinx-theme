@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Page Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Monday, August 26 2024
+Last updated on: Thursday, September 05 2024
 -->
 {%- extends "layout.html" -%}
 {%- block body %}
@@ -19,8 +19,6 @@ Last updated on: Monday, August 26 2024
                     {%- include "breadcrumbs.html.jinja" %}
                 {%- endif %}
                 <div id="content" role="main">
-                    {% set article = article if article != "None" else "&#8203;" %}
-                    <span class="title-hero-type">{{ article }}</span>
                     {{ body }}
                 </div>
             </div>
