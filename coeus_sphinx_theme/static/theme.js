@@ -1,4 +1,3 @@
-/*! For license information please see theme.js.LICENSE.txt */
 document.addEventListener('DOMContentLoaded', function () {
     const links = document.querySelectorAll('a[href^="#"]');
     for (const link of links) {

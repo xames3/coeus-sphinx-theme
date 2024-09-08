@@ -1236,12 +1236,15 @@ div.deprecated .versionmodified:is(.dark *) {
     color: rgba(248, 113, 113, var(--coeus-text-opacity));
 }
 
-.highlight {
-    background-color: transparent !important;
+div.highlight {
     position: relative;
 }
 
-.highlight:hover .copy {
+button.copybtn {
+    top: 1rem;
+    right: 1rem;
+    width: 1.7em;
+    height: 1.7em;
     opacity: 1;
 }
 
@@ -3521,7 +3524,6 @@ details.sd-dropdown .sd-summary-content {
     z-index: 2;
     display: flex;
     justify-content: center;
-    margin-bottom: -1rem;
     list-style: none;
 }
 
