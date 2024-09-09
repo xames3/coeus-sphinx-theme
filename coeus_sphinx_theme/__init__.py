@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Thursday, September 05 2024
+Last updated on: Saturday, September 07 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -82,6 +82,11 @@ documentation.
         Sphinx's `glossary` directive to better support with `term`
         cross-reference role.
 
+.. versionadded:: 2024.09.09
+
+    [1] Added support for "Open Graph Protocol" using another extension,
+        called `sphinxext.opengraph`.
+
 .. versionchanged:: 2024.09.09
 
     [1] The syntax of the `people` option is now changed and is now
@@ -128,6 +133,7 @@ natively_supported_extensions: t.Sequence[str] = (
     "sphinx_design",
     "sphinx_tags",
     "sphinxcontrib.jquery",
+    "sphinxext.opengraph",
 )
 
 coeus_theme_default_mapping: dict[str, str] = {
