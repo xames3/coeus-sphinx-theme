@@ -989,7 +989,7 @@ table tbody td:not(:first-child) {
     border-radius: .5rem;
     border-radius: var(--radius);
     color: #0f1729;
-    color: var(--foreground);
+    color: var(--color-text);
     font-size: 1.1rem;
     border-style: solid;
     border-width: 2px;
@@ -1002,7 +1002,6 @@ table tbody td:not(:first-child) {
 
 .admonition p:not(.admonition-title) {
     margin-top: 1.3rem;
-    color: #1d1d1f;
     line-height: 1.5;
 }
 
@@ -1027,7 +1026,7 @@ table tbody td:not(:first-child) {
     --coeus-bg-opacity: 1;
     background-color: #f0f9ff;
     background-color: rgba(245, 245, 247, var(--coeus-bg-opacity));
-    --coeus-text-opacity: 1;
+    --coeus-text-opacity: 0.7;
     color: #0c4a6e;
     color: rgba(32, 32, 32, var(--coeus-text-opacity));
     font-size: 1.1rem;
@@ -1806,10 +1805,28 @@ table:not(.does-not-exist):hover .navbarlink>* {
     justify-content: space-between;
 }
 
-#left-sidebar a.expandable.expanded>button>svg {
-    --coeus-rotate: 90deg;
-    transform: translate(var(--coeus-translate-x), var(--coeus-translate-y)) rotate(90deg) skewX(var(--coeus-skew-x)) skewY(var(--coeus-skew-y)) scaleX(var(--coeus-scale-x)) scaleY(var(--coeus-scale-y));
-    transform: translate(var(--coeus-translate-x), var(--coeus-translate-y)) rotate(var(--coeus-rotate)) skewX(var(--coeus-skew-x)) skewY(var(--coeus-skew-y)) scaleX(var(--coeus-scale-x)) scaleY(var(--coeus-scale-y));
+#left-sidebar a>button>i {
+    opacity: 0.5;
+    color: #636365;
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    transition: transform 0.3s ease-in-out;
+}
+
+#left-sidebar a.expandable>button>i::before {
+    content: "\f055";
+}
+
+#left-sidebar a.expandable.expanded>button>i::before {
+    content: "\f056";
+}
+
+#left-sidebar a.expandable.expanded>button>i {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease-in-out;
 }
 
 #right-sidebar ul {

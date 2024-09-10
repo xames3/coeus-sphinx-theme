@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Saturday, September 07 2024
+Last updated on: Tuesday, September 10 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -86,6 +86,8 @@ documentation.
 
     [1] Added support for "Open Graph Protocol" using another extension,
         called `sphinxext.opengraph`.
+    [2] Added support for collapsible table of content in the sidebar
+        and post processing HTML capabilities.
 
 .. versionchanged:: 2024.09.09
 
@@ -120,6 +122,8 @@ import docutils.parsers.rst as rst
 
 from coeus_sphinx_theme.extensions import directives
 from coeus_sphinx_theme.extensions import roles
+from coeus_sphinx_theme.utils import post_process_build
+from coeus_sphinx_theme.utils import read_env_docs
 
 if t.TYPE_CHECKING:
     import docutils.nodes as nodes
@@ -243,9 +247,9 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
     for default, new in coeus_theme_default_mapping.items():
         setattr(config, default, getattr(config, new))
     app.add_html_theme(name=theme_name, theme_path=here)
-    app.add_css_file("theme.css", priority=900)
-    app.add_js_file("theme.js", loading_method="defer")
-    app.connect("html-page-context", update_html_context)
+    app.add_css_file("coeus.css", priority=900)
+    app.add_js_file("main.js", loading_method="defer")
+    app.add_js_file("coeus.js", loading_method="defer")
     for directive in directives:
         app.add_node(fix(directive), html=(directive.visit, directive.depart))
         app.add_directive(directive.name, directive.directive)
@@ -255,4 +259,7 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         if role.endswith("_role"):
             _role = role[:-5].replace("_", "-")
             rst.roles.register_local_role(_role, getattr(roles, role))
+    app.connect("env-before-read-docs", read_env_docs)
+    app.connect("build-finished", post_process_build)
+    app.connect("html-page-context", update_html_context)
     return {"parallel_read_safe": True, "parallel_write_safe": True}
