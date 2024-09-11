@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 window.onload = function () {
-    const wordsPerMinute = 225;
+    const wordsPerMinute = 275;
     const section = document.querySelector('section');
 
     if (!section) return;

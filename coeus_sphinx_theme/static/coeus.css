@@ -1046,6 +1046,16 @@ table tbody td:not(:first-child) {
     color: rgba(224, 242, 254, var(--coeus-text-opacity));
 }
 
+.note .admonition-title::before {
+    content: "\f005";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
+}
+
 .hint,
 .tip {
     --coeus-border-opacity: 0.3;
@@ -1073,6 +1083,17 @@ table tbody td:not(:first-child) {
     --coeus-text-opacity: 1;
     color: #dcfce7;
     color: rgba(220, 252, 231, var(--coeus-text-opacity));
+}
+
+.hint .admonition-title::before,
+.tip .admonition-title::before {
+    content: "\e2ca";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
 }
 
 .danger,
@@ -1104,6 +1125,18 @@ table tbody td:not(:first-child) {
     color: rgba(254, 226, 226, var(--coeus-text-opacity));
 }
 
+.danger .admonition-title::before,
+.error .admonition-title::before,
+.warning .admonition-title::before {
+    content: "\f256";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
+}
+
 .attention,
 .caution,
 .important,
@@ -1124,6 +1157,18 @@ table tbody td:not(:first-child) {
     margin-bottom: 3rem;
     padding: 1rem 2rem;
     text-align: start;
+}
+
+.attention .admonition-title::before,
+.caution .admonition-title::before,
+.important .admonition-title::before {
+    content: "\f071";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
 }
 
 .dark .attention,
@@ -1494,22 +1539,19 @@ pre span.linenos {
     border-radius: calc(.5rem - 4px);
     border-radius: calc(var(--radius) - 4px);
     border-width: 1px;
-    color: #0f1729;
-    color: var(--accent-foreground);
+    color: #808080;
     font-weight: 500;
-    padding: 1px .5rem;
+    padding: 0.25rem .5rem;
 }
 
 #content kbd:not(.compound) {
     background-color: #f1f5f9;
-    background-color: var(--muted);
     border-radius: .25rem;
     border-width: 1px;
-    font-size: .875rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    letter-spacing: .025em;
     line-height: 1.25rem;
-    padding: 1px .25rem;
+    padding: 0.5rem .5rem;
 }
 
 .language-prefix {
