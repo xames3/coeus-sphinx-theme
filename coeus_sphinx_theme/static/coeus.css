@@ -967,6 +967,12 @@ table tbody td:not(:first-child) {
     text-decoration-line: none !important;
 }
 
+a.footnote-reference {
+    vertical-align: super;
+    font-size: 0.85rem;
+    line-height: normal;
+}
+
 .backrefs {
     margin-right: 0.5rem;
 }
@@ -3470,7 +3476,7 @@ details.sd-dropdown {
 details.sd-dropdown:not(:first-of-type) {
     border-top: 1px solid #d2d2d7 !important;
     padding-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 0.125rem !important;
 }
 
 details.sd-dropdown:not([open])>.sd-card-header {
@@ -3515,6 +3521,10 @@ details.sd-dropdown[open]>.sd-summary-title .sd-summary-chevron-right {
 
 details.sd-dropdown .sd-summary-content {
     margin-bottom: 1.5rem;
+}
+
+.sd-tab-set {
+    margin: 0 !important;
 }
 
 .sd-sphinx-override p {

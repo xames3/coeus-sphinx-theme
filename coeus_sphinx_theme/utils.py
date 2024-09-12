@@ -50,8 +50,6 @@ def make_toc_collapsible(tree: bs4.BeautifulSoup) -> None:
                 type="button",
                 **{"@click.prevent.stop": "expanded = !expanded"},
             )
-            label = tree.new_tag("span", class_="sr-only")
-            button.append(label)
             i = tree.new_tag("i", attrs={"class": "fa-solid fa-circle-plus"})
             button.append(i)
             link.append(button)
