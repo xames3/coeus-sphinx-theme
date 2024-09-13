@@ -626,10 +626,15 @@ h6:hover>a.headerlink:before {
 #content .title-hero-summary {
     font-size: 1.1rem;
     line-height: 1.5;
-    margin-top: 8px;
-    height: 8rem;
-    width: 80ch;
+    margin-top: 0.5rem;
+    width: calc(100% - 2rem);
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
 }
 
 .contributors-timestamp {
@@ -668,14 +673,18 @@ h6:hover>a.headerlink:before {
 
 #content h1 {
     font-size: 2.35rem;
-    width: 30ch;
+    width: calc(100% - 2rem);
     font-weight: 700;
     line-height: 2.5rem;
     margin-top: 5rem;
     margin-bottom: 0.5rem;
-    white-space: nowrap;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: normal;
 }
 
 #content h2 {
@@ -723,7 +732,7 @@ h6:hover>a.headerlink:before {
 }
 
 #content section>p.tags {
-    margin-top: -3.5rem;
+    margin-top: 2rem;
 }
 
 #content .centered {
@@ -833,6 +842,10 @@ h6:hover>a.headerlink:before {
 :where(h1, h2, h3, h4, h5, h6) figure,
 figure {
     margin: 2rem 0;
+    overflow: hidden !important;
+    position: relative;
+    display: grid;
+    justify-content: center;
 }
 
 #content img {
@@ -840,9 +853,15 @@ figure {
 }
 
 #content figure img {
-    display: inline-block;
+    display: block;
     width: 100%;
     margin: 0;
+    transform-origin: bottom;
+    transition: transform 0.3s ease-in-out;
+}
+
+#content figure img:hover {
+    transform: scale(1.1);
 }
 
 #content figcaption {
@@ -1006,6 +1025,13 @@ a.footnote-reference {
     max-width: 895px;
     margin: 3rem auto;
     padding-left: 5rem;
+}
+
+.extra-footer-elements {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 .admonition {
@@ -3040,7 +3066,73 @@ table:not(.does-not-exist):hover .navbarlink>* {
     .container {
         padding-left: 1rem;
         padding-right: 1rem;
+        position: relative;
     }
+
+    .bg-background\/80 {
+        background-color: #00000030 !important;
+    }
+
+    .announcement-wrapper {
+        display: none;
+    }
+
+    .container .contributors-timestamp,
+    .container .contributors-publisher,
+    .container .contributors-article-metadata {
+        margin-left: -1rem;
+    }
+
+    .container .contributors-publisher {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .border-r {
+        border-right: 0;
+    }
+
+    .title-hero-container {
+        position: absolute;
+        width: calc(100% + 2rem);
+        left: -1rem;
+    }
+
+    .py-6 {
+        padding-top: 0;
+    }
+
+    .space-x-1 {
+        padding-top: 1rem;
+    }
+
+    .footer-element {
+        padding-left: 0;
+    }
+
+    .extra-footer-elements {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .headshots-grid,
+    #tagged-pages ul {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+
+    #tagged-pages ul {
+        margin-bottom: 2rem !important;
+    }
+
+    .step-flow-carousel .scbs-carousel-control-prev {
+        left: 36.5% !important;
+    }
+
+    .step-flow-carousel .scbs-carousel-control-next {
+        right: 36.5% !important;
+    }
+
 }
 
 .hover\:bg-accent:hover {
@@ -3613,6 +3705,7 @@ details.sd-dropdown .sd-summary-content {
     color: var(--color-text) !important;
     background-color: transparent !important;
     border: 2px solid var(--color-text);
+    margin-bottom: 0.5rem;
 }
 
 .tags a:hover {

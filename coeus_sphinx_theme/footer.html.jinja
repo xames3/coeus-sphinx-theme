@@ -11,32 +11,38 @@ Last updated on: Friday, August 30 2024
     {%- block footer_before %}{%- endblock footer_before %}
         <div class="footer-element">
             <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-                <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">
-                    To submit feedback on documentation, visit
-                    <a style="color: var(--link);" href="#">Feedback</a>.
-                    <br>
-                    {%- if show_copyright and copyright|length -%}
+                <div class="extra-footer-elements">
+                    <span class="text-sm leading-loose text-center text-muted-foreground md:text-left">
+                        To submit feedback on documentation, visit
+                        <a style="color: var(--link);" href="{{ feedback_link }}">Feedback</a>.
+                    </span>
+                    <span class="text-sm leading-loose text-center text-muted-foreground md:text-left">{%- if show_copyright and copyright|length -%}
                         {%- if hasdoc('copyright') -%}
                             {%- trans path=pathto('copyright'), copyright=copyright|e -%}
                             Copyright © <a href="{{ path }}">Copyright</a>{{ copyright }}
                         {%- endtrans -%}
                     {%- else -%}
                         {%- trans copyright=copyright|e -%}
-                        Copyright © {{ copyright }}&ensp; | &ensp;
+                        Copyright © {{ copyright }}
                     {%- endtrans -%}
                 {%- endif -%}
             {%- endif -%}
+        </span>
+            <span class="text-sm leading-loose text-center text-muted-foreground md:text-left">
+                {%- if show_sphinx -%}
+                    {%- trans sphinx_version=sphinx_version|e -%}
+                    Built with <a class="font-medium" style="color: var(--link);" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx {{ sphinx_version }}.</a>
+                {%- endtrans -%}
+            {%- endif -%}
+        </span>
+        <span class="text-sm leading-loose text-center text-muted-foreground md:text-left">
             {%- if last_updated -%}
                 {%- trans last_updated=last_updated|e -%}
-                Last updated: {{ last_updated }}&ensp; | &ensp;
+                Last updated: {{ last_updated }}
             {%- endtrans -%}
         {%- endif -%}
-        {%- if show_sphinx -%}
-            {%- trans sphinx_version=sphinx_version|e -%}
-            Built with <a class="font-medium" style="color: var(--link);" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx {{ sphinx_version }}</a>
-        {%- endtrans -%}
-    {%- endif -%}
-</p>
+    </span>
+</div>
 </div>
 </div>
 {%- block footer_after %}{%- endblock footer_after %}
