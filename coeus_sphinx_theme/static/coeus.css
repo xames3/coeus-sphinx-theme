@@ -31,6 +31,7 @@ body {
     line-height: inherit;
     margin: 0;
     scroll-snap-type: y mandatory;
+    overflow-y: scroll;
 }
 
 hr {
@@ -3726,23 +3727,29 @@ details.sd-dropdown .sd-summary-content {
     margin: 0 !important;
 }
 
-.headshot-name {
+.headshot-title-card .headshot-name,
+.headshot-title-card .sd-card-text:first-of-type {
     font-size: 1.05rem;
     font-weight: 600;
     line-height: 1.5;
+    margin-bottom: 0 !important;
 }
 
-.headshot-about {
+.headshot-title-card .headshot-about,
+.headshot-title-card .sd-card-text:nth-of-type(2) {
     font-size: 0.95rem;
     color: #909090;
     line-height: 1.5;
+    margin-bottom: 0 !important;
 }
 
-.headshot-information {
+.headshot-card .headshot-information,
+.headshot-card .sd-card-text:first-of-type {
     margin-bottom: 0;
+    font-size: 1rem;
 }
 
-.beta-badge {
+.status-badge {
     font-size: 0.75rem;
     line-height: 1.5;
     font-weight: 600;
@@ -3752,8 +3759,15 @@ details.sd-dropdown .sd-summary-content {
     margin: auto;
     margin-left: 0.25rem;
     color: white;
-    background-color: #db4545;
     vertical-align: middle;
+}
+
+.status-badge.beta {
+    background-color: #db4545;
+}
+
+.status-badge.wip {
+    background-color: var(--color-text);
 }
 
 .step-flow-carousel {
@@ -3785,4 +3799,38 @@ details.sd-dropdown .sd-summary-content {
 
 .step-flow-carousel .scbs-carousel-item img {
     border-radius: 0;
+}
+
+.page-content {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+.page-fade-in .page-content {
+    animation: pageFadeIn 0.5s ease-in forwards;
+    opacity: 1;
+}
+
+.page-fade-out .page-content {
+    animation: pageFadeOut 0.5s ease-in forwards;
+}
+
+@keyframes pageFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pageFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

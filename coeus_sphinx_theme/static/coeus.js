@@ -22,27 +22,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-window.onload = function () {
+window.addEventListener('load', () => {
     const wordsPerMinute = 275;
     const section = document.querySelector('section');
 
     if (!section) return;
 
     const paragraphs = section.querySelectorAll('p');
-    const totalWordCount = Array.from(paragraphs).reduce((count, p) => {
-        return count + p.textContent.trim().split(/\s+/).length;
-    }, 0);
+    const totalWordCount = Array.from(paragraphs).reduce((count, p) =>
+        count + p.textContent.trim().split(/\s+/).length, 0);
 
     if (totalWordCount > 0) {
-        const value = Math.ceil(totalWordCount / wordsPerMinute);
-        const result = `${value} minutes`;
-        document.getElementById('readingTime').innerHTML = `<i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>${result}`;
+        const readingTime = Math.ceil(totalWordCount / wordsPerMinute);
+        document.getElementById('readingTime').innerHTML = `<i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>${readingTime} minutes`;
     }
-};
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     const images = document.querySelectorAll('#content .fade-image');
-
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -53,15 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('fade-in');
-            } else {
-                entry.target.classList.remove('fade-in');
             }
         });
     }, observerOptions);
 
-    images.forEach(image => {
-        observer.observe(image);
-    });
+    images.forEach(image => observer.observe(image));
 });
 
 document.querySelectorAll('details.sd-dropdown').forEach((dropdown) => {
@@ -80,5 +73,22 @@ document.querySelectorAll('details.sd-dropdown').forEach((dropdown) => {
             dropdown.setAttribute('open', true);
             content.style.maxHeight = content.scrollHeight + 'px';
         }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('page-fade-in');
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+        link.addEventListener('click', function (event) {
+            const href = this.getAttribute('href');
+            if (href && !href.startsWith('http')) {
+                event.preventDefault();
+                document.body.classList.add('page-fade-out');
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500);
+            }
+        });
     });
 });
