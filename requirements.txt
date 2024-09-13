@@ -1,6 +1,7 @@
 pytube
 sphinx
 sphinx-carousel
+sphinx-copybutton
 sphinx-tags
 sphinx_design
 sphinxext-opengraph
