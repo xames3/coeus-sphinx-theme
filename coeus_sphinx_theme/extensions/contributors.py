@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Thursday, August 29 2024
+Last updated on: Friday, September 13 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -54,6 +54,14 @@ contributors when building the documentation.
 
     [1] The `people` option is now deprecated in favor of more simple
         and intuitive `list-table` like directive layout.
+
+.. versionadded:: 2024.09.16
+
+    [1] Added support for `supported_language` option from `conf.py`.
+
+.. versionchanged:: 2024.09.16
+
+    [1] The `language` option is now optional and is not enforced.
 """
 
 from __future__ import annotations
@@ -134,6 +142,10 @@ def visit(self: HTMLTranslator, node: node) -> None:
 
         [1] Added support for automatically listing the author provided
             socials via the `html_coeus_socials` option.
+
+    .. versionadded:: 2024.09.16
+
+        [1] Added support for `supported_language` option.
     """
     title = (
         dom.asdom().getElementsByTagName("title")
@@ -149,6 +161,9 @@ def visit(self: HTMLTranslator, node: node) -> None:
         if platform in self.config.html_coeus_socials:
             self.config.html_coeus_socials[platform].append(icon)
     node.attributes["socials"] = self.config.html_coeus_socials
+    node.attributes["languages"] = self.config.html_coeus_theme_options[
+        "supported_languages"
+    ]
     self.body.append(template.render(**node.attributes))
 
 
@@ -163,5 +178,5 @@ directive.option_spec = {
     "limit": rst.directives.positive_int,
     "timestamp": rst.directives.unchanged,
     "location": rst.directives.unchanged_required,
-    "language": lambda x: rst.directives.choice(x, ("english", "spanish")),
+    "language": rst.directives.unchanged,
 }

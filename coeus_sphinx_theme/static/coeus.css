@@ -124,6 +124,26 @@ select {
     text-transform: none;
 }
 
+.no-chevron-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+.no-chevron-select::-ms-expand {
+    display: none;
+}
+
+.no-chevron-select:active,
+.no-chevron-select:focus,
+.no-chevron-select:focus-visible {
+    outline: none;
+}
+
 button,
 input:where([type=button]),
 input:where([type=reset]),
@@ -3590,6 +3610,13 @@ details.sd-dropdown .sd-summary-content {
     padding: 0.5rem;
     border-radius: var(--radius);
     margin-right: 0.2rem;
+    color: var(--color-text) !important;
+    background-color: transparent !important;
+    border: 2px solid var(--color-text);
+}
+
+.tags a:hover {
+    background-color: #0000001a !important;
 }
 
 .scbs-carousel {
@@ -3833,4 +3860,53 @@ details.sd-dropdown .sd-summary-content {
     to {
         opacity: 0;
     }
+}
+
+#tagged-pages .caption::before {
+    content: "\f02c";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.5rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+#tagged-pages ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.05rem;
+    padding: 1rem;
+    background-color: var(--code);
+    margin-top: 2.5rem !important;
+    border-radius: var(--radius);
+}
+
+#tagged-pages ul:not(.search) p,
+#tagged-pages ul:not(.search)>li {
+    margin-bottom: 0;
+}
+
+#tagged-pages ul li {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 5px #0000001a;
+}
+
+#tagged-pages ul li a.reference {
+    font-size: 1rem;
+    color: var(--color-text) !important;
+}
+
+#tagged-pages ul li a.reference::before {
+    content: "\f0c1";
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1rem !important;
+    font: var(--fa-font-solid);
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }

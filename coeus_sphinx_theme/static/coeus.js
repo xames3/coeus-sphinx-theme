@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     links.forEach(link => {
         link.addEventListener('click', function (event) {
             const href = this.getAttribute('href');
-            if (href && !href.startsWith('http')) {
+            if (href && href.startsWith('http')) {
                 event.preventDefault();
                 document.body.classList.add('page-fade-out');
                 setTimeout(() => {
@@ -91,4 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+function switchLanguage() {
+    var selectedLanguage = document.getElementById('language-selector').value;
+    var currentUrl = window.location.href;
+    var newUrl;
+    if (currentUrl.match(/\/(en|es)\//)) {
+        newUrl = currentUrl.replace(/\/(en|es)\//, '/' + selectedLanguage + '/');
+    } else {
+        newUrl = currentUrl + selectedLanguage + '/';
+    }
+    window.location.href = newUrl;
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+    var currentLanguage = window.location.href.match(/\/(en|es)\//);
+    if (currentLanguage) {
+        document.getElementById('language-selector').value = currentLanguage[1];
+    }
 });

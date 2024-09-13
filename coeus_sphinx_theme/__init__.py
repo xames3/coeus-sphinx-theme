@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Tuesday, September 10 2024
+Last updated on: Friday, September 13 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -110,6 +110,18 @@ documentation.
         directive.
     [3] The `html_coeus_include_last_updated_date` option is now
         deprecated in favor of traditional sphinx option.
+
+.. versionadded:: 2024.09.16
+
+    [1] Added native support for mangling `sphinx_tags` tags with custom
+        embedding for `title-hero` directive.
+    [2] Added support for `supported_language` option from `conf.py` in
+        the `contributors` directive.
+
+.. versionchanged:: 2024.09.16
+
+    [1] The `language` option is now optional and is not enforced in
+        the `contributors` directive.
 """
 
 from __future__ import annotations
@@ -119,9 +131,12 @@ import types
 import typing as t
 
 import docutils.parsers.rst as rst
+import sphinx_tags
 
 from coeus_sphinx_theme.extensions import directives
 from coeus_sphinx_theme.extensions import roles
+from coeus_sphinx_theme.utils import add_title_hero
+from coeus_sphinx_theme.utils import create_file_with_title_hero
 from coeus_sphinx_theme.utils import post_process_build
 from coeus_sphinx_theme.utils import read_env_docs
 
@@ -130,7 +145,7 @@ if t.TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
-theme_version: str = "2024.09.09"
+theme_version: str = "2024.09.16"
 
 natively_supported_extensions: t.Sequence[str] = (
     "sphinx_carousel.carousel",
@@ -153,6 +168,9 @@ coeus_theme_default_mapping: dict[str, str] = {
     "tags_intro_text": "html_coeus_tags_prefix",
     "tags_page_title": "html_coeus_tags_page_title",
 }
+
+sphinx_tags.tagpage = add_title_hero
+sphinx_tags.Tag.create_file = create_file_with_title_hero
 
 
 def update_html_context(
@@ -235,7 +253,7 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "html_coeus_repository": ("#", str),
         "html_coeus_tags_create_badges": (True, bool),
         "html_coeus_tags_create_tags": (True, bool),
-        "html_coeus_tags_page_title": ("Tagged", str),
+        "html_coeus_tags_page_title": ("Tagged Pages", str),
         "html_coeus_tags_prefix": ("", str),
         "html_coeus_theme_options": (config.html_theme_options, dict),
         "html_coeus_title": (config.html_title or config.project, tuple),

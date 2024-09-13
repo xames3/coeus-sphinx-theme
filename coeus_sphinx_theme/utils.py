@@ -4,16 +4,22 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Tuesday, September 10 2024
-Last updated on: Tuesday, September 10 2024
+Last updated on: Friday, September 13 2024
 
 This module defines the utilities for customizing or post processing
 Coeus Sphinx Theme.
 
 .. versionadded:: 2024.09.09
+
+.. versionadded:: 2024.09.16
+
+    [1] Added native support for mangling `sphinx_tags` tags with custom
+        embedding for `title-hero` directive.
 """
 
 from __future__ import annotations
 
+import os
 import typing as t
 
 import bs4
@@ -174,3 +180,122 @@ def post_process_build(app: Sphinx, exc: Exception | None) -> None:
         app.verbosity,
     ):
         modify_single_html_document(doc)
+
+
+def add_title_hero(
+    tags: dict[str, str],
+    outdir: str,
+    title: str,
+    extension: t.Any,
+    tags_index_head: str,
+) -> None:
+    """Add `title hero` directive to the tags page.
+
+    .. versionadded:: 2024.09.16
+
+        [1] Added native support for mangling `sphinx_tags` tags with
+            custom embedding for `title-hero` directive.
+    """
+    tags = list(tags.values())
+    if "md" in extension:
+        content = []
+        content.append("(tagoverview)=")
+        content.append("")
+        content.append(f"# {title}")
+        content.append("")
+        content.append("```{toctree}")
+        content.append("---")
+        content.append(f"caption: {tags_index_head}")
+        content.append("maxdepth: 1")
+        content.append("---")
+        for tag in sorted(tags, key=lambda t: t.name):
+            content.append(
+                f"{tag.name} ({len(tag.items)}) <{tag.file_basename}>"
+            )
+        content.append("```")
+        content.append("")
+        filename = os.path.join(outdir, "tagsindex.md")
+    else:
+        content = []
+        content.append(":orphan:")
+        content.append("")
+        content.append(".. _tagoverview:")
+        content.append("")
+        content.append("=" * 79)
+        content.append(title)
+        content.append("=" * 79)
+        content.append("")
+        content.append(".. title-hero::")
+        content.append("    :icon: fa-solid fa-tags")
+        content.append("    :summary: All pages with this tag.")
+        content.append("")
+        content.append(".. toctree::")
+        content.append(f"    :caption: {tags_index_head}")
+        content.append("    :maxdepth: 1")
+        content.append("")
+        for tag in sorted(tags, key=lambda t: t.name):
+            content.append(
+                f"    {tag.name} ({len(tag.items)}) <{tag.file_basename}.rst>"
+            )
+        content.append("")
+        filename = os.path.join(outdir, "tagsindex.rst")
+    with open(filename, "w", encoding="utf8") as f:
+        f.write("\n".join(content))
+
+
+def create_file_with_title_hero(
+    self,
+    items: list[str],
+    extension: t.Any,
+    output_dir: str,
+    srcdir: str,
+    page_title: str,
+    page_header: str,
+) -> None:
+    """Add `title hero` directive to individual page.
+
+    .. versionadded:: 2024.09.16
+
+        [1] Added native support for mangling `sphinx_tags` tags with
+            custom embedding for `title-hero` directive.
+    """
+    tag_page_paths = sorted([i.relpath(srcdir) for i in items])
+    ref_label = f"sphx_tag_{self.file_basename}"
+    content = []
+    if "md" in extension:
+        filename = f"{self.file_basename}.md"
+        content.append(f"({ref_label})=")
+        content.append(f"# {page_title}: {self.name}")
+        content.append("")
+        content.append("```{toctree}")
+        content.append("---")
+        content.append("maxdepth: 1")
+        content.append(f"caption: {page_header}")
+        content.append("---")
+        for path in tag_page_paths:
+            content.append(f"../{path}")
+        content.append("```")
+    else:
+        filename = f"{self.file_basename}.rst"
+        header = page_title
+        content.append(f".. _{ref_label}:")
+        content.append("")
+        content.append("=" * 79)
+        content.append(header)
+        content.append("=" * 79)
+        content.append("")
+        content.append(".. title-hero::")
+        content.append("    :icon: fa-solid fa-tags")
+        content.append("    :summary: All pages with selected tags.")
+        content.append("")
+        content.append(".. toctree::")
+        content.append("    :maxdepth: 1")
+        content.append(f"    :caption: {self.name.upper()}")
+        content.append("")
+        for path in tag_page_paths:
+            content.append(f"    ../{path}")
+    content.append("")
+    with open(
+        os.path.join(srcdir, output_dir, filename), "w", encoding="utf8"
+    ) as f:
+        f.write("\n".join(content))

@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 25 2024
-Last updated on: Thursday, August 29 2024
+Last updated on: Friday, September 13 2024
 -->
 {% block contributors_metadata %}
     {%- if people %}
@@ -31,7 +31,7 @@ Last updated on: Thursday, August 29 2024
                 {% endif %}
                 <div class="project-socials">
                     {% for key, value in socials | dictsort %}
-                    <a class="{{ value[1]|e }}" href="{{ value[0]|e }}" {% if value[0]|e !='#' %}target="_blank"{% endif %}aria-label="Share this article via {{ key|title }} (opens a new tab)"></a>
+                        <a class="{{ value[1]|e }}" href="{{ value[0]|e }}" {% if value[0]|e !='#' %}target="_blank"{% endif %}aria-label="Share this article via {{ key|title }} (opens a new tab)"></a>
                     {% endfor %}
                     <a class="fa-brands fa-github" href="{{ github }}" {% if github !='#' %}target="_blank"{% endif %}aria-label="Check out source on GitHub"></a>
                     <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}" aria-label="Ask author via email" style="font-weight: 900;"></a>
@@ -40,8 +40,21 @@ Last updated on: Thursday, August 29 2024
             </div>
             <div class="contributors-article-metadata">
                 <p class="contributors-metadata-badge" id="readingTime"></p>
-                <p class="contributors-metadata-badge"><i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}</p>
-                <p class="contributors-metadata-badge"><i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>{{ language|d("English") }}</p>
+                <p class="contributors-metadata-badge">
+                    <i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}
+                </p>
+                <div class="language-switcher">
+                    <p class="contributors-metadata-badge">
+                        <i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>
+                        <select id="language-selector" class="no-chevron-select" onchange="switchLanguage()">
+                            {% for code, name in languages.items() %}
+                                <option value="{{ code }}" {% if language == code %}selected{% endif %}>
+                                    {{ name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                </div>
             </div>
         </div>
     {%- endif %}
