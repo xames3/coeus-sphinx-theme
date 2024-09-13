@@ -93,21 +93,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+var supportedLanguages = ['en', 'es'];
+
 function switchLanguage() {
     var selectedLanguage = document.getElementById('language-selector').value;
     var currentUrl = window.location.href;
     var newUrl;
-    if (currentUrl.match(/\/(en|es)\//)) {
-        newUrl = currentUrl.replace(/\/(en|es)\//, '/' + selectedLanguage + '/');
+    var regex = new RegExp('\/(' + supportedLanguages.join('|') + ')\/');
+    var currentLanguage = currentUrl.match(regex);
+
+    if (selectedLanguage !== 'en') {
+        if (currentLanguage) {
+            newUrl = currentUrl.replace(regex, '/' + selectedLanguage + '/');
+        } else {
+            newUrl = currentUrl.endsWith('/') ? currentUrl + selectedLanguage + '/' : currentUrl + '/' + selectedLanguage + '/';
+        }
     } else {
-        newUrl = currentUrl + selectedLanguage + '/';
+        if (currentLanguage) {
+            newUrl = currentUrl.replace(regex, '/');
+        }
     }
-    window.location.href = newUrl;
+    if (newUrl) {
+        window.location.href = newUrl;
+    }
 }
 
 window.addEventListener('DOMContentLoaded', function () {
-    var currentLanguage = window.location.href.match(/\/(en|es)\//);
+    var regex = new RegExp('\/(' + supportedLanguages.join('|') + ')\/');
+    var currentLanguage = window.location.href.match(regex);
     if (currentLanguage) {
         document.getElementById('language-selector').value = currentLanguage[1];
+    } else {
+        document.getElementById('language-selector').value = 'en';
     }
 });
