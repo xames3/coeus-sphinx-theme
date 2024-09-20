@@ -1,0 +1,19 @@
+<!--
+Coeus Sphinx Theme General Video Template
+=========================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Saturday, September 14 2024
+Last updated on: Saturday, September 14 2024
+-->
+{% block general_video_player %}
+    {%- if title %}
+        <h3 style="margin-top: 2.5rem;">{{ title }}</h3>
+    {%- endif -%}
+    <div class="general-video-container">
+        <video width="auto" height="auto" controls>
+            <source src="{{ url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+{% endblock general_video_player %}

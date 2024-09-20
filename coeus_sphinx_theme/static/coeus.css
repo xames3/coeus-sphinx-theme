@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @import url('github.css');
+@import url('xarray.css');
 
 *,
 :after,
@@ -822,6 +823,7 @@ h6:hover>a.headerlink:before {
 
 #content dl dt:not(.sig) {
     font-weight: 600;
+    font-family: 'Courier Prime', monospace;
 }
 
 #content dl dd {
@@ -873,7 +875,6 @@ figure {
 
 #content figcaption>* {
     margin-top: 1.5rem;
-    margin-bottom: 2rem;
 }
 
 #content .fade-image {
@@ -894,6 +895,7 @@ figure {
     margin-right: auto;
 }
 
+.general-video-container,
 .youtube-video-container {
     margin: 2rem auto;
     position: relative;
@@ -903,6 +905,7 @@ figure {
     padding-top: 56.25%;
 }
 
+.general-video-container video,
 .youtube-video-container iframe {
     position: absolute;
     top: 0;
@@ -986,8 +989,7 @@ table tbody td:not(:first-child) {
 
 .footnote {
     line-height: 1.8rem;
-    font-size: 1.1rem;
-    margin-top: 1.5rem;
+    font-size: 1rem;
 }
 
 .footnote:last-child {
@@ -999,7 +1001,7 @@ table tbody td:not(:first-child) {
 }
 
 .footnote>p {
-    display: inline-block;
+    display: contents;
 }
 
 .footnote .footnote-reference,
@@ -1402,6 +1404,10 @@ code {
     position: relative;
     white-space: nowrap;
     color: var(--link);
+}
+
+.xref {
+    font-weight: 600;
 }
 
 code .ge,
@@ -3646,10 +3652,6 @@ details.sd-dropdown .sd-summary-content {
     margin-bottom: 1rem;
 }
 
-.sd-sphinx-override p:last-of-type {
-    margin-bottom: 1.5rem;
-}
-
 .sd-sphinx-override p a span.std-ref {
     font-weight: bold !important;
 }
@@ -3716,12 +3718,13 @@ details.sd-dropdown .sd-summary-content {
     position: relative;
     margin: 0 auto;
     max-width: 85%;
+    margin-bottom: 1rem;
 }
 
 .scbs-carousel-indicators {
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: -1rem;
     left: 0;
     z-index: 2;
     display: flex;

@@ -1,40 +1,51 @@
 """\
-Coeus Sphinx Theme Step Flow Directive
-======================================
+Coeus Sphinx Theme General Video Directive
+==========================================
 
 Author: Akshay Mestry <xa@mes3.dev>
-Created on: Sunday, September 08 2024
-Last updated on: Sunday, September 08 2024
+Created on: Saturday, September 14 2024
+Last updated on: Saturday, September 14 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
-that allows authors and contributors to make a step-by-step tutorial
-carousel with images and captions.
+that allows authors and contributors to embed a public video as part of
+their document.
 
-Coeus Sphinx Theme's step-by-step flow guide is created using the custom
-`step-flow` directive, which is included as part of this theme. The
+Coeus Sphinx Theme's video embedding mechanism is created using the
+custom `video` directive, which is included as part of this theme. The
 directive is implemented below, and is available to use by authors and
 contributors when building the documentation.
 
 .. note::
 
-    SVG images are more suitable for considering as banner or hero
-    icons. Try using icons from `FontAwesome` as they're natively
-    supported by Coeus Sphinx Theme.
+    This module is designed specifically for the Coeus Sphinx Theme,
+    hence the directive may not be available or may be implemented
+    differently for different themes. Please consult the documentation
+    for more information.
 
-.. versionadded:: 2024.09.09
+.. versionadded:: 2024.09.16
 """
 
 from __future__ import annotations
 
+import os
 import typing as t
 
 import docutils.nodes as nodes
 import docutils.parsers.rst as rst
+import jinja2
 
 if t.TYPE_CHECKING:
     from sphinx.writers.html import HTMLTranslator
 
-name: t.Final[str] = "step-flow"
+name: t.Final[str] = "video"
+
+source = os.path.join(
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
+    "video.html.jinja",
+)
+
+with open(source) as f:
+    template = jinja2.Template(f.read())
 
 
 class node(nodes.Element):
@@ -63,19 +74,27 @@ class directive(rst.Directive):
 
         :return: List of `docutils` node(s).
         """
-        element = node("\n".join(self.content), **self.options)
-        self.state.nested_parse(self.content, self.content_offset, element)
-        return [element]
+        self.assert_has_content()
+        self.options["url"] = "\n".join(self.content)
+        attributes: dict[str, str] = {}
+        attributes["text"] = template.render(**self.options)
+        attributes["format"] = "html"
+        attributes["class"] = "general-video-container"
+        return [nodes.raw(**attributes)]
 
 
 def visit(self: HTMLTranslator, node: node) -> None:
     """Node visitor function which maps the node element."""
-    self.body.append(self.starttag(node, "div", CLASS="step-flow-carousel"))
+    pass
 
 
 def depart(self: HTMLTranslator, node: node) -> None:
     """Node departure function which maps the node element."""
-    self.body.append("</div>")
+    pass
 
 
 directive.has_content = True
+directive.option_spec = {
+    "autoplay": rst.directives.flag,
+    "title": rst.directives.unchanged,
+}
