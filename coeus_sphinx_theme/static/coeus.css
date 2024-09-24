@@ -617,7 +617,7 @@ h6:hover>a.headerlink:before {
 .title-hero-icon {
     position: absolute;
     margin-top: 2.5rem;
-    margin-right: -3rem;
+    margin-right: -1rem;
     right: 0;
     box-sizing: border-box;
     font-size: 20rem;
