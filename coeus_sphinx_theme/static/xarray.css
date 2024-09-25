@@ -13,6 +13,7 @@ dl.xr-attrs {
 
 .xr-wrap {
     max-width: max-content !important;
+    margin-bottom: 2rem !important;
 }
 
 .xr-wrap ul:not(.search) {

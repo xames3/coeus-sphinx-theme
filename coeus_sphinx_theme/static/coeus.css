@@ -4006,3 +4006,8 @@ details.sd-dropdown .sd-summary-content {
     margin-right: 0.5rem;
     vertical-align: middle;
 }
+
+#folium-map {
+    border-radius: var(--radius);
+    margin-bottom: 2rem;
+}
