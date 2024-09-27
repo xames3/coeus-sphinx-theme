@@ -631,6 +631,7 @@ h6:hover>a.headerlink:before {
     width: calc(100% - 2rem);
     overflow: hidden;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -681,6 +682,7 @@ h6:hover>a.headerlink:before {
     margin-bottom: 0.5rem;
     overflow: hidden;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -713,6 +715,7 @@ h6:hover>a.headerlink:before {
     scroll-margin: 5rem;
     scroll-snap-align: start;
     scroll-margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
 }
 
 #content section>p {
@@ -937,9 +940,14 @@ blockquote .attribution {
 table {
     font-size: 1.1rem;
     line-height: 1.5rem;
-    margin-bottom: 2rem;
     width: 100%;
     border-collapse: collapse;
+    display: block;
+    max-width: fit-content;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    overflow-x: scroll;
+    white-space: nowrap;
 }
 
 table caption {
@@ -3644,6 +3652,7 @@ details.sd-dropdown .sd-summary-content {
 
 .sd-tab-set {
     margin: 0 !important;
+    margin-bottom: 1.5rem !important;
 }
 
 .sd-sphinx-override p {
@@ -4010,4 +4019,21 @@ details.sd-dropdown .sd-summary-content {
 #folium-map {
     border-radius: var(--radius);
     margin-bottom: 2rem;
+}
+
+.dataframe tbody tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+.dataframe tbody tr th {
+    padding: 0 0.5rem;
+    text-align: right;
+}
+
+.dataframe thead th {
+    text-align: left !important;
+}
+
+table.dataframe + p {
+    margin-bottom: 1.5rem;
 }
