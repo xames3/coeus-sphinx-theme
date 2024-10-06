@@ -4034,6 +4034,47 @@ details.sd-dropdown .sd-summary-content {
     text-align: left !important;
 }
 
-table.dataframe + p {
+table.dataframe+p {
     margin-bottom: 1.5rem;
+}
+
+.navbar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover {
+    font-weight: 500;
+}
+
+.navbar-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--background);
+    min-width: 1rem;
+    margin-left: -0.75rem;
+    margin-top: 1rem;
+    width: max-content;
+    z-index: 1;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.navbar-dropdown-content a {
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    display: block;
+}
+
+.navbar-dropdown-content a:hover {
+    background-color: #147c9c17;
+}
+
+.navbar-dropdown.active .navbar-dropdown-content {
+    display: block;
 }

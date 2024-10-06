@@ -9,12 +9,19 @@ Last updated on: Monday, August 26 2024
 {% block navigation_bar_links %}
     {%- if navbar_links|tobool -%}
         <nav class="flex md:hidden flex-col font-medium mt-4">
-            {%- for text, url in navbar_links.items() %}
-                {%- if url.startswith("http") %}
-                    <a href="{{ url }}" rel="nofollow noopener">{{ text }}</a>
-                {%- else %}
-                    <a href="{{ pathto(url) }}">{{ text }}</a>
-                {%- endif %}
+            {%- for caption, pages in navbar_links.items() %}
+                <div class="dropdown">
+                    <button class="dropbtn">{{ caption }}</button>
+                    <div class="dropdown-content">
+                        {%- for title, url in pages.items() %}
+                            {%- if url.startswith("http") %}
+                                <a href="{{ url }}" rel="nofollow noopener">{{ title }}</a>
+                            {%- else %}
+                                <a href="{{ pathto(url) }}">{{ title }}</a>
+                            {%- endif %}
+                        {%- endfor %}
+                    </div>
+                </div>
             {%- endfor %}
         </nav>
     {%- endif %}

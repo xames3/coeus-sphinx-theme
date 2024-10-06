@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Page Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Thursday, September 05 2024
+Last updated on: Sunday, October 06 2024
 -->
 {%- extends "layout.html" -%}
 {%- block body %}
@@ -18,12 +18,10 @@ Last updated on: Thursday, September 05 2024
                 {%- if pagename != master_doc and theme_show_breadcrumbs|tobool %}
                     {%- include "breadcrumbs.html.jinja" %}
                 {%- endif %}
-                <div id="content" role="main" class="page-content">
-                    {{ body }}
-                </div>
+                <div id="content" role="main" class="page-content">{{ body }}</div>
             </div>
             {%- block body_after %}{%- endblock body_after -%}
                 {%- if show_previous_next_pages|tobool %}
-                    {%- include "previous_next.html" %}
+                    {%- include "previous_next.html.jinja" %}
                 {%- endif %}
             {%- endblock body %}

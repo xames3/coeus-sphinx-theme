@@ -127,3 +127,17 @@ window.addEventListener('DOMContentLoaded', function () {
         document.getElementById('language-selector').value = 'en';
     }
 });
+
+const dropdowns = document.querySelectorAll('.navbar-dropdown');
+dropdowns.forEach(dropdown => {
+    const button = dropdown.querySelector('.dropbtn');
+    button.addEventListener('click', () => {
+        dropdowns.forEach(d => d.classList.remove('active'));
+        dropdown.classList.toggle('active');
+    });
+});
+document.addEventListener('click', function (event) {
+    if (!event.target.closest('.navbar-dropdown')) {
+        dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+    }
+});

@@ -1,10 +1,9 @@
 <!--
 Coeus Sphinx Theme Main Layout Template
 =======================================
-
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Thursday, September 05 2024
+Last updated on: Sunday, October 06 2024
 -->
 {%- set lang_attr = "en" if language == None else (language|replace('_','-')) -%}
 {%- if not embedded and docstitle -%}
@@ -45,55 +44,54 @@ Last updated on: Thursday, September 05 2024
             {%- endif %}
         {%- endblock linktags %}
         {%- block extrahead %}{%- endblock extrahead %}
-        </head>
-        <body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
-            {%- if sidebars|length > 0 %}
-                <div x-cloak="x-cloak" x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false">
-                </div>
-            {%- endif %}
-            <div id="page" class="relative flex flex-col min-h-screen">
-                {%- block header %}
-                    {%- include "navbar.html" %}
-                {%- endblock header %}
-                {%- block announcement %}
-                    {% if announcement %}
-						<div class="announcement-wrapper md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
-                            <span>{{ announcement }}</span>
-                        </div>
-                    {% endif %}
-                {%- endblock announcement %}
-                <div class="flex-1">
-                    {%- set only_main_nav = sidebars == ["navbar_links.html.jinja"] %}
-                    {%- if not only_main_nav and sidebars|length > 0 -%}
-                        <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
-                        {%- else -%}
-                            <div class="container flex-1 items-start md:grid">
-                            {% endif %}
-                            {%- block sidebar %}
-                                {%- if sidebars|length > 0 %}
-                                    {%- include "sidebar.html.jinja" %}
-                                {%- endif %}
-                            {%- endblock sidebar %}
-                            {%- block main %}
-                                <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
-                                    {% if icon %}
-										<div class="title-hero-container" style="background-image: {{ gradient|d('linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)') }};">
-											<span class="{{ icon }} title-hero-icon"></span>
-											<div class="title-hero-content"></div>
-										</div>
-                                    {% endif %}
-                                    {%- block body %}{%- endblock %}
-                                    </main>
-                                {%- endblock main %}
-                            </div>
-                        </div>
-                        {%- block footer %}
-                            {%- include "footer.html.jinja" %}
-                        {%- endblock footer %}
+    </head>
+    <body x-data="{ showSidebar: false }" class="min-h-screen font-sans antialiased bg-background text-foreground" :class="{ 'overflow-hidden': showSidebar }">
+        {%- if sidebars|length > 0 %}
+            <div x-cloak="x-cloak" x-show="showSidebar" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" @click.self="showSidebar = false"></div>
+        {%- endif %}
+        <div id="page" class="relative flex flex-col min-h-screen">
+            {%- block header %}
+                {%- include "navbar.html.jinja" %}
+            {%- endblock header %}
+            {%- block announcement %}
+                {% if announcement %}
+                    <div class="announcement-wrapper md:grid md:grid-cols-[220px_minmax(0,1fr) ] lg:grid-cols-[240px_minmax(0,1fr)]">
+                        <span>{{ announcement }}</span>
                     </div>
-                    {% block scripts %}
-                        {%- for js in script_files %}{{ js_tag(js) }}{%- endfor %}
-                    {% endblock scripts %}
+                {% endif %}
+            {%- endblock announcement %}
+            <div class="flex-1">
+                {%- set only_main_nav = sidebars == ["navbar_links.html.jinja"] %}
+                {%- if not only_main_nav and sidebars|length > 0 -%}
+                <div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] lg:grid-cols-[240px_minmax(0,1fr)]">
+                    {%- else -%}
+                    <div class="container flex-1 items-start md:grid">
+                    {% endif %}
+                    {%- block sidebar %}
+                        {%- if sidebars|length > 0 %}
+                            {%- include "sidebar.html.jinja" %}
+                        {%- endif %}
+                    {%- endblock sidebar %}
+                    {%- block main %}
+                        <main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr] border-r">
+                            {% if icon %}
+                                <div class="title-hero-container" style="background-image: {{ gradient|d(" linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)") }};"="linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)") }};"">
+                                    <span class="{{ icon }} title-hero-icon"></span>
+                                    <div class="title-hero-content"></div>
+                                </div>
+                            {% endif %}
+                            {%- block body %}{%- endblock %}
+                        </main>
+                    {%- endblock main %}
+                    </div>
                 </div>
-            </body>
-        </html>
+                {%- block footer %}
+                    {%- include "footer.html.jinja" %}
+                {%- endblock footer %}
+            </div>
+            {% block scripts %}
+                {%- for js in script_files %}{{ js_tag(js) }}{%- endfor %}
+            {% endblock scripts %}
+        </div>
+    </body>
+</html>

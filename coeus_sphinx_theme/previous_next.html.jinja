@@ -1,0 +1,19 @@
+<!--
+Coeus Sphinx Theme Page Buttons Template
+========================================
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Monday, August 26 2024
+Last updated on: Sunday, October 06 2024
+-->
+<div class="items-center gap-4 previous-next">
+    <div class="ml-auto" {% if not prev %}style="opacity: 0.3;"{% endif %}>
+        <a href="{{ prev.link|e }}" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4">
+            <span style="margin-top: 0.3rem;"><i class="fa fa-chevron-left" style="font-size: 1.5rem;"></i></span>
+        </a>
+    </div>
+    <div class="mr-auto" {% if not next %}style="opacity: 0.3;"{% endif %}>
+        <a href="{{ next.link|e }}" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors border border-input hover:bg-accent hover:text-accent-foreground py-2 px-4">
+            <span style="margin-top: 0.3rem;"><i class="fa fa-chevron-right" style="font-size: 1.5rem;"></i></span>
+        </a>
+    </div>
+</div>

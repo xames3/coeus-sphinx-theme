@@ -1,0 +1,16 @@
+<!--
+Coeus Sphinx Theme Search Box Template
+======================================
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Monday, August 26 2024
+Last updated on: Sunday, October 06 2024
+-->
+<form id="searchbox" action="{{ pathto('search') }}" method="get" class="relative flex items-center group" @keydown.k.window.meta="$refs.search.focus()">
+    <input x-ref="search"
+           name="q"
+           id="search-input"
+           type="search"
+           aria-label="Search the docs"
+           placeholder="{{ _('Search') }}"
+           class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-5rem text-sm text-muted-foreground md:w-40 lg:w-64" />
+</form>
