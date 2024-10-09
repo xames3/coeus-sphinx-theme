@@ -4078,3 +4078,7 @@ table.dataframe+p {
 .navbar-dropdown.active .navbar-dropdown-content {
     display: block;
 }
+
+.jupyterlite-embed {
+    border-radius: 15px;
+}

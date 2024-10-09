@@ -1,0 +1,13 @@
+<!--
+Coeus Sphinx Theme Jupyter Notebook Embedding Template
+======================================================
+
+Author: Akshay Mestry <xa@mes3.dev>
+Created on: Wednesday, October 09 2024
+Last updated on: Wednesday, October 09 2024
+-->
+{% block jupyterlite_notebook_embed %}
+    <div class="jupyter-embed">
+        <iframe src="{{ url }}" width="{{ width|d('100%') }}" height="{{ height|d('600px') }}"></iframe>
+    </div>
+{% endblock jupyterlite_notebook_embed %}

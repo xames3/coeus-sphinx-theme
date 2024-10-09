@@ -4,7 +4,7 @@ Coeus Sphinx Theme
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, August 11 2024
-Last updated on: Friday, September 13 2024
+Last updated on: Wednesday, October 09 2024
 
 This module defines the extensions for Coeus Sphinx Theme, providing
 utilities and configuration for integrating a custom theme into Sphinx
@@ -122,6 +122,11 @@ documentation.
 
     [1] The `language` option is now optional and is not enforced in
         the `contributors` directive.
+
+.. versionadded:: 2024.10.10
+
+    [1] Added support for embedding Jupyter Lite/Notebooks inside the
+        documentation using the `notebook` directive.
 """
 
 from __future__ import annotations
@@ -145,7 +150,7 @@ if t.TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 theme_name: t.Final[str] = "coeus_sphinx_theme"
-theme_version: str = "2024.09.16"
+theme_version: str = "2024.10.10"
 
 natively_supported_extensions: t.Sequence[str] = (
     "sphinx_carousel.carousel",
