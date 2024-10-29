@@ -3,59 +3,81 @@ Coeus Sphinx Theme Contributors Template
 ========================================
 
 Author: Akshay Mestry <xa@mes3.dev>
-Created on: Sunday, August 25 2024
-Last updated on: Friday, September 13 2024
+Created on: Tuesday, October 29 2024
+Last updated on: Tuesday, October 29 2024
 -->
 {% block contributors_metadata %}
-    {%- if people %}
-        {%- set prefix = prefix|d("Published by") -%}
-        {%- set names = people | map(attribute="name") | list -%}
-        {%- set emails = people | map(attribute="email") | list -%}
-        {%- set contributors = names | length -%}
-        {%- set limit = limit if limit and limit > 1 and limit - 1 < contributors else 2 -%}
-        <div class="container flex-1 px-0 my-8">
-            <p class="contributors-timestamp">{{ timestamp|d("Updated Today") }}</p>
-            <div class="contributors-publisher">
-                {% if contributors == 1 %}
-                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a></span>
-                {% elif contributors == 2 %}
-                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a> and <a href="mailto:{{ emails[1] }}?subject={{ subject }}" aria-label="Ask {{ names[1]|safe }} via email">{{ names[1]|safe }}</a></span>
-                {% else %}
-                    <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" aria-label="Ask author via email">{{ names[0]|safe }}</a>, <a href="mailto:{{ emails[1] }}?subject={{ subject }}" aria-label="Ask author via email">{{ names[1]|safe }}</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#peopleModal">{{ contributors - limit }}</a> other
-                        {% if contributors - limit == 1 %}
-                            contributor
-                        {% else %}
-                            contributors
-                        {% endif %}
-                    </span>
-                {% endif %}
-                <div class="project-socials">
-                    {% for key, value in socials | dictsort %}
-                        <a class="{{ value[1]|e }}" href="{{ value[0]|e }}" {% if value[0]|e !='#' %}target="_blank"{% endif %}aria-label="Share this article via {{ key|title }} (opens a new tab)"></a>
+{%- if people %}
+{%- set prefix = prefix|d("Published by") -%}
+{%- set names = people | map(attribute="name") | list -%}
+{%- set emails = people | map(attribute="email") | list -%}
+{%- set usernames = people | map(attribute="github") | list -%}
+{%- set headshots = people | map(attribute="headshot") | list -%}
+{%- set contributors = names | length -%}
+{%- set limit = limit if limit and limit > 1 and limit - 1 < contributors else 2 -%}
+<div class="contributors-wrapper">
+    <p class="contributors-timestamp">{{ timestamp|d("Updated Today") }}</p>
+    <div class="contributors-publisher">
+        {% if contributors == 1 %}
+        <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" class="contributor-name"
+                data-index="0" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a></span>
+        {% elif contributors == 2 %}
+        <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" class="contributor-name"
+                data-index="0" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a> and <a
+                href="mailto:{{ emails[1] }}?subject={{ subject }}" class="contributor-name" data-index="1"
+                aria-label="Ask {{ names[1]|safe }} via email">{{ names[1]|safe }}</a></span>
+        {% else %}
+        <span>{{ prefix }} <a href="mailto:{{ emails[0] }}?subject={{ subject }}" class="contributor-name"
+                data-index="0" aria-label="Ask {{ names[0]|safe }} via email">{{ names[0]|safe }}</a>, <a
+                href="mailto:{{ emails[1] }}?subject={{ subject }}" class="contributor-name" data-index="1"
+                aria-label="Ask {{ names[1]|safe }} via email">{{ names[1]|safe }}</a> and <a href="#"
+                data-bs-toggle="modal" data-bs-target="#">{{ contributors - limit }}</a> other
+            {% if contributors - limit == 1 %}
+            contributor
+            {% else %}
+            contributors
+            {% endif %}
+        </span>
+        {% endif %}
+        <div class="project-socials">
+            {% for key, value in socials | dictsort %}
+            <a class="{{ value[1]|e }}" href="{{ value[0]|e }}" {% if value[0]|e !='#' %}target="_blank" {% endif
+                %}aria-label="Share this article via {{ key|title }} (opens a new tab)"></a>
+            {% endfor %}
+            <a class="fa-brands fa-github" href="{{ github }}" {% if github !='#' %}target="_blank" {% endif
+                %}aria-label="Check out source on GitHub"></a>
+            <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}"
+                aria-label="Ask team via email" style="font-weight: 900;"></a>
+        </div>
+    </div>
+    <div class="contributors-article-metadata">
+        <p class="contributors-metadata-badge" id="readingTime"></p>
+        <p class="contributors-metadata-badge">
+            <i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}
+        </p>
+        <div class="language-switcher">
+            <p class="contributors-metadata-badge">
+                <i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>
+                <select id="language-selector" class="no-chevron-select" onchange="switchLanguage()">
+                    {% for code, name in languages.items() %}
+                    <option value="{{ code }}" {% if language==code %}selected{% endif %}>
+                        {{ name }}
+                    </option>
                     {% endfor %}
-                    <a class="fa-brands fa-github" href="{{ github }}" {% if github !='#' %}target="_blank"{% endif %}aria-label="Check out source on GitHub"></a>
-                    <a class="fa-solid fa-envelope" href="mailto:{{ email }}?subject={{ subject }}" aria-label="Ask author via email" style="font-weight: 900;"></a>
-                    <a class="fa-solid fa-link copylink" href="#" @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied to clipboard'); setTimeout(() => $el.setAttribute('data-tooltip', 'Copy article URL to clipboard'), 2000)" aria-label="Copy article URL to clipboard" style="font-weight: 900;"></a>
-                </div>
-            </div>
-            <div class="contributors-article-metadata">
-                <p class="contributors-metadata-badge" id="readingTime"></p>
-                <p class="contributors-metadata-badge">
-                    <i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}
-                </p>
-                <div class="language-switcher">
-                    <p class="contributors-metadata-badge">
-                        <i class="fa-solid fa-language" style="padding-right: 0.3rem;"></i>
-                        <select id="language-selector" class="no-chevron-select" onchange="switchLanguage()">
-                            {% for code, name in languages.items() %}
-                                <option value="{{ code }}" {% if language == code %}selected{% endif %}>
-                                    {{ name }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </p>
-                </div>
+                </select>
+            </p>
+        </div>
+    </div>
+    {% for name in names %}
+        <div id="contributors-publisher-modal-{{ loop.index0 }}" class="contributors-publisher-modal">
+            <div>
+                <img src="{{ headshots[loop.index0] }}" alt="{{ name }}'s photo">
+                <p><strong>{{ name }}</strong></p>
+                <p>Email: <a href="mailto:{{ emails[loop.index0] }}">{{ emails[loop.index0] }}</a></p>
+                <p>GitHub: <a href="{{ usernames[loop.index0] }}" target="_blank">{{ usernames[loop.index0] }}</a></p>
             </div>
         </div>
-    {%- endif %}
+    {% endfor %}
+</div>
+{%- endif %}
 {% endblock contributors_metadata %}

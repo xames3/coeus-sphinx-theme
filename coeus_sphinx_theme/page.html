@@ -4,24 +4,19 @@ Coeus Sphinx Theme Main Page Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Sunday, October 06 2024
+Last updated on: Tuesday, October 29 2024
 -->
-{%- extends "layout.html" -%}
+{%- extends 'layout.html' -%}
 {%- block body %}
-    {%- set only_main_nav = sidebars == ["navbar_links.html.jinja"] %}
-    {%- if not only_main_nav and sidebars|length > 0 %}
-        <div class="w-full min-w-0 mx-auto">
-        {%- else %}
-            <div class="w-full min-w-0 mx-auto max-w-prose">
-            {%- endif %}
-            {%- block body_before %}{%- endblock body_before -%}
-                {%- if pagename != master_doc and theme_show_breadcrumbs|tobool %}
-                    {%- include "breadcrumbs.html.jinja" %}
-                {%- endif %}
-                <div id="content" role="main" class="page-content">{{ body }}</div>
-            </div>
-            {%- block body_after %}{%- endblock body_after -%}
-                {%- if show_previous_next_pages|tobool %}
-                    {%- include "previous_next.html.jinja" %}
-                {%- endif %}
-            {%- endblock body %}
+{%- set only_header = sidebars == ['navbar_links.html.jinja'] %}
+{%- if not only_header and sidebars|length > 0 %}
+<div class="inner-content-wrapper">
+    {%- endif %}
+    {%- if pagename != master_doc and theme_show_breadcrumbs|tobool %}
+    {%- include 'breadcrumbs.html.jinja' %}
+    {%- endif %}
+    <div id="content" role="main">{{ body }}</div>
+    {%- if show_previous_next_pages|tobool %}
+    {%- include 'previous_next.html.jinja' %}
+    {%- endif %}
+    {%- endblock body %}

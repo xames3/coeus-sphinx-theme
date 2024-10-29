@@ -141,3 +141,18 @@ document.addEventListener('click', function (event) {
         dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
     }
 });
+
+document.querySelectorAll('.contributor-name').forEach(element => {
+    element.addEventListener('mouseenter', function (event) {
+        const index = event.target.getAttribute('data-index');
+        const modal = document.getElementById('contributors-publisher-modal-' + index);
+        modal.style.display = 'block';
+
+        document.addEventListener('click', function handleOutsideClick(e) {
+            if (!modal.contains(e.target) && !element.contains(e.target)) {
+                modal.style.display = 'none';
+                document.removeEventListener('click', handleOutsideClick);
+            }
+        });
+    });
+});
