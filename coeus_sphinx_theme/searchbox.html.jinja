@@ -3,7 +3,7 @@ Coeus Sphinx Theme Search Box Template
 ======================================
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Tuesday, October 29 2024
+Last updated on: Wednesday, October 30 2024
 -->
 <div x-data="{ isOpen: false }">
     <button @click="isOpen = !isOpen; $nextTick(() => $refs.search.focus())" aria-label="Toggle search">
@@ -12,6 +12,6 @@ Last updated on: Tuesday, October 29 2024
     <form x-show="isOpen" x-transition @click.outside="isOpen = false" id="searchbox" action="{{ pathto('search') }}"
         method="get" class="searchbox">
         <input x-ref="search" name="q" id="search-input" type="search" aria-label="Search the docs"
-            placeholder="{{ _('Search documentation...') }}" class="glass-bevel" />
+            placeholder="{{ _('Search documentation') }}" class="glass-bevel" />
     </form>
 </div>
