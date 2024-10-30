@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
 
     if (totalWordCount > 0) {
         const readingTime = Math.ceil(totalWordCount / wordsPerMinute);
-        document.getElementById('readingTime').innerHTML = `<i class="fa-solid fa-clock" style="padding-right: 0.3rem;"></i>${readingTime} minutes`;
+        document.getElementById('readingTime').innerHTML = `<i class="fa-regular fa-hourglass-start" style="padding-right: 0.3rem;"></i>${readingTime} minutes`;
     }
 });
 
@@ -128,16 +128,16 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-const dropdowns = document.querySelectorAll('.navbar-dropdown');
+const dropdowns = document.querySelectorAll('.header-dropdown');
 dropdowns.forEach(dropdown => {
-    const button = dropdown.querySelector('.dropbtn');
+    const button = dropdown.querySelector('.header-dropdown button');
     button.addEventListener('click', () => {
         dropdowns.forEach(d => d.classList.remove('active'));
         dropdown.classList.toggle('active');
     });
 });
 document.addEventListener('click', function (event) {
-    if (!event.target.closest('.navbar-dropdown')) {
+    if (!event.target.closest('.header-dropdown')) {
         dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
     }
 });

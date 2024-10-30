@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Friday, September 13 2024
+Last updated on: Wednesday, October 23 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -62,11 +62,17 @@ contributors when building the documentation.
 .. versionchanged:: 2024.09.16
 
     [1] The `language` option is now optional and is not enforced.
+
+.. versionadded:: 2024.11.01
+
+    [1] Added support for on hover modal popup for contributors.
 """
 
 from __future__ import annotations
 
 import os
+import re
+import shutil
 import typing as t
 
 import docutils.nodes as nodes
@@ -82,6 +88,9 @@ source = os.path.join(
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..")),
     "contributors.html.jinja",
 )
+
+options_re: t.Pattern = re.compile(r"(-\s:.*:\s)(.*)")
+relpath_re: t.Pattern = re.compile(r"^(\.|\/)*")
 
 socials: dict[str, str] = {
     "twitter": "fa-brands fa-x-twitter",
@@ -120,18 +129,38 @@ class directive(rst.Directive):
         encountered.
 
         :return: List of `docutils` node(s).
+
+        .. versionadded:: 2024.11.01
+
+            [1] Added support for on hover modal popup for contributors.
         """
         self.assert_has_content()
+        env = self.state.document.settings.env
+        build = os.path.dirname(env.doctreedir)
+        person = 0
+        people = [{}]
+        for content in self.content:
+            if not content:
+                people.append({})
+                person += 1
+            else:
+                if (matches := options_re.match(content)) is not None:
+                    pattern, value = matches.groups()
+                    match pattern.strip(" -:"):
+                        case "name":
+                            people[person]["name"] = value
+                        case "email":
+                            people[person]["email"] = value
+                        case "github":
+                            people[person]["github"] = value
+                        case "headshot":
+                            rp = relpath_re.match(value).group()
+                            sd = os.path.join(env.srcdir, value.lstrip("./"))
+                            dd = os.path.join("_images", os.path.basename(sd))
+                            people[person]["headshot"] = os.path.join(rp, dd)
+                            shutil.copyfile(sd, os.path.join(build, dd))
         element = node("\n".join(self.content), **self.options)
-        content = [_.split("- ")[-1].strip() for _ in self.content if _]
-        element.attributes["people"] = [
-            {
-                "name": content[idx],
-                "email": content[idx + 1],
-                "github": content[idx + 2],
-            }
-            for idx in range(0, len(content), 3)
-        ]
+        element.attributes["people"] = people
         return [element]
 
 

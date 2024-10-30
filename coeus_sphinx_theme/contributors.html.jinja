@@ -53,7 +53,7 @@ Last updated on: Tuesday, October 29 2024
     <div class="contributors-article-metadata">
         <p class="contributors-metadata-badge" id="readingTime"></p>
         <p class="contributors-metadata-badge">
-            <i class="fa-solid fa-location-dot" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}
+            <i class="fa-solid fa-map-pin" style="padding-right: 0.3rem;"></i>{{ location|d("Earth") }}
         </p>
         <div class="language-switcher">
             <p class="contributors-metadata-badge">
@@ -70,11 +70,16 @@ Last updated on: Tuesday, October 29 2024
     </div>
     {% for name in names %}
         <div id="contributors-publisher-modal-{{ loop.index0 }}" class="contributors-publisher-modal">
-            <div>
+            <div style="display: flex; gap: 0.25rem;">
                 <img src="{{ headshots[loop.index0] }}" alt="{{ name }}'s photo">
-                <p><strong>{{ name }}</strong></p>
-                <p>Email: <a href="mailto:{{ emails[loop.index0] }}">{{ emails[loop.index0] }}</a></p>
-                <p>GitHub: <a href="{{ usernames[loop.index0] }}" target="_blank">{{ usernames[loop.index0] }}</a></p>
+                <div class="contributor-identity">
+                    <p><strong>{{ name }}</strong></p>
+                    <div class="contributor-reachout-details">
+                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="mailto:{{ emails[loop.index0] }}"><i class="fa-solid fa-envelope" style="padding-right: 0.3rem;"></i>Email</a></p>
+                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ usernames[loop.index0] }}" target="_blank"><i class="fa-brands fa-github" style="padding-right: 0.3rem;"></i>GitHub</a></p>
+                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="#" target="_blank"><i class="fa-brands fa-orcid" style="padding-right: 0.3rem;"></i>ORCID</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     {% endfor %}
