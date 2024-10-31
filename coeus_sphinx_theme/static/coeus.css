@@ -3562,7 +3562,7 @@ details.sd-dropdown .sd-summary-chevron-right::before {
     display: inline-block;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
-    font-size: 2.25rem !important;
+    font-size: 2.15rem !important;
     font: var(--fa-font-solid);
 }
 
@@ -3710,7 +3710,7 @@ details.sd-dropdown .sd-summary-content {
 }
 
 .scbs-carousel-control-prev {
-    left: -5rem;
+    left: -4rem;
 }
 
 .scbs-carousel-control-next,
@@ -3727,7 +3727,7 @@ details.sd-dropdown .sd-summary-content {
 }
 
 .scbs-carousel-control-next {
-    right: -5rem;
+    right: -4rem;
 }
 
 .scbs-carousel-control-prev-icon {
@@ -3742,6 +3742,8 @@ details.sd-dropdown .sd-summary-content {
 
 .scbs-carousel-item img {
     border-radius: var(--main-rounded-corner-radius);
+    transition: none !important;
+    transform: scale(1) !important;
 }
 
 .headshots-grid {
