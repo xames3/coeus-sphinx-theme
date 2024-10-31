@@ -4,7 +4,7 @@ Coeus Sphinx Theme Contributors Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, August 14 2024
-Last updated on: Wednesday, October 23 2024
+Last updated on: Wednesday, October 30 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -66,6 +66,9 @@ contributors when building the documentation.
 .. versionadded:: 2024.11.01
 
     [1] Added support for on hover modal popup for contributors.
+    [2] Added support for proper resolving images over `http/s`.
+    [3] Added support for optional extra social media connections like
+        ORCID, LinkedIn, Twitter and YouTube.
 """
 
 from __future__ import annotations
@@ -133,10 +136,15 @@ class directive(rst.Directive):
         .. versionadded:: 2024.11.01
 
             [1] Added support for on hover modal popup for contributors.
+            [2] Added support for proper resolving images over `http/s`.
+            [3] Added support for optional extra social media
+                connections like ORCID, LinkedIn, Twitter and YouTube.
         """
         self.assert_has_content()
-        env = self.state.document.settings.env
-        build = os.path.dirname(env.doctreedir)
+        e = self.state.document.settings.env
+        build = os.path.dirname(e.doctreedir)
+        if not os.path.exists((images := os.path.join(build, "_images"))):
+            os.makedirs(images, exist_ok=True)
         person = 0
         people = [{}]
         for content in self.content:
@@ -151,14 +159,28 @@ class directive(rst.Directive):
                             people[person]["name"] = value
                         case "email":
                             people[person]["email"] = value
+                        case "headshot":
+                            if not value.startswith(("http://", "https://")):
+                                r = relpath_re.match(value).group()
+                                s = os.path.join(e.srcdir, value.lstrip("./"))
+                                _ = os.path.basename(s)
+                                d = os.path.join("_images", _)
+                                people[person]["headshot"] = os.path.join(r, d)
+                                shutil.copyfile(s, os.path.join(build, d))
+                            else:
+                                people[person]["headshot"] = value
                         case "github":
                             people[person]["github"] = value
-                        case "headshot":
-                            rp = relpath_re.match(value).group()
-                            sd = os.path.join(env.srcdir, value.lstrip("./"))
-                            dd = os.path.join("_images", os.path.basename(sd))
-                            people[person]["headshot"] = os.path.join(rp, dd)
-                            shutil.copyfile(sd, os.path.join(build, dd))
+                        case "orcid":
+                            people[person]["orcid"] = value
+                        case "linkedin":
+                            people[person]["linkedin"] = value
+                        case "twitter":
+                            people[person]["twitter"] = value
+                        case "youtube":
+                            people[person]["youtube"] = value
+                        case "status":
+                            people[person]["status"] = value
         element = node("\n".join(self.content), **self.options)
         element.attributes["people"] = people
         return [element]

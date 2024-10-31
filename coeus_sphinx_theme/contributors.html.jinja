@@ -4,15 +4,20 @@ Coeus Sphinx Theme Contributors Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Tuesday, October 29 2024
-Last updated on: Tuesday, October 29 2024
+Last updated on: Wednesday, October 30 2024
 -->
 {% block contributors_metadata %}
 {%- if people %}
 {%- set prefix = prefix|d("Published by") -%}
 {%- set names = people | map(attribute="name") | list -%}
 {%- set emails = people | map(attribute="email") | list -%}
-{%- set usernames = people | map(attribute="github") | list -%}
+{%- set githubs = people | map(attribute="github") | list -%}
 {%- set headshots = people | map(attribute="headshot") | list -%}
+{%- set orcids = people | map(attribute="orcid") | list -%}
+{%- set linkedins = people | map(attribute="linkedin") | list -%}
+{%- set twitters = people | map(attribute="twitter") | list -%}
+{%- set youtubes = people | map(attribute="youtube") | list -%}
+{%- set statuses = people | map(attribute="status") | list -%}
 {%- set contributors = names | length -%}
 {%- set limit = limit if limit and limit > 1 and limit - 1 < contributors else 2 -%}
 <div class="contributors-wrapper">
@@ -71,13 +76,29 @@ Last updated on: Tuesday, October 29 2024
     {% for name in names %}
         <div id="contributors-publisher-modal-{{ loop.index0 }}" class="contributors-publisher-modal">
             <div style="display: flex; gap: 0.25rem;">
-                <img src="{{ headshots[loop.index0] }}" alt="{{ name }}'s photo">
+                <img src="{{ headshots[loop.index0]|d('https://static.thenounproject.com/png/4035892-200.png') }}" alt="{{ name }}'s photo">
                 <div class="contributor-identity">
                     <p>{{ name }}</p>
+                    <p style="font-weight: 400; font-size: 0.85rem; color: gray; margin-top: -0.25rem; margin-bottom: 0.25rem;">{{ statuses[loop.index0]|d('Open Science Contributor') }}</p>
                     <div class="contributor-reachout-details">
-                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="mailto:{{ emails[loop.index0] }}"><i class="fa-solid fa-envelope" style="padding-right: 0.3rem;"></i>Email</a></p>
-                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ usernames[loop.index0] }}" target="_blank"><i class="fa-brands fa-github" style="padding-right: 0.3rem;"></i>GitHub</a></p>
-                        <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="#" target="_blank"><i class="fa-brands fa-orcid" style="padding-right: 0.3rem;"></i>ORCID</a></p>
+                        {% if emails[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="mailto:{{ emails[loop.index0] }}"><i class="fa-solid fa-envelope" style="padding-right: 0.3rem;"></i>Email</a></p>
+                        {% endif %}
+                        {% if githubs[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ githubs[loop.index0] }}" target="_blank"><i class="fa-brands fa-github" style="padding-right: 0.3rem;"></i>GitHub</a></p>
+                        {% endif %}
+                        {% if orcids[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ orcids[loop.index0] }}" target="_blank"><i class="fa-brands fa-orcid" style="padding-right: 0.3rem;"></i>ORCID</a></p>
+                        {% endif %}
+                        {% if linkedins[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ linkedins[loop.index0] }}" target="_blank"><i class="fa-brands fa-linkedin" style="padding-right: 0.3rem;"></i>LinkedIn</a></p>
+                        {% endif %}
+                        {% if twitters[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ twitters[loop.index0] }}" target="_blank"><i class="fa-brands fa-x-twitter" style="padding-right: 0.3rem;"></i>Twitter</a></p>
+                        {% endif %}
+                        {% if youtubes[loop.index0] %}
+                            <p class="contributors-metadata-badge" style="margin-right: 0.25rem;"><a href="{{ youtubes[loop.index0] }}" target="_blank"><i class="fa-brands fa-youtube" style="padding-right: 0.3rem;"></i>YouTube</a></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
