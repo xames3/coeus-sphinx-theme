@@ -3,7 +3,7 @@ Coeus Sphinx Theme Main Layout Template
 =======================================
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Tuesday, October 29 2024
-Last updated on: Tuesday, October 29 2024
+Last updated on: Thursday, October 30 2024
 -->
 {%- set lang_attr = 'en' if language == None else (language|replace('_','-')) -%}
 {%- if not embedded and docstitle -%}
@@ -87,6 +87,11 @@ Last updated on: Tuesday, October 29 2024
                 {%- block body %}{%- endblock %}
             </main>
             {%- endblock main %}
+            {%- block mini_sidebar %}
+            {%- if display_toc %}
+            {%- include "mini_sidebar.html.jinja" %}
+            {%- endif %}
+            {%- endblock mini_sidebar %}
         </div>
     </div>
     {%- block footer %}

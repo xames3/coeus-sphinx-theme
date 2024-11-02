@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
 
     if (totalWordCount > 0) {
         const readingTime = Math.ceil(totalWordCount / wordsPerMinute);
-        document.getElementById('readingTime').innerHTML = `<i class="fa-regular fa-hourglass-start" style="padding-right: 0.3rem;"></i>${readingTime} minutes`;
+        document.getElementById('readingTime').innerHTML = `<i class='fa-regular fa-hourglass-start' style='padding-right: 0.3rem;'></i>${readingTime} minutes`;
     }
 });
 
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('details.sd-dropdown').forEach((dropdown) => {
     const summary = dropdown.querySelector('summary');
     const content = dropdown.querySelector('.sd-summary-content');
-    content.style.transition = 'max-height 0.5s ease-in-out';
+    content.style.transition = 'max-height 1s ease';
     content.style.overflow = 'hidden';
     content.style.maxHeight = '0';
     summary.addEventListener('click', (event) => {
@@ -68,7 +68,7 @@ document.querySelectorAll('details.sd-dropdown').forEach((dropdown) => {
         const isOpen = dropdown.hasAttribute('open');
         if (isOpen) {
             content.style.maxHeight = '0';
-            setTimeout(() => dropdown.removeAttribute('open'), 500);
+            setTimeout(() => dropdown.removeAttribute('open'), 1000);
         } else {
             dropdown.setAttribute('open', true);
             content.style.maxHeight = content.scrollHeight + 'px';
@@ -155,4 +155,24 @@ document.querySelectorAll('.contributor-name').forEach(element => {
             }
         });
     });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    const observerOptions = {
+        root: null,
+        threshold: 0.2
+    };
+    const observerCallback = (entries) => {
+        entries.forEach((entry) => {
+            const link = document.querySelector(`#right-sidebar ul li a[href='#${entry.target.id}']`);
+            if (entry.isIntersecting) {
+                link.setAttribute('data-current', 'true');
+            } else {
+                link.removeAttribute('data-current');
+            }
+        });
+    };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    sections.forEach((section) => observer.observe(section));
 });
