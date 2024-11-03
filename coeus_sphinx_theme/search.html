@@ -3,29 +3,23 @@ Coeus Sphinx Theme Search Template
 ==================================
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Sunday, October 06 2024
+Last updated on: Tuesday, October 29 2024
 -->
-
-{% extends "page.html" %}
-
+{% extends 'page.html' %}
 {% set title = _('Search') %}
 {% block scripts %}
-    {{ super() }}
-    <script src="{{ pathto('_static/searchtools.js', 1) }}" defer></script>
-    <script src="{{ pathto('_static/language_data.js', 1) }}" defer></script>
-    <script src="{{ pathto('searchindex.js', 1) }}" defer></script>
+{{ super() }}
+<script src="{{ pathto('_static/searchtools.js', 1) }}" defer></script>
+<script src="{{ pathto('_static/language_data.js', 1) }}" defer></script>
+<script src="{{ pathto('searchindex.js', 1) }}" defer></script>
 {% endblock scripts %}
 {% block body %}
-    <div class="title-hero-content" style="background:linear-gradient(135deg, #ffd5d5, #f7fbfb);">
-        <span class="fa-solid fa-magnifying-glass title-hero-icon"></span>
+<span class="fa-solid fa-magnifying-glass hero-icon"></span>
+<div id="content" role="main">
+    <div id="fallback" class="my-8 text-sm text-red-700">
+        <script>document.querySelector("#fallback").style.display = "none"</script>
+        {%- trans %}Please activate Javascript to enable searching the documentation.{% endtrans -%}
     </div>
-    <div class="w-full min-w-0 mx-auto">
-        <div id="content" role="main">
-            <div id="fallback" class="my-8 text-sm text-red-700">
-                <script>document.querySelector("#fallback").style.display = "none"</script>
-                {%- trans %}Please activate Javascript to enable searching the documentation.{% endtrans -%}
-            </div>
-            <div id="search-results"></div>
-        </div>
-    </div>
+    <div id="search-results"></div>
+</div>
 {% endblock body %}

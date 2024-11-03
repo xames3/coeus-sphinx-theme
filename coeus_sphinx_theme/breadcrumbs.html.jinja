@@ -3,23 +3,26 @@ Coeus Sphinx Theme Breadcrumbs Template
 =======================================
 
 Author: Akshay Mestry <xa@mes3.dev>
-Created on: Monday, August 26 2024
-Last updated on: Monday, August 26 2024
+Created on: Tuesday, October 29 2024
+Last updated on: Tuesday, October 29 2024
 -->
 {% block breadcrumbs_section %}
-    {%- set separator %}
-        <div class="mr-1">{{ theme_breadcrumbs_separator|default("/") }}</div>
-    {%- endset %}
-    <nav aria-label="{{ _('breadcrumbs') }}" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
-        <a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="{{ pathto(master_doc) }}">
-            <span class="hidden md:inline">{{ docstitle }}</span>
-            <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 96 960 960" aria-label="Home" fill="currentColor" stroke="none" class="md:hidden">
-                <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
-            </svg>
-        </a>
-        {%- for doc in parents -%}
-        <a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="{{ doc.link|e }}">{{ doc.title }}</a>
-        {{ separator }} {%- endfor -%}
-        <span aria-current="page" class="font-bold text-foreground overflow-hidden text-ellipsis whitespace-nowrap">{{ title }}</span>
-    </nav>
+{%- set separator %}
+<div style="margin-right: .25rem;">{{ theme_breadcrumbs_separator|default('/') }}</div>
+{%- endset %}
+<nav aria-label="{{ _('breadcrumbs') }}" class="breadcrumbs space-x-1">
+    <a class="breadcrumbs-passive" href="{{ pathto(master_doc) }}">
+        <span class="hidden md:inline">{{ docstitle }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 96 960 960" aria-label="Home"
+            fill="currentColor" stroke="none" class="md:hidden">
+            <path
+                d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z" />
+        </svg>
+    </a>
+    {%- for doc in parents -%}
+    <a class="breadcrumbs-passive" href="{{ doc.link|e }}">{{
+        doc.title }}</a>
+    {{ separator }} {%- endfor -%}
+    <span aria-current="page" class="breadcrumbs-active" style="margin-left: 0rem">{{ title }}</span>
+</nav>
 {% endblock breadcrumbs_section %}

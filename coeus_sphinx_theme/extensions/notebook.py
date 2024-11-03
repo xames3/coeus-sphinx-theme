@@ -4,7 +4,7 @@ Coeus Sphinx Theme Notebook Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, October 09 2024
-Last updated on: Wednesday, October 09 2024
+Last updated on: Tuesday, October 29 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to embed a Jupyter Notebook or a
@@ -23,6 +23,11 @@ authors and contributors when building the documentation.
     for more information.
 
 .. versionadded:: 2024.10.10
+
+.. versionchanged:: 2024.11.01
+
+    [1] Added support for parsing different JupyterLab themes and
+        custom iframe width.
 """
 
 from __future__ import annotations
@@ -73,17 +78,28 @@ class directive(rst.Directive):
         encountered.
 
         :return: List of `docutils` node(s).
+
+        .. versionchanged:: 2024.11.01
+
+            [1] Added support for parsing different JupyterLab themes
+                and custom iframe width.
         """
-        base = self.options.get("content", "_jupyter")
+        base = self.options.get("basedir", "_jupyter")
+        flags: str = ""
         if self.content:
-            url = f"../{base}/notebooks/?path=" + "\n".join(self.content)
+            url = f"../{base}/notebooks/?path={'\n'.join(self.content)}"
         if not self.content:
-            url = f"../{base}/repl/index.html?kernel=python&toolbar=1"
+            url = f"../{base}/repl/index.html?"
+            flags += "kernel=python&toolbar=1"
+        flags += (
+            f"&theme={self.options.get('theme', 'jupyterlab_coeus_theme')}"
+        )
+        url += flags
         self.options["url"] = url
         attributes: dict[str, str] = {}
         attributes["text"] = template.render(**self.options)
         attributes["format"] = "html"
-        attributes["class"] = "jupyter-embed"
+        attributes["class"] = "jupyterlite-notebook"
         return [nodes.raw(**attributes)]
 
 
@@ -99,7 +115,8 @@ def depart(self: HTMLTranslator, node: node) -> None:
 
 directive.has_content = True
 directive.option_spec = {
-    "content": rst.directives.unchanged,
-    "width": rst.directives.unchanged,
+    "basedir": rst.directives.unchanged,
     "height": rst.directives.unchanged,
+    "theme": rst.directives.unchanged,
+    "width": rst.directives.unchanged,
 }
