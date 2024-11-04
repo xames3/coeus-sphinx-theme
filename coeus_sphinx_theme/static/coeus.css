@@ -814,6 +814,10 @@ table tbody td:not(:first-child) {
     border: 0px solid transparent !important;
 }
 
+.no-rounded-corners {
+    border-radius: 0 !important;
+}
+
 .glass-bevel {
     box-shadow:
         0 1px 2px transparent,
