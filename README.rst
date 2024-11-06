@@ -5,6 +5,9 @@
 Coeus Sphinx Theme
 ==================
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.14045380.svg
+  :target: https://doi.org/10.5281/zenodo.14045380
+
 .. figure:: https://raw.githubusercontent.com/xames3/coeus-sphinx-theme/main/
     assets/coeus-stable-diffusion.png
     :alt: Coeus
