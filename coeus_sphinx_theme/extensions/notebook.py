@@ -91,9 +91,8 @@ class directive(rst.Directive):
         if not self.content:
             url = f"../{base}/repl/index.html?"
             flags += "kernel=python&toolbar=1"
-        flags += (
-            f"&theme={self.options.get('theme', 'jupyterlab_coeus_theme')}"
-        )
+        theme = self.options.get("theme", "jupyterlab_coeus_theme")
+        flags += f"&theme={theme}"
         url += flags
         self.options["url"] = url
         attributes: dict[str, str] = {}

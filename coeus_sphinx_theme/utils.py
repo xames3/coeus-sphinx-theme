@@ -28,6 +28,7 @@ from sphinx.util.display import status_iterator
 if t.TYPE_CHECKING:
     from sphinx.application import Sphinx
     from sphinx.environment import BuildEnvironment
+    from sphinx_tags import Tag
 
 
 def make_toc_collapsible(tree: bs4.BeautifulSoup) -> None:
@@ -196,7 +197,7 @@ def add_title_hero(
         [1] Added native support for mangling `sphinx_tags` tags with
             custom embedding for `title-hero` directive.
     """
-    tags = list(tags.values())
+    _tags = list(tags.values())
     if "md" in extension:
         content = []
         content.append("(tagoverview)=")
@@ -208,7 +209,7 @@ def add_title_hero(
         content.append(f"caption: {tags_index_head}")
         content.append("maxdepth: 1")
         content.append("---")
-        for tag in sorted(tags, key=lambda t: t.name):
+        for tag in sorted(_tags, key=lambda t: t.name):
             content.append(
                 f"{tag.name} ({len(tag.items)}) <{tag.file_basename}>"
             )
@@ -233,7 +234,7 @@ def add_title_hero(
         content.append(f"    :caption: {tags_index_head}")
         content.append("    :maxdepth: 1")
         content.append("")
-        for tag in sorted(tags, key=lambda t: t.name):
+        for tag in sorted(_tags, key=lambda t: t.name):
             content.append(
                 f"    {tag.name} ({len(tag.items)}) <{tag.file_basename}.rst>"
             )
@@ -244,7 +245,7 @@ def add_title_hero(
 
 
 def create_file_with_title_hero(
-    self,
+    self: Tag,
     items: list[str],
     extension: t.Any,
     output_dir: str,
