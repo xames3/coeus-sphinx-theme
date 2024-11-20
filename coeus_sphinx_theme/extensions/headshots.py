@@ -40,7 +40,6 @@ contributors when building the documentation.
 from __future__ import annotations
 
 import typing as t
-from itertools import groupby
 
 import docutils.nodes as nodes
 import docutils.parsers.rst as rst

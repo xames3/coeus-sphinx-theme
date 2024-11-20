@@ -32,8 +32,8 @@ def stylize_role(
     text: str,
     lineno: int,
     inliner: t.Any,
-    options: dict | None = None,
-    content: list | None = None,
+    options: dict[str, t.Any] | None = None,
+    content: list[t.Any] | None = None,
 ) -> tuple[list[nodes.Node], list[nodes.system_message]]:
     """Apply inline styling to text.
 

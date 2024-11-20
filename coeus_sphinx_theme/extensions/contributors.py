@@ -92,8 +92,8 @@ source = os.path.join(
     "contributors.html.jinja",
 )
 
-options_re: t.Pattern = re.compile(r"(-\s:.*:\s)(.*)")
-relpath_re: t.Pattern = re.compile(r"^(\.|\/)*")
+options_re: t.Pattern[str] = re.compile(r"(-\s:.*:\s)(.*)")
+relpath_re: t.Pattern[str] = re.compile(r"^(\.|\/)*")
 
 socials: dict[str, str] = {
     "twitter": "fa-brands fa-x-twitter",
@@ -145,8 +145,8 @@ class directive(rst.Directive):
         build = os.path.dirname(e.doctreedir)
         if not os.path.exists((images := os.path.join(build, "_images"))):
             os.makedirs(images, exist_ok=True)
-        person = 0
-        people = [{}]
+        person: int = 0
+        people: list[dict[str, str]] = [{}]
         for content in self.content:
             if not content:
                 people.append({})
@@ -161,11 +161,12 @@ class directive(rst.Directive):
                             people[person]["email"] = value
                         case "headshot":
                             if not value.startswith(("http://", "https://")):
-                                r = relpath_re.match(value).group()
+                                if r := relpath_re.match(value):
+                                    x = r.group()
                                 s = os.path.join(e.srcdir, value.lstrip("./"))
                                 _ = os.path.basename(s)
                                 d = os.path.join("_images", _)
-                                people[person]["headshot"] = os.path.join(r, d)
+                                people[person]["headshot"] = os.path.join(x, d)
                                 shutil.copyfile(s, os.path.join(build, d))
                             else:
                                 people[person]["headshot"] = value

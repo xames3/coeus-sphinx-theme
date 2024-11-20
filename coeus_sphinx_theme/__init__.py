@@ -212,7 +212,7 @@ def fix(module: types.ModuleType) -> type[nodes.Element]:
 
     .. versionadded:: 2024.09.01
     """
-    node = module.node
+    node: type[nodes.Element] = module.node
     node.__name__ = "".join(_.capitalize() for _ in module.name.split("-"))
     return node
 
@@ -274,8 +274,8 @@ def setup(app: Sphinx) -> dict[str, t.Any]:
         "html_coeus_socials": ({}, dict),
         "html_coeus_version": (config.release, str),
     }
-    for name, (default, types) in coeus_theme_configurations.items():
-        app.add_config_value(name, default, "html", types)
+    for name, (default, dtypes) in coeus_theme_configurations.items():
+        app.add_config_value(name, default, "html", dtypes)
     for default, new in coeus_theme_default_mapping.items():
         setattr(config, default, getattr(config, new))
     app.add_html_theme(name=theme_name, theme_path=here)
