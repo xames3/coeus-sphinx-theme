@@ -102,19 +102,21 @@ function switchLanguage() {
     var regex = new RegExp('\/(' + supportedLanguages.join('|') + ')\/');
     var currentLanguage = currentUrl.match(regex);
 
-    if (selectedLanguage !== 'en') {
-        if (currentLanguage) {
-            newUrl = currentUrl.replace(regex, '/' + selectedLanguage + '/');
+    if (supportedLanguages.includes(selectedLanguage)) {
+        if (selectedLanguage !== 'en') {
+            if (currentLanguage) {
+                newUrl = currentUrl.replace(regex, '/' + encodeURIComponent(selectedLanguage) + '/');
+            } else {
+                newUrl = currentUrl.endsWith('/') ? currentUrl + encodeURIComponent(selectedLanguage) + '/' : currentUrl + '/' + encodeURIComponent(selectedLanguage) + '/';
+            }
         } else {
-            newUrl = currentUrl.endsWith('/') ? currentUrl + selectedLanguage + '/' : currentUrl + '/' + selectedLanguage + '/';
+            if (currentLanguage) {
+                newUrl = currentUrl.replace(regex, '/');
+            }
         }
-    } else {
-        if (currentLanguage) {
-            newUrl = currentUrl.replace(regex, '/');
+        if (newUrl) {
+            window.location.href = newUrl;
         }
-    }
-    if (newUrl) {
-        window.location.href = newUrl;
     }
 }
 
