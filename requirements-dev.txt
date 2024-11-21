@@ -1,9 +1,9 @@
 black
-build
-djlint
+docutils-stubs
 flake8
 isort
 mypy
 mypy-extensions
-twine
+tox
+types-beautifulsoup4
 typing_extensions

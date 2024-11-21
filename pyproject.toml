@@ -7,7 +7,7 @@ name = "coeus-sphinx-theme"
 dynamic = [ "version", "dependencies" ]
 description = "A Sphinx Documentation Theme."
 readme = "README.rst"
-requires-python = ">=3.11"
+requires-python = ">=3.8"
 license.file = "LICENSE"
 authors = [
   { name = "Akshay Mestry", email = "xa@mes3.dev" }
@@ -20,9 +20,11 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
   "Topic :: Documentation",
   "Topic :: Software Development :: Documentation"
 ]
@@ -59,19 +61,21 @@ strict = true
 show_column_numbers = true
 warn_unreachable = true
 warn_unused_ignores = true
+warn_unused_configs = true
+check_untyped_defs = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+disable_error_code = ["attr-defined", "index", "union-attr"]
 
-[tool.djlint]
-blank_line_after_tag = "load,extends,include"
-blank_line_before_tag = "load,extends,include"
-extension = "html.jinja"
-format_attribute_template_tags = true
-format_css = true
-ignore="H008,H021,T002"
-indent = 4
-max_attribute_length = 500
-line_break_after_multiline_tag = false
-max_line_length = 79
-profile = "html"
+[tool.tox]
+requires = ["tox>=4"]
+envlist = ["py312", "py311", "py310", "py39", "py38", "static"]
 
-[tool.djlint.css]
-indent_size = 4
+[tool.tox.env.static]
+deps = ["-r requirements-dev.txt"]
+commands = [
+  ["black", "-q", "coeus_sphinx_theme/"],
+  ["flake8", "coeus_sphinx_theme/"],
+  ["isort", "--sl", "coeus_sphinx_theme/"],
+  ["mypy", "coeus_sphinx_theme/"],
+]
