@@ -1,10 +1,9 @@
 bs4
-jupyter-cell
 pytube
 sphinx
 sphinx-carousel
 sphinx-copybutton
 sphinx-tags
 sphinx_design
-sphinxext-opengraph
 sphinxcontrib-jquery
+sphinxext-opengraph
