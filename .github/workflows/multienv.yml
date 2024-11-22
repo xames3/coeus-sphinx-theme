@@ -1,0 +1,58 @@
+# Multi-Environment Testing Workflow
+# ==================================
+#
+# Author: Akshay Mestry <xa@mes3.dev>
+# Created on: Thursday, November 21 2024
+# Last updated on: Thursday, November 21 2024
+
+name: multienv-testing
+run-name: Started ${{ github.workflow }}
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '**.py'
+      - 'pyproject.toml'
+      - 'requirements*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test with ${{ matrix.env }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - '3.12'
+          - '3.11'
+          - '3.10'
+          - '3.9'
+          - '3.8'
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
+        with:
+          fetch-depth: 1
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v3
+      - name: Install tox
+        run: uv tool install --python-preference only-managed --python 3.13 tox --with tox-uv --with tox-gh
+      - name: Install Python
+        if: matrix.env != '3.13'
+        run: uv python install --python-preference only-managed ${{ matrix.env }}
+      - name: Run tox suite
+        run: tox run -vv
+        env:
+          TOX_GH_MAJOR_MINOR: ${{ matrix.env }}
