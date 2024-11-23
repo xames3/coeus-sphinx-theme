@@ -4,7 +4,7 @@ Coeus Sphinx Theme Headshot Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Tuesday, August 27 2024
-Last updated on: Saturday, August 31 2024
+Last updated on: Saturday, November 23 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to add information about themselves
@@ -39,6 +39,7 @@ contributors when building the documentation.
 
 from __future__ import annotations
 
+import os.path as p
 import typing as t
 
 import docutils.nodes as nodes
@@ -102,13 +103,14 @@ class directive(rst.Directive):
                 "name": content[idx],
                 "about": content[idx + 1],
                 "headshot": content[idx + 2],
-                "information": content[idx + 3],
             }
-            for idx in range(0, len(content), 4)
+            for idx in range(0, len(content), 3)
         ]
         if "sorted" in self.options:
             people = sorted(people, key=lambda x: x["name"])
+        cols = self.options.get("columns", 2)
         (container := nodes.container())["classes"].append("headshots-grid")
+        container["style"] = f"grid-template-columns: repeat({cols}, 1fr);"
         for person in people:
             individual = nodes.container()
             individual["classes"].append("headshot-card")
@@ -117,7 +119,13 @@ class directive(rst.Directive):
             title = nodes.container()
             title["classes"].append("headshot-title-card")
             image = nodes.image(uri=person["headshot"])
+            raw = p.join("..", "_images", p.basename(person["headshot"]))
             image["classes"].append("headshot-img")
+            individual["style"] = (
+                "background-image: linear-gradient(to right, "
+                "rgba(255, 255, 255, 1) 60%, rgba(255, 255, 255, 0.7)), url("
+                f'"{raw}");'
+            )
             name = nodes.paragraph(text=person["name"])
             name["classes"].append("headshot-name")
             about_node = nodes.container()
@@ -125,17 +133,11 @@ class directive(rst.Directive):
             self.state.nested_parse(about_lines, 0, about_node)
             about = about_node[0]
             about["classes"].append("headshot-about")
-            information_node = nodes.container()
-            info_lines = stm.StringList([person["information"]])
-            self.state.nested_parse(info_lines, 0, information_node)
-            information = information_node[0]
-            information["classes"].append("headshot-information")
             identity.append(image)
             title.append(name)
             title.append(about)
             identity.append(title)
             individual.append(identity)
-            individual.append(information)
             container.append(individual)
         return [container]
 
@@ -153,4 +155,5 @@ def depart(self: HTMLTranslator, node: node) -> None:
 directive.has_content = True
 directive.option_spec = {
     "sorted": rst.directives.flag,
+    "columns": rst.directives.unchanged,
 }
