@@ -3779,25 +3779,25 @@ details.sd-dropdown .sd-summary-content .sd-tab-set {
 
 .headshots-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    padding-inline: 0rem !important;
     gap: 1.25rem;
-    padding: 1rem;
-    background-color: var(--main-code-background);
     margin-bottom: 2.5rem;
     border-radius: var(--main-rounded-corner-radius);
 }
 
 .headshot-card {
-    background: white;
-    padding: 2rem;
+    padding: 1rem;
+    padding-inline: 1.5rem;
+    border: 1px solid var(--main-page-border-color);
     border-radius: var(--main-rounded-corner-radius);
-    box-shadow: 0 2px 5px #0000001a;
+    background-repeat: no-repeat;
+    background-position: right;
 }
 
 .headshot-identity-card {
     display: flex;
     padding: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     align-items: center;
 }
 
@@ -3808,9 +3808,9 @@ details.sd-dropdown .sd-summary-content .sd-tab-set {
 }
 
 .headshot-img {
-    border-radius: 50%;
-    max-width: 4.5rem;
-    max-height: 4.5rem;
+    border-radius: 50% !important;
+    max-width: 5rem;
+    max-height: 5rem;
     width: max-content;
     object-fit: cover;
     margin: 0 !important;
@@ -3818,24 +3818,20 @@ details.sd-dropdown .sd-summary-content .sd-tab-set {
 
 .headshot-title-card .headshot-name,
 .headshot-title-card .sd-card-text:first-of-type {
-    font-size: 1.05rem;
     font-weight: 600;
-    line-height: 1.5;
     margin-bottom: 0 !important;
 }
 
 .headshot-title-card .headshot-about,
 .headshot-title-card .sd-card-text:nth-of-type(2) {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: #909090;
-    line-height: 1.5;
     margin-bottom: 0 !important;
 }
 
 .headshot-card .headshot-information,
 .headshot-card .sd-card-text:first-of-type {
     margin-bottom: 0;
-    font-size: 1rem;
 }
 
 .status-badge {
