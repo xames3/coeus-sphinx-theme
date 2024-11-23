@@ -92,8 +92,6 @@ class directive(rst.Directive):
         """
         self.assert_has_content()
         content: list[str] = []
-        e = self.state.document.settings.env
-        build = p.dirname(e.doctreedir)
         for line in self.content:
             if line and line.startswith("- "):
                 content.append(current := line.split("- ")[-1].strip())
