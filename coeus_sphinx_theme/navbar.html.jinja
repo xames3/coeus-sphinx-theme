@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Navigation Bar Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, October 06 2024
-Last updated on: Wednesday, October 30 2024
+Last updated on: Sunday, November 24 2024
 -->
 <header class="header-pill glass-bevel">
     {%- block header_left %}
@@ -58,12 +58,12 @@ Last updated on: Wednesday, October 30 2024
                 </div>
             </div>
             {%- endfor %}
-            {%- if docsearch or hasdoc('search') %}
-                <div class="header-search glass-bevel">
-                    {%- include "searchbox.html.jinja" %}
-                </div>
-            {%- endif %}
         </nav>
+        {%- endif %}
+        {%- if docsearch or hasdoc('search') %}
+            <div class="header-search">
+                {%- include "searchbox.html.jinja" %}
+            </div>
         {%- endif %}
         {%- endblock header_main_nav -%}
     </div>
