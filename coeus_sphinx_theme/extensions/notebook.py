@@ -4,7 +4,7 @@ Coeus Sphinx Theme Notebook Directive
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Wednesday, October 09 2024
-Last updated on: Tuesday, October 29 2024
+Last updated on: Wednesday, November 27 2024
 
 This module provides a custom directive for the Coeus Sphinx Theme,
 that allows authors and contributors to embed a Jupyter Notebook or a
@@ -87,7 +87,8 @@ class directive(rst.Directive):
         base = self.options.get("basedir", "_jupyter")
         flags: str = ""
         if self.content:
-            url = f"../{base}/notebooks/?path={'\n'.join(self.content)}"
+            content = "\n".join(self.content)
+            url = f"../{base}/notebooks/?path={content}"
         if not self.content:
             url = f"../{base}/repl/index.html?"
             flags += "kernel=python&toolbar=1"

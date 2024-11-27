@@ -1,9 +1,0 @@
-black
-docutils-stubs
-flake8
-isort
-mypy
-mypy-extensions
-tox
-types-beautifulsoup4
-typing_extensions
