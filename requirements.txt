@@ -7,3 +7,4 @@ sphinx-tags
 sphinx_design
 sphinxcontrib-jquery
 sphinxext-opengraph
+tox

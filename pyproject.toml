@@ -7,7 +7,7 @@ name = "coeus-sphinx-theme"
 dynamic = [ "version", "dependencies" ]
 description = "A Sphinx Documentation Theme."
 readme = "README.rst"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license.file = "LICENSE"
 authors = [
   { name = "Akshay Mestry", email = "xa@mes3.dev" }
@@ -20,8 +20,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -69,10 +67,21 @@ disable_error_code = ["attr-defined", "index", "union-attr"]
 
 [tool.tox]
 requires = ["tox>=4"]
-envlist = ["py312", "py311", "py310", "py39", "py38", "static"]
+envlist = ["py312", "py311", "py310"]
 
-[tool.tox.env.static]
-deps = ["-r requirements-dev.txt"]
+[tool.tox.env_run_base]
+description = "Linting code and running static type checking on {base_python}"
+deps = [
+  "black",
+  "docutils-stubs",
+  "flake8",
+  "isort",
+  "mypy",
+  "mypy-extensions",
+  "types-beautifulsoup4",
+  "types-docutils",
+  "typing_extensions",
+]
 commands = [
   ["black", "-q", "coeus_sphinx_theme/"],
   ["flake8", "coeus_sphinx_theme/"],
@@ -85,5 +94,3 @@ commands = [
 "3.12" = ["3.12"]
 "3.11" = ["3.11"]
 "3.10" = ["3.10"]
-"3.9" = ["3.9"]
-"3.8" = ["3.8"]
