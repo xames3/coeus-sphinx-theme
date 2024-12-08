@@ -4,7 +4,7 @@ Coeus Sphinx Theme Main Navigation Bar Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Sunday, October 06 2024
-Last updated on: Sunday, November 24 2024
+Last updated on: Saturday, December 07 2024
 -->
 <header class="header-pill glass-bevel">
     {%- block header_left %}
@@ -45,18 +45,11 @@ Last updated on: Sunday, November 24 2024
         {%- if navbar_links|tobool -%}
         <nav>
             {%- for caption, pages in navbar_links.items() %}
-            <div class="header-dropdown">
-                <button>{{ caption }}</button>
-                <div class="header-dropdown-content glass-bevel">
-                    {%- for title, url in pages.items() %}
-                    {%- if url.startswith("http") %}
-                    <a href="{{ url }}" rel="nofollow noopener">{{ title }}</a>
-                    {%- else %}
-                    <a href="{{ pathto(url) }}">{{ title }}</a>
-                    {%- endif %}
-                    {%- endfor %}
-                </div>
-            </div>
+            {%- if pages.startswith("http") %}
+            <a href="{{ pages }}" rel="nofollow noopener">{{ caption }}</a>
+            {%- else %}
+            <a href="{{ pathto(pages) }}">{{ caption }}</a>
+            {%- endif %}
             {%- endfor %}
         </nav>
         {%- endif %}

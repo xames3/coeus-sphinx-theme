@@ -4,24 +4,17 @@ Coeus Sphinx Theme Navigation Bar Template
 
 Author: Akshay Mestry <xa@mes3.dev>
 Created on: Monday, August 26 2024
-Last updated on: Monday, August 26 2024
+Last updated on: Saturday, December 07 2024
 -->
 {% block navigation_bar_links %}
     {%- if navbar_links|tobool -%}
         <nav class="flex md:hidden flex-col font-medium mt-4">
-            {%- for caption, pages in navbar_links.items() %}
-                <div class="dropdown">
-                    <button class="dropbtn">{{ caption }}</button>
-                    <div class="dropdown-content">
-                        {%- for title, url in pages.items() %}
-                            {%- if url.startswith("http") %}
-                                <a href="{{ url }}" rel="nofollow noopener">{{ title }}</a>
-                            {%- else %}
-                                <a href="{{ pathto(url) }}">{{ title }}</a>
-                            {%- endif %}
-                        {%- endfor %}
-                    </div>
-                </div>
+            {%- for caption, pages in navbar_links.items()%}
+                {%- if pages.startswith("http") %}
+                    <a href="{{ pages }}" rel="nofollow noopener">{{ caption }}</a>
+                {%- else %}
+                    <a href="{{ pathto(pages) }}">{{ caption }}</a>
+                {%- endif %}
             {%- endfor %}
         </nav>
     {%- endif %}
