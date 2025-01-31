@@ -1023,6 +1023,7 @@ table tbody td:not(:first-child) {
     margin-top: 3rem;
     margin-bottom: 1rem;
     padding-top: 1.5rem;
+    max-width: 15rem;
 }
 
 .contributors-wrapper {
