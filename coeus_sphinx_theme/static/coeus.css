@@ -2032,6 +2032,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 .contents ul li ul,
 .toctree-wrapper ul li ul {
     padding-left: 1rem;
+    word-break: keep-all;
 }
 
 .contents ul:not(:last-child),
