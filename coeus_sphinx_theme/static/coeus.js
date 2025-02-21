@@ -178,3 +178,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     sections.forEach((section) => observer.observe(section));
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    Splitting();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    let prevScrollTop = 0;
+    let header = document.querySelector("header");
+
+    header.style.transition = "transform 0.2s ease-in-out";
+
+    document.addEventListener("scroll", function () {
+        let nowScrollTop = window.scrollY;
+
+        if (nowScrollTop > prevScrollTop) {
+            header.style.transform = "translateY(-200%)";
+        } else {
+            header.style.transform = "translateY(0%)";
+        }
+
+        prevScrollTop = nowScrollTop;
+    });
+});
+
+
+
