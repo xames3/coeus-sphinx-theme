@@ -3489,6 +3489,23 @@ table:not(.does-not-exist):hover .navbarlink>* {
     color: var(--main-page-text-color);
 }
 
+/* Make sphinx-design cards with links fully clickable */
+.sd-card a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sd-card:has(a) {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sd-card:has(a):hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
 .sd-card-img {
     margin: 0rem !important;
     border-radius: var(--main-rounded-corner-radius);
@@ -3519,6 +3536,13 @@ table:not(.does-not-exist):hover .navbarlink>* {
     border-color: transparent;
     transform: scale(1.02);
     transition: transform 0.5s ease;
+}
+
+/* Enhanced hover effect for clickable cards */
+.sd-card:has(a).sd-card-hover:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sd-summary-title {
