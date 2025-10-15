@@ -1,0 +1,25 @@
+{
+    "name": "ciesin-docs",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "workspaceFolder": "/workspace/",
+    "remoteUser": "root",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/venv/bin/python",
+                "python.terminal.activateEnvironment": true,
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ritwickdey.liveserver",
+                "lextudio.restructuredtext-pack",
+                "samuelcolvin.jinjahtml"
+            ]
+        }
+    }
+}
