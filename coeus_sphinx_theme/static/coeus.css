@@ -1110,6 +1110,7 @@ table tbody td:not(:first-child) {
     float: right;
     font-size: 1.25rem;
     margin-top: -3px;
+    gap: 10px;
 }
 
 .height-450 {
@@ -1198,8 +1199,9 @@ a.footnote-reference {
 .extra-footer-elements {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    gap: 0.25rem;
+    flex-direction: column; # horizontal layout for social icons
+    justify-content: center;
+    gap: 10px; #adjused to 10px
 }
 
 .extra-footer-elements div a {
@@ -3126,7 +3128,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 
     .extra-footer-elements {
         flex-direction: column !important;
-        gap: 0 !important;
+        gap: 10px !important; #added spacing between icons
     }
 
     .headshots-grid,
