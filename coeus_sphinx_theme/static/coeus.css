@@ -942,7 +942,7 @@ table tbody td:not(:first-child) {
     border-radius: var(--main-rounded-corner-radius);
     background-color: transparent;
     right: 0%;
-    left: 70%;
+    left: 150%;
     position: absolute;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     align-items: center;
