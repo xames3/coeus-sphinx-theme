@@ -183,24 +183,55 @@ document.addEventListener("DOMContentLoaded", function () {
     Splitting();
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    let prevScrollTop = 0;
-    let header = document.querySelector("header");
 
-    header.style.transition = "transform 0.2s ease-in-out";
+// header-pill scroll behaviour 
+document.addEventListener("DOMContentLoaded", () => {
+    const header = document.querySelector(".header-pill");
+    if (!header) return;
 
-    document.addEventListener("scroll", function () {
-        let nowScrollTop = window.scrollY;
+    let idleTimeout;
+    let lastScrollY = window.scrollY;
 
-        if (nowScrollTop > prevScrollTop) {
-            header.style.transform = "translateY(-200%)";
+    header.style.transition = "transform 0.5s ease-in-out";
+
+    const showHeader = () => (header.style.transform = "translateY(0%)");
+    const hideHeader = () => (header.style.transform = "translateY(-200%)");
+
+    function resetIdleTimer() {
+        clearTimeout(idleTimeout);
+        if (window.scrollY > 0) {
+            idleTimeout = setTimeout(hideHeader, 1500); // Hide after 1.5s idle
+        }
+    }
+
+    function handleScroll() {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY <= 0) {
+            showHeader(); // Always visible at top
+            clearTimeout(idleTimeout);
         } else {
-            header.style.transform = "translateY(0%)";
+            showHeader(); // Show when scrolling or moving
+            resetIdleTimer(); // Restart idle timer
         }
 
-        prevScrollTop = nowScrollTop;
-    });
+        lastScrollY = currentScrollY;
+    }
+
+    // Attach listeners
+    document.addEventListener("scroll", handleScroll, { passive: true });
+    ["mousemove", "keydown", "touchstart"].forEach(event =>
+        document.addEventListener(event, () => {
+            showHeader();
+            resetIdleTimer();
+        }, { passive: true })
+    );
+
+    // Initial state
+    if (window.scrollY <= 0) {
+        showHeader();
+    } else {
+        hideHeader();
+        resetIdleTimer();
+    }
 });
-
-
-
