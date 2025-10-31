@@ -562,6 +562,7 @@ table tbody td:not(:first-child) {
     margin-inline: auto;
 }
 
+/*
 .inner-content-wrapper {
     width: 100%;
     min-width: 0;
@@ -569,6 +570,25 @@ table tbody td:not(:first-child) {
     padding-top: 1.5rem;
     margin-top: 3rem;
     position: relative;
+}
+*/
+
+/* dru center the button at bottom */
+.inner-content-wrapper {
+    display: flex !important;
+    padding-bottom: 1.5rem !important;
+    padding-top: 1.5rem !important;
+    margin-top: 3rem !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    width: 100%;
+    max-width: 1100px;
+    /* controls how wide content can get */
+    margin: 0 auto;
+    /* centers in viewport */
+    padding: 0 5vw;
+    /* even left/right padding */
 }
 
 #page {
@@ -845,6 +865,7 @@ table tbody td:not(:first-child) {
     transform: translate(-50%, -50%);
 }
 
+/* dru code*/
 .header-pill {
     display: flex;
     align-items: center;
