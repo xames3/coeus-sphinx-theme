@@ -3981,3 +3981,5 @@ table.dataframe+p {
     border-radius: var(--main-rounded-corner-radius);
     margin-bottom: 1.5rem;
 }
+
+.sd-btn {border-radius: 50px;}
