@@ -942,7 +942,7 @@ table tbody td:not(:first-child) {
     border-radius: var(--main-rounded-corner-radius);
     background-color: transparent;
     right: 0%;
-    left: 150%;
+    left: 95%;
     position: absolute;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
     align-items: center;
@@ -1199,9 +1199,9 @@ a.footnote-reference {
 .extra-footer-elements {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column; # horizontal layout for social icons
+    flex-direction: column; 
     justify-content: center;
-    gap: 10px; #adjused to 10px
+    gap: 10px;
 }
 
 .extra-footer-elements div a {
@@ -3128,7 +3128,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 
     .extra-footer-elements {
         flex-direction: column !important;
-        gap: 10px !important; #added spacing between icons
+        gap: 10px !important;
     }
 
     .headshots-grid,
