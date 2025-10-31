@@ -1110,7 +1110,7 @@ table tbody td:not(:first-child) {
     float: right;
     font-size: 1.25rem;
     margin-top: -3px;
-    gap: 10px;
+    gap: 16px;
 }
 
 .height-450 {
