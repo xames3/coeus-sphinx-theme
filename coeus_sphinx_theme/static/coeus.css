@@ -180,8 +180,7 @@
 
 [data-theme="dark"] {
     /* --- 1. Redefine Theme Variables --- */
-    /* We use your colors but apply them to the theme's existing variables. */
-    --main-page-background: #0d0d0d; /* Base color from your gradient */
+    --main-page-background: #0d0d0d; 
     --main-page-text-color: #f5f5f5;
     --main-footer-background: #0b0b0b;
     --main-code-background: #2a2a2a;
