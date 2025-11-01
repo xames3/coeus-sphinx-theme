@@ -170,77 +170,125 @@
 }
 
 /* dru dark theme */
+/* ==========================================================================
+   Dark Theme Overrides
+   ========================================================================== */
+
+/* ==========================================================================
+   Dark Theme Overrides
+   ========================================================================== */
+
 [data-theme="dark"] {
-  --bg-color: linear-gradient(
-    #0b0b0b 0%,
-    #0d0d0d 50%,
-    #111 100%
-  );
-  --text-color: #f5f5f5;
-}
+    /* --- 1. Redefine Theme Variables --- */
+    /* We use your colors but apply them to the theme's existing variables. */
+    --main-page-background: #0d0d0d; /* Base color from your gradient */
+    --main-page-text-color: #f5f5f5;
+    --main-footer-background: #0b0b0b;
+    --main-code-background: #2a2a2a;
+    --main-page-header-background: hsla(0, 0%, 12%, 0.7);
+    --main-page-slightly-less-white-color: #2a2a2a;
+    --main-page-slightly-less-grey-color: #3a3a3a;
+    --main-page-slightly-less-dark-color: #e0e0e0;
+    --main-sidebar-text-color: #b0b0b0;
+    --main-caption-text-color: #9e9e9e;
+    --main-page-muted-text-color: #9e9e9e;
+    --main-sidebar-header-text-color: #ffffff;
+    --muted: #888888;
+    --main-page-url-color: #58a6ff;
+    --main-page-dark-url-color: #8cb4ff;
+    --main-page-border-color: #3a3a3a;
+    --sd-color-tabs-overline: #3a3a3a;
+    --sd-color-tabs-underline: #3a3a3a;
+    --sd-color-tabs-label-active: #ffffff;
+    --sd-color-tabs-label-hover: #e0e0e0;
+    --unsafe-accent: #4a4a4a;
+    --unsafe-accent-foreground: #f5f5f5;
+    
+    /* Apply your gradient to the body */
+    body {
+        background: linear-gradient(
+            #0b0b0b 0%,
+            #0d0d0d 50%,
+            #111 100%
+        );
+    }
+    
+    /* Fix header text color */
+    .header-content {
+        color: var(--main-page-text-color);
+    }
 
-.inner-content-wrapper {
-    display: flex !important;
-    padding-bottom: 1.5rem !important;
-    padding-top: 1.5rem !important;
-    margin-top: 3rem !important;
-    flex-direction: column;
-    align-items: center;
-    justify-content: left;
-    width: 100%;
-    max-width: 1100px;
-    /* controls how wide content can get */
-    margin: 0 auto;
-    /* centers in viewport */
-    padding: 0 5vw;
-    /* even left/right padding */
-    background: var(--bg-color);
-}
+    /* Fix active ToC link */
+    .toctree-l1.current {
+        color: white;
+    }
 
-body {
-    background: var(--bg-color)
-}
+    /* Fix hero content fade */
+    .hero-content {
+        background: radial-gradient(135% 145% at 100% -15%, #fff0, #111 75%);
+    }
 
-span {
-    color: var(--text-color)
-}
+    /* Invert logo if it's dark */
+    .header-logo img {
+        filter: invert(1) hue-rotate(180deg);
+    }
 
-.universal-wrapper{
-    background: var(--bg-color);
-    color: var(--text-color);
-}
+    /* --- 3. Hardcoded Fixes for Other Components --- */
 
-footer {
-    background: var(--bg-color);
-}
-/*
-.outer-content-wrapper {
-    background: var(--bg-color)
-}*/
-/*
-.page-content {
-  background: var(--bg-color);
-  color: var(--text-color);
-}
-*/
+    .note {
+        border-color: rgba(195, 195, 195, 0.3);
+        background-color: rgba(80, 80, 80, 0.3);
+        color: rgba(230, 230, 230, 0.9);
+    }
 
-.header-pill {
-  background: var(--pill-bg);
-  border: 1px solid var(--pill-border);
-  backdrop-filter: blur(12px) saturate(140%);
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
+    .hint, .tip {
+        border-color: rgba(61, 119, 125, 0.3);
+        background-color: rgba(61, 119, 125, 0.2);
+        color: rgba(120, 200, 210, 1);
+    }
 
-.glass-bevel {
-  background: var(--bevel-bg);
-  color: var(--bevel-text);
-}
+    .danger, .error {
+        border-color: rgba(255, 100, 100, 0.3);
+        background-color: rgba(191, 72, 0, 0.2);
+        color: rgba(255, 150, 150, 1);
+    }
 
-a.btn-link {
-  background-color: var(--accent-color);
-  /*color: var(--text-color);*/
+    .attention, .caution, .important, .warning {
+        border-color: rgba(202, 138, 4, 0.3);
+        background-color: rgba(158, 103, 0, 0.2);
+        color: rgba(255, 200, 100, 1);
+    }
+    
+    #content kbd:not(.compound) {
+        background-color: #4a4a4a;
+        color: #e0e0e0;
+        border-width: 1px;
+        border-color: #5a5a5a;
+    }
+    
+    .dataframe tbody tr:nth-child(odd) {
+        background-color: #2c2c2c;
+    }
+    .dataframe tbody tr:nth-child(even) {
+        background-color: #252525;
+    }
+    .dataframe thead th {
+        color: #f5f5f5;
+    }
+    
+    #tagged-pages ul {
+        background-color: #2a2a2a;
+    }
+    #tagged-pages ul li {
+        background: #1d1d1d;
+        box-shadow: 0 2px 5px #0000003a;
+    }
+    
+    .highlighted {
+        background-color: var(--unsafe-accent);
+        border: 1px solid var(--main-page-border-color);
+    }
 }
-
 /* dark theme end dru*/
 
 
