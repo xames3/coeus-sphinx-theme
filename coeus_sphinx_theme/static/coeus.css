@@ -561,7 +561,7 @@ header {
   /* Positioning */
   position: fixed;
   z-index: 100; /* Needs to be on top of other content */
-  top: 5rem;    /* Position it below your fixed header */
+  top: 3.2rem;    /* Position it below your fixed header */
   left: 50%;
   transform: translateX(-50%);
   overflow: hidden; /* Keeps links inside the rounded corners */
@@ -600,7 +600,7 @@ header {
 #mobileNav li:last-child a {
   border-bottom: none;
 }
-
+/* */
 
 
 

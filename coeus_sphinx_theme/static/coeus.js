@@ -236,6 +236,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+
+//night mode
 const themeToggle = document.getElementById('theme-toggle');
 const currentTheme = localStorage.getItem('theme');
 
@@ -253,3 +255,21 @@ themeToggle.addEventListener('click', () => {
     ? '<i class="fa-solid fa-sun"></i>'
     : '<i class="fa-solid fa-moon"></i>';
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // 1. Find the burger icon and the mobile menu
+    const burgerIcon = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileNav');
+
+    // 2. Add a click event listener to the burger icon
+    burgerIcon.addEventListener('click', () => {
+      
+      // 3. When clicked, toggle the 'is-active' class on the menu
+      mobileMenu.classList.toggle('is-active');
+    });
+
+  });
+
+
+//mobilenav
