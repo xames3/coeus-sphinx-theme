@@ -515,7 +515,8 @@ textarea {
 
 header {
     --coeus-backdrop-blur: blur(12px);
-    width: calc(814px - 4rem);
+    width: 90vw;
+    max-width: calc(814px - 4rem);
     border-radius: calc(2 * var(--main-rounded-corner-radius));
     color: var(--main-page-white-color);
     left: 50%;
@@ -687,11 +688,15 @@ table tbody td:not(:first-child) {
     flex: 1 1 0%;
 }
 
+/* dru edit */
 .outer-content-wrapper {
     display: grid;
-    grid-template-columns: 276px 814px 276px;
+    grid-template-columns: minmax(0, 276px) minmax(0, 814px) minmax(0, 276px);
+    /*grid-template-columns: 276px 814px 276px;*/
+    justify-content: center;
     max-width: 1366px;
     margin-inline: auto;
+    width:100%;
 }
 
 /*
@@ -1353,9 +1358,9 @@ a.footnote-reference {
 .extra-footer-elements {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column; # horizontal layout for social icons
+    flex-direction: column; 
     justify-content: center;
-    gap: 10px; #adjused to 10px
+    gap: 10px; 
 }
 
 .extra-footer-elements div a {
@@ -3282,7 +3287,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 
     .extra-footer-elements {
         flex-direction: column !important;
-        gap: 10px !important; #added spacing between icons
+        gap: 10px !important; /*added spacing between icons*/
     }
 
     .headshots-grid,
@@ -3300,6 +3305,10 @@ table:not(.does-not-exist):hover .navbarlink>* {
 
     .step-flow-carousel .scbs-carousel-control-next {
         right: 36.5% !important;
+    }
+
+    .header-content nav {
+        display: none;
     }
 
 }
