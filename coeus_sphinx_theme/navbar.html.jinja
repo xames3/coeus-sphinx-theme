@@ -9,6 +9,10 @@ Last updated on: Saturday, December 07 2024
 <header class="header-pill glass-bevel">
     {%- block header_left %}
     {%- block header_logo %}
+<!--<button id="toggle-theme">🌓 Toggle Theme</button> -->
+<button id="theme-toggle" aria-label="Toggle theme">
+  <i class="fa-solid fa-sun"></i>
+</button>
     <a href="{{ pathto(master_doc) }}" class="header-logo">
         {%- if logo_url %}
         <img height="36" width="36" style="margin-right: 0.5rem;" src="{{ logo_url }}" alt="Logo" />
