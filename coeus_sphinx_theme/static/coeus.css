@@ -524,17 +524,85 @@ header {
     backdrop-filter: var(--coeus-backdrop-blur) var(--coeus-backdrop-brightness) var(--coeus-backdrop-contrast) var(--coeus-backdrop-grayscale) var(--coeus-backdrop-hue-rotate) var(--coeus-backdrop-invert) var(--coeus-backdrop-opacity) var(--coeus-backdrop-saturate) var(--coeus-backdrop-sepia);
 }
 
+/* --- Burger Icon Styling --- */
 .burger {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem; /* Gives it some space */
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  /* Color is inherited from its parent (the header) */
 }
 
-@media (max-width: 768px) {
+/* Subtle hover effect that works on light/dark backgrounds */
+.burger:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 648px) {
   .burger {
     display: block;
   }
 }
+
+/* --- Themed Mobile Nav Panel --- */
+#mobileNav {
+  display: none;
+  width: 40vw; /* Match header width */
+  max-width: calc(814px - 4rem); /* Match header max-width */
+
+  /* Use theme variables */
+  background-color: var(--main-page-background);
+  border: 1px solid var(--main-page-border-color);
+  border-radius: var(--main-rounded-corner-radius);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+
+  /* Positioning */
+  position: fixed;
+  z-index: 100; /* Needs to be on top of other content */
+  top: 5rem;    /* Position it below your fixed header */
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden; /* Keeps links inside the rounded corners */
+}
+
+/* 2. Create the 'is-active' class to show the menu */
+#mobileNav.is-active {
+  display: block;
+}
+
+/* --- Style the links --- */
+#mobileNav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#mobileNav li a {
+  display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  text-align: center;
+
+  /* Use theme variables */
+  color: var(--main-page-text-color);
+  border-bottom: 1px solid var(--main-page-border-color);
+  transition: background-color 0.3s ease;
+}
+
+/* Use the theme's hover color */
+#mobileNav li a:hover {
+  background-color: var(--unsafe-accent);
+}
+
+/* Remove the border from the very last link */
+#mobileNav li:last-child a {
+  border-bottom: none;
+}
+
+
+
 
 input::-moz-placeholder,
 textarea::-moz-placeholder {
