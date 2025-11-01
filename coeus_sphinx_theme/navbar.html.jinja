@@ -45,7 +45,20 @@ Last updated on: Saturday, December 07 2024
         #}
         <span class="sr-only">Toggle navigation menu</span>
     </button>
-    <div class="burger" id="burger">☰</div>
+<div class="burger" id="burger">☰</div>
+<nav id="mobileNav">
+<ul>
+{%- for caption, pages in navbar_links.items() %}
+<li>
+{%- if pages.startswith("http") %}
+<a href="{{ pages }}" rel="nofollow noopener">{{ caption }}</a>
+{%- else %}
+<a href="{{ pathto(pages) }}">{{ caption }}</a>
+{%- endif %}
+</li>
+{%- endfor %}
+</ul>
+</nav>
     {%- endif -%}
     {%- endblock mobile_menu %}
     {%- block header_right %}
