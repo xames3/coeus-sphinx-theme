@@ -531,6 +531,18 @@ header {
     backdrop-filter: var(--coeus-backdrop-blur) var(--coeus-backdrop-brightness) var(--coeus-backdrop-contrast) var(--coeus-backdrop-grayscale) var(--coeus-backdrop-hue-rotate) var(--coeus-backdrop-invert) var(--coeus-backdrop-opacity) var(--coeus-backdrop-saturate) var(--coeus-backdrop-sepia);
 }
 
+.burger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .burger {
+    display: block;
+  }
+}
+
 input::-moz-placeholder,
 textarea::-moz-placeholder {
     color: var(--main-page-white-color);
