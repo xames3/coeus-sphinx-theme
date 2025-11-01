@@ -287,6 +287,16 @@
         background-color: var(--unsafe-accent);
         border: 1px solid var(--main-page-border-color);
     }
+
+    div.highlight {
+        background-color: transparent; 
+    }
+
+    div.highlight pre {
+        border-radius: 1rem;
+        background-color: var(--main-code-background);
+    }
+
 }
 /* dark theme end dru*/
 
