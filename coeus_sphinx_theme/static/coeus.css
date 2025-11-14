@@ -3522,6 +3522,32 @@ table:not(.does-not-exist):hover .navbarlink>* {
     transform: scale(1.02);
     transition: transform 0.5s ease;
 }
+.sd-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.sd-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.sd-card a {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    text-indent: -9999px;
+}
+
+
+.sd-card:hover {
+    filter: brightness(0.97);
+    transition: 0.2s ease;
+}
+
+
+
+
 
 .sd-summary-title {
     color: hsl(var(--main-page-grey-color));
@@ -3560,17 +3586,7 @@ table:not(.does-not-exist):hover .navbarlink>* {
 details.sd-dropdown.sd-card {
     border-radius: 0 !important;
 }
-.sd-card-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
 
-.sd-card-link:hover {
-    cursor: pointer;
-    filter: brightness(0.97);
-    transition: 0.2s ease;
-}
 
 details.sd-dropdown {
     font-weight: inherit;
