@@ -3560,6 +3560,17 @@ table:not(.does-not-exist):hover .navbarlink>* {
 details.sd-dropdown.sd-card {
     border-radius: 0 !important;
 }
+.sd-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sd-card-link:hover {
+    cursor: pointer;
+    filter: brightness(0.97);
+    transition: 0.2s ease;
+}
 
 details.sd-dropdown {
     font-weight: inherit;
@@ -3576,6 +3587,7 @@ details.sd-dropdown:not(:first-of-type) {
 details.sd-dropdown:not([open])>.sd-card-header {
     font-weight: 600 !important;
 }
+
 
 details.sd-dropdown summary:focus {
     outline-style: none;
@@ -3824,6 +3836,7 @@ details.sd-dropdown .sd-summary-content .sd-tab-set {
     font-weight: 600;
     margin-bottom: 0 !important;
 }
+
 
 .headshot-title-card .headshot-about,
 .headshot-title-card .sd-card-text:nth-of-type(2) {
