@@ -3522,6 +3522,32 @@ table:not(.does-not-exist):hover .navbarlink>* {
     transform: scale(1.02);
     transition: transform 0.5s ease;
 }
+.sd-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+.sd-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.sd-card a {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    text-indent: -9999px;
+}
+
+
+.sd-card:hover {
+    filter: brightness(0.97);
+    transition: 0.2s ease;
+}
+
+
+
+
 
 .sd-summary-title {
     color: hsl(var(--main-page-grey-color));
@@ -3561,6 +3587,7 @@ details.sd-dropdown.sd-card {
     border-radius: 0 !important;
 }
 
+
 details.sd-dropdown {
     font-weight: inherit;
     margin-bottom: 0 !important;
@@ -3576,6 +3603,7 @@ details.sd-dropdown:not(:first-of-type) {
 details.sd-dropdown:not([open])>.sd-card-header {
     font-weight: 600 !important;
 }
+
 
 details.sd-dropdown summary:focus {
     outline-style: none;
@@ -3824,6 +3852,7 @@ details.sd-dropdown .sd-summary-content .sd-tab-set {
     font-weight: 600;
     margin-bottom: 0 !important;
 }
+
 
 .headshot-title-card .headshot-about,
 .headshot-title-card .sd-card-text:nth-of-type(2) {
